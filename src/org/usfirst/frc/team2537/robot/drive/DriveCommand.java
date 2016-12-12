@@ -1,5 +1,9 @@
 package org.usfirst.frc.team2537.robot.drive;
 
+import org.usfirst.frc.team2537.robot.Robot;
+import org.usfirst.frc.team2537.robot.input.HumanInput;
+
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
@@ -11,8 +15,8 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-		
+		Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick());
+		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick());
 	}
 
 	@Override
