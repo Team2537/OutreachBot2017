@@ -12,7 +12,7 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon leftMotor = new CANTalon(Ports.LEFT_MOTOR);
 	private CANTalon rightMotor = new CANTalon(Ports.RIGHT_MOTOR);
 	private static final double DEADZONE_THRESHOLD = 0.1;
-	protected static final double SPEED_MULTIPLIER = 0.5;
+	protected static final double SPEED_MULTIPLIER = 1;
 	protected DriveTypeEnum driveMode = DriveTypeEnum.TANK_DRIVE;
 	
 	@Override
@@ -26,10 +26,12 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void setLeftMotor(double speed){
+		System.out.println("Drive type: " + driveMode);
 		leftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
 	
 	public void setRightMotor(double speed){
+		System.out.println("Drive type: " + driveMode);
 		rightMotor.set(speed * SPEED_MULTIPLIER);
 	}
 	

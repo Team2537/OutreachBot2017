@@ -18,6 +18,7 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void execute() {
+		System.out.println("I'm executing!");
 		switch(Robot.driveSys.driveMode){
 		case TANK_DRIVE:
 			Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
@@ -33,7 +34,7 @@ public class DriveCommand extends Command {
 				Robot.driveSys.setRightMotor(fwdSpeed);
 			} else {
 				Robot.driveSys.setLeftMotor(fwdSpeed);
-				Robot.driveSys.setRightMotor(fwdSpeed*(sideSpeed - 0.5)*2);
+				Robot.driveSys.setRightMotor(fwdSpeed*-(sideSpeed - 0.5)*2);
 			}
 		}
 	}
