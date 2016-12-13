@@ -32,6 +32,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto choices", chooser);
         
         driveSys = new DriveSubsystem();
+        driveSys.initDefaultCommand();
     }
     
 	/**

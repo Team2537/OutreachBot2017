@@ -12,28 +12,35 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon leftMotor = new CANTalon(Ports.LEFT_MOTOR);
 	private CANTalon rightMotor = new CANTalon(Ports.RIGHT_MOTOR);
 	private static final double DEADZONE_THRESHOLD = 0.1;
+	protected static final double SPEED_MULTIPLIER = 0.5;
+	protected DriveTypeEnum driveMode = DriveTypeEnum.TANK_DRIVE;
 	
 	@Override
-	protected void initDefaultCommand() {
-		
+	public void initDefaultCommand() {
+		DriveCommand dc = new DriveCommand();
+		this.setDefaultCommand(dc);
+	}
+	
+	public void registerButtons(){
+		HumanInput.registerWhenPressedCommand(HumanInput.driveModeButton, new DriveTypeCommand());
 	}
 	
 	public void setLeftMotor(double speed){
-		leftMotor.set(speed);
+		leftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
 	
 	public void setRightMotor(double speed){
-		rightMotor.set(speed);
+		rightMotor.set(speed * SPEED_MULTIPLIER);
 	}
 	
-	public double getLeftJoystick(){
-		double leftJoystickValue = HumanInput.leftJoystick.getAxis(AxisType.kY);
+	public double getLeftJoystick(AxisType axis){
+		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
 		if(Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD) return leftJoystickValue;
 		else return 0;
 	}
 	
-	public double getRightJoystick(){
-		double rightJoystickValue = HumanInput.rightJoystick.getAxis(AxisType.kY);
+	public double getRightJoystick(AxisType axis){
+		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
 		if(Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD) return rightJoystickValue;
 		else return 0;
 	}
