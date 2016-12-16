@@ -14,38 +14,64 @@ public class DriveSubsystem extends Subsystem {
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
 	protected DriveTypeEnum driveMode = DriveTypeEnum.TANK_DRIVE;
-	
+
 	@Override
 	public void initDefaultCommand() {
 		DriveCommand dc = new DriveCommand();
 		this.setDefaultCommand(dc);
 	}
-	
-	public void registerButtons(){
+
+	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.driveModeButton, new DriveTypeCommand());
 	}
-	
-	public void setLeftMotor(double speed){
+
+	/**
+	 * Set left motor to speed
+	 * 
+	 * @param speed
+	 * 
+	 */
+	public void setLeftMotor(double speed) {
 		System.out.println("Drive type: " + driveMode);
 		leftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
-	
-	public void setRightMotor(double speed){
+
+	/**
+	 * Set right motor to speed
+	 * 
+	 * @param speed
+	 */
+	public void setRightMotor(double speed) {
 		System.out.println("Drive type: " + driveMode);
 		rightMotor.set(speed * SPEED_MULTIPLIER);
 	}
-	
-	public double getLeftJoystick(AxisType axis){
+
+	/**
+	 * Gets value based on direction left joy stick is pressed
+	 * 
+	 * @param axis
+	 * @return
+	 */
+	public double getLeftJoystick(AxisType axis) {
 		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
-		if(Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD) return leftJoystickValue;
-		else return 0;
+		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
+			return leftJoystickValue;
+		else
+			return 0;
 	}
-	
-	public double getRightJoystick(AxisType axis){
+
+	/**
+	 * Gets value based on direction right joy stick is pressed
+	 * 
+	 * @param axis
+	 * @return
+	 */
+	public double getRightJoystick(AxisType axis) {
 		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
-		if(Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD) return rightJoystickValue;
-		else return 0;
+		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
+			return rightJoystickValue;
+		else
+			return 0;
 	}
-	
-	
+
 }
