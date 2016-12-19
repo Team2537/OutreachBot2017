@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.auto.CourseCorrect;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     final String defaultAuto = "Default";
-    final String customAuto = "My Auto";
+    final String driveFiveInches = "DriveFiveInches";
     String autoSelected;
     SendableChooser chooser;
     public static DriveSubsystem driveSys;
@@ -29,7 +30,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
-        chooser.addObject("My Auto", customAuto);
+        chooser.addObject("Drive Five Inches Straight", driveFiveInches);
         SmartDashboard.putData("Auto choices", chooser);
         
         driveSys = new DriveSubsystem();
@@ -57,8 +58,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	switch(autoSelected) {
-    	case customAuto:
-        //Put custom auto code here   
+    	case driveFiveInches:
+        	new CourseCorrect(5);   
             break;
     	case defaultAuto:
     	default:

@@ -26,13 +26,20 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void setLeftMotor(double speed){
-		System.out.println("Drive type: " + driveMode);
 		leftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
 	
 	public void setRightMotor(double speed){
-		System.out.println("Drive type: " + driveMode);
 		rightMotor.set(speed * SPEED_MULTIPLIER);
+	}
+	
+	public void setDriveMotors(double leftSpeed, double rightSpeed){
+		setLeftMotor(leftSpeed);
+		setRightMotor(rightSpeed);
+	}
+	
+	public void setDriveMotors(double speed){
+		setDriveMotors(speed, speed);
 	}
 	
 	public double getLeftJoystick(AxisType axis){
