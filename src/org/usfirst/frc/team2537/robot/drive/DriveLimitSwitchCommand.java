@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveLimitSwitchCommand extends Command {
 
 	@Override
-	protected void initialize() {
+	protected void initialize() { 
+		//drives forward slowly
 		Robot.driveSys.setLeftMotor(.2);
 		Robot.driveSys.setRightMotor(.2);
+	
 
 	}
 
@@ -20,12 +22,14 @@ public class DriveLimitSwitchCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		//stops command when limit switch is pressed
 		return Robot.driveSys.limitSwitch.get();
 
 	}
 
 	@Override
 	protected void end() {
+		//stops motors
 		Robot.driveSys.setLeftMotor(0);
 		Robot.driveSys.setRightMotor(0);
 
@@ -33,6 +37,7 @@ public class DriveLimitSwitchCommand extends Command {
 
 	@Override
 	protected void interrupted() {
+		//stops motors
 		Robot.driveSys.setLeftMotor(0);
 		Robot.driveSys.setRightMotor(0);
 
