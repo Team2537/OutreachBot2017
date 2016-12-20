@@ -20,7 +20,8 @@ public class DriveSubsystem extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		DriveCommand dc = new DriveCommand();
+//		DriveCommand dc = new DriveCommand();
+		DriveLimitSwitchCommand dc = new DriveLimitSwitchCommand();
 		this.setDefaultCommand(dc);
 	}
 

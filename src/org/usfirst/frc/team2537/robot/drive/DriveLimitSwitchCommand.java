@@ -5,7 +5,9 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveLimitSwitchCommand extends Command {
-
+	public DriveLimitSwitchCommand() {
+		requires (Robot.driveSys);
+	}
 	@Override
 	protected void initialize() { 
 		//drives forward slowly

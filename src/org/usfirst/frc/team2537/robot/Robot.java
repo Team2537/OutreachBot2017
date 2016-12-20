@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
-		mainUltrasonic = new Ultrasonic(1, 0);
+		mainUltrasonic = new Ultrasonic(5, 0);
 		mainUltrasonic.setAutomaticMode(true);
 	}
 
