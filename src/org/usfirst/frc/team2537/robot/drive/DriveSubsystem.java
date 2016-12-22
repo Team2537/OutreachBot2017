@@ -20,14 +20,14 @@ public class DriveSubsystem extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-//		DriveCommand dc = new DriveCommand();
-		DriveLimitSwitchCommand dc = new DriveLimitSwitchCommand();
+		DriveCommand dc = new DriveCommand();
 		this.setDefaultCommand(dc);
 	}
 
 	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.driveModeButton, new DriveTypeCommand());
-		
+		HumanInput.registerWhenPressedCommand(HumanInput.limitSwitchButton, new DriveLimitSwitchCommand());
+
 	}
 
 	/**
