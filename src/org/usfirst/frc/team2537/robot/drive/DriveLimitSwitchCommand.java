@@ -11,13 +11,13 @@ public class DriveLimitSwitchCommand extends Command {
 	@Override
 	protected void initialize() { 
 		//drives forward slowly
-		Robot.driveSys.setLeftMotor(.2);
-		Robot.driveSys.setRightMotor(.2);
+		Robot.driveSys.setLeftMotor(.1);
+		Robot.driveSys.setRightMotor(.1);
 	
 
 	}
 
-	@Override
+	@Override		
 	protected void execute() {
 
 	}
