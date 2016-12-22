@@ -72,6 +72,4 @@ public class DriveSubsystem extends Subsystem {
 			return rightJoystickValue;
 		else
 			return 0;
-	}
-
-}
+	}}
