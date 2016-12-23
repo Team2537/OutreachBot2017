@@ -9,6 +9,8 @@ public class DriveUltrasonic extends Command {
 
 	@Override
 	protected void end() {
+		Robot.driveSys.setLeftMotor(0);
+		Robot.driveSys.setRightMotor(0);
 		// TODO Auto-generated method stub
 		
 		
@@ -22,13 +24,16 @@ public class DriveUltrasonic extends Command {
 
 	@Override
 	protected void initialize() {
-		
+		Robot.driveSys.setLeftMotor(.1);
+		Robot.driveSys.setRightMotor(.1);
 		// TODO Auto-generated method stub
 	
 	}
 
 	@Override
 	protected void interrupted() {
+		Robot.driveSys.setLeftMotor(0);
+		Robot.driveSys.setRightMotor(0);
 		// TODO Auto-generated method stub
 		
 	}
