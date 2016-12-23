@@ -27,6 +27,7 @@ public class DriveSubsystem extends Subsystem {
 	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.driveModeButton, new DriveTypeCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.limitSwitchButton, new DriveLimitSwitchCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.limitSwitchOffButton, new DriveCommand());
 
 	}
 
