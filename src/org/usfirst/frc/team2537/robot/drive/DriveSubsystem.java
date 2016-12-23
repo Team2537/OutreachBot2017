@@ -4,6 +4,7 @@ import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,6 +15,12 @@ public class DriveSubsystem extends Subsystem {
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
 	protected DriveTypeEnum driveMode = DriveTypeEnum.TANK_DRIVE;
+	private static Ultrasonic ultron;
+
+	public DriveSubsystem() {
+		ultron = new Ultrasonic(1, 0);
+		ultron.setAutomaticMode(true);
+	}
 
 	@Override
 	public void initDefaultCommand() {
@@ -23,6 +30,7 @@ public class DriveSubsystem extends Subsystem {
 
 	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.driveModeButton, new DriveTypeCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.driveUltrasonicButton, new DriveUltrasonic());
 	}
 
 	/**
@@ -72,4 +80,8 @@ public class DriveSubsystem extends Subsystem {
 			return rightJoystickValue;
 		else
 			return 0;
-	}}
+	}
+	public double getUltrasonic () {
+		return ultron.getRangeInches();
+	}
+}
