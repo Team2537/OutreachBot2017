@@ -12,8 +12,8 @@ public class HumanInput {
 	public static Joystick leftJoystick = new Joystick(Ports.LEFT_JOYSTICK);
 	public static Joystick rightJoystick = new Joystick(Ports.RIGHT_JOYSTICK);
 	
-	public static Button driveModeButton = new JoystickButton(rightJoystick, Ports.DRIVE_SWITCH_BUTTON);
-	public static Button limitSwitchButton = new JoystickButton(leftJoystick, Ports.LIMIT_SWITCH_BUTTON);
+	public static Button driveModeButton = new JoystickButton(leftJoystick, Ports.DRIVE_SWITCH_BUTTON);
+	public static Button limitSwitchButton = new JoystickButton(leftJoystick, Ports.LIMIT_SWITCH_ACTIVATOR);
 	public static Button limitSwitchOffButton = new JoystickButton(leftJoystick, Ports.LIMIT_SWITCH_MODE_OFF);
 	
 	public static void registerWhenPressedCommand(Button b, Command c){

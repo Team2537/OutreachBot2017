@@ -24,7 +24,6 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	public static DriveSubsystem driveSys;
-	public static Ultrasonic mainUltrasonic;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -39,8 +38,6 @@ public class Robot extends IterativeRobot {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
-		mainUltrasonic = new Ultrasonic(5, 0);
-		mainUltrasonic.setAutomaticMode(true);
 	}
 
 	/**
@@ -81,8 +78,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println(mainUltrasonic.getRangeInches());
-		SmartDashboard.putNumber("Ultrasonic Value: ", mainUltrasonic.getRangeInches());
 	}
 
 	/**
