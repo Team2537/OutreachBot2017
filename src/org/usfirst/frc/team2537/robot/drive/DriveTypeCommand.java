@@ -13,17 +13,18 @@ public class DriveTypeCommand extends Command {
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
+		System.out.println("Top kek");
 		
 	}
 
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void initialize() {
+		System.out.println("Ayyy lmao");
 		if(Robot.driveSys.driveMode.equals(DriveTypeEnum.TANK_DRIVE))
 			Robot.driveSys.driveMode = DriveTypeEnum.ARCADE_DRIVE;
 		else
@@ -33,7 +34,7 @@ public class DriveTypeCommand extends Command {
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Wew lass");
 	}
 
 	@Override

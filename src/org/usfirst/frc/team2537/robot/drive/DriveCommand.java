@@ -13,12 +13,13 @@ public class DriveCommand extends Command {
 	
 	@Override
 	protected void initialize() {
+		System.out.println("Drive Command Initiated");
 		
 	}
 
 	@Override
 	protected void execute() {
-		System.out.println("I'm executing!");
+		System.out.println("I'm executing! Drive mode: " + Robot.driveSys.driveMode);
 		switch(Robot.driveSys.driveMode){
 		case TANK_DRIVE:
 			Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
@@ -44,15 +45,21 @@ public class DriveCommand extends Command {
 		// TODO Auto-generated method stub
 		return false;
 	}
+		
+		
 
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
+		System.out.println("Drive command end");
+		Robot.driveSys.setLeftMotor(0);
+		Robot.driveSys.setRightMotor(0);
 		
 	}
 
 	@Override
 	protected void interrupted() {
+		System.out.println("Drive command interrupted");
 		Robot.driveSys.setLeftMotor(0);
 		Robot.driveSys.setRightMotor(0);
 	}

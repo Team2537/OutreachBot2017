@@ -5,6 +5,7 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,6 +23,8 @@ public class DriveSubsystem extends Subsystem {
 		ultron.setAutomaticMode(true);
 	}
 
+	DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH_BUTTON);
+
 	@Override
 	public void initDefaultCommand() {
 		DriveCommand dc = new DriveCommand();
@@ -31,6 +34,8 @@ public class DriveSubsystem extends Subsystem {
 	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.driveModeButton, new DriveTypeCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.driveUltrasonicButton, new DriveUltrasonic());
+		HumanInput.registerWhenPressedCommand(HumanInput.limitSwitchButton, new DriveLimitSwitchCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.limitSwitchOffButton, new DriveCommand());
 	}
 
 	/**
