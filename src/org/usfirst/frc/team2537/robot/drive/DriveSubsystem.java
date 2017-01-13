@@ -5,13 +5,13 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
 
-	private Talon leftMotor = new Talon(Ports.LEFT_MOTOR);
-	private Talon rightMotor = new Talon(Ports.RIGHT_MOTOR);
+	private CANTalon leftMotor = new CANTalon(Ports.LEFT_MOTOR);
+	private CANTalon rightMotor = new CANTalon(Ports.RIGHT_MOTOR);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
 
