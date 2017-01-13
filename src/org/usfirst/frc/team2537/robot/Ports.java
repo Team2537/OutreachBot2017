@@ -3,6 +3,7 @@ package org.usfirst.frc.team2537.robot;
 public class Ports {
 	public static final int LEFT_MOTOR = 1;
 	public static final int RIGHT_MOTOR = 2;
+	public static final int CLIMBER_MOTOR = 5; //subject to change
 
 	public static final int LEFT_JOYSTICK = 0;
 	public static final int RIGHT_JOYSTICK = 1;
