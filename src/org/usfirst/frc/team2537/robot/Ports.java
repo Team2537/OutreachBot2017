@@ -3,6 +3,9 @@ package org.usfirst.frc.team2537.robot;
 public class Ports {
 	public static final int LEFT_MOTOR = 1;
 	public static final int RIGHT_MOTOR = 2;
+	
+	//temp port, make sure to change once port actually 
+	public static final int GEAR_MOTOR = 3;
 
 	public static final int LEFT_JOYSTICK = 0;
 	public static final int RIGHT_JOYSTICK = 1;
