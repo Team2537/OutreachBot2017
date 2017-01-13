@@ -3,15 +3,15 @@ package org.usfirst.frc.team2537.robot.drive;
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
 
-	private CANTalon leftMotor = new CANTalon(Ports.LEFT_MOTOR);
-	private CANTalon rightMotor = new CANTalon(Ports.RIGHT_MOTOR);
+	private Talon leftMotor = new Talon(Ports.LEFT_MOTOR);
+	private Talon rightMotor = new Talon(Ports.RIGHT_MOTOR);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
 
@@ -37,7 +37,7 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 */
 	public void setLeftMotor(double speed) {
-		leftMotor.set(-speed * SPEED_MULTIPLIER);
+		leftMotor.set(speed * SPEED_MULTIPLIER);
 	}
 
 	/**
