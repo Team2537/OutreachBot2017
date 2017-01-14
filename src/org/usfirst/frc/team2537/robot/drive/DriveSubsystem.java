@@ -27,8 +27,8 @@ public class DriveSubsystem extends Subsystem {
 		this.setDefaultCommand(dc);
 	}
 
-	public void registerButtons() {
-	}
+ 	public void registerButtons() {
+	} 
 
 	/**
 	 * Set left motor to speed
@@ -61,7 +61,7 @@ public class DriveSubsystem extends Subsystem {
 			return leftJoystickValue;
 		else
 			return 0;
-	}
+	} 
 
 	/**
 	 * Gets value based on direction right joy stick is pressed
