@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.climber;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,6 +21,8 @@ public class ClimberSubsystem extends Subsystem {
 	}
 	
 	public void registerButtons(){ //registers buttons
+		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
 		
 	}
 	

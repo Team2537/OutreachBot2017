@@ -17,6 +17,8 @@ public class HumanInput {
 	public static Button limitSwitchButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_ACTIVATOR);
 	public static Button limitSwitchOffButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_MODE_OFF);
 	public static Button climberActivateButton = new JoystickButton(rightJoystick, Ports.CLIMBER_ACTIVATOR_BUTTON);
+	public static Button climberKillSwitch = new JoystickButton(rightJoystick, Ports.CLIMBER_KILL_SWITCH);
+	
 	
 	public static void registerWhenPressedCommand(Button b, Command c){
 		b.whenPressed(c);

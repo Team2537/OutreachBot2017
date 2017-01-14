@@ -5,6 +5,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberCommand extends Command {
+	//executes climber function
 	
 	public int shortClimbTimems = 5000;
 	public int longClimbTimems = 30000;
