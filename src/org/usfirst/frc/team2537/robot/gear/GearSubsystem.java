@@ -17,7 +17,6 @@ public class GearSubsystem extends Subsystem {
 	}
 	
 	public void gearDown() {
-		gearMotor.set(.5);
-		
+		gearMotor.set(.1);
 	}
 }

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GearCommand extends Command {
-
+	private long startTime;
 	public GearCommand() {
 		requires(Robot.gearSys);
 	}
@@ -14,17 +14,19 @@ public class GearCommand extends Command {
 	@Override
 	protected void initialize() {
 		System.out.println("Gear Command Initiated");
+		startTime = System.currentTimeMillis();
 	}
 	
 	@Override
 	protected void execute() {
-		
+		Robot.gearSys.gearDown();
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		//TODO Add Or statement - Return true when Limit Switch is presses
+		//TODO Add Or statement - Return true when Encoder Reaches Limit
+		return System.currentTimeMillis() >= startTime + 100; //.1seconds of running
 	}
 	
 	@Override
