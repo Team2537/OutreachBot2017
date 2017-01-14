@@ -11,9 +11,13 @@ public class GearSubsystem extends Subsystem {
 	private CANTalon gearMotor = new CANTalon(Ports.GEAR_MOTOR);
 
 	@Override
-	protected void initDefaultCommand() {
+	public void initDefaultCommand() {
 		GearCommand gc = new GearCommand();
 		this.setDefaultCommand(gc);
 	}
-
+	
+	public void gearDown() {
+		gearMotor.set(.5);
+		
+	}
 }
