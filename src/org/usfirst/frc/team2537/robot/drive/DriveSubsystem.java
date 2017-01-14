@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.climber.ClimberCommand;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -28,7 +29,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void registerButtons() {
-		
+		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 	}
 
 	/**
