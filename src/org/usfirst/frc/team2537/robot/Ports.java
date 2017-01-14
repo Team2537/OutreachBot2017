@@ -11,4 +11,8 @@ public class Ports {
 	public static final int LIMIT_SWITCH_BUTTON = 4;
 	public static final int LIMIT_SWITCH_ACTIVATOR = 1;
 	public static final int LIMIT_SWITCH_MODE_OFF = 3;
+	public static final int BLEFT_FLY = 1;
+	public static final int FLEFT_FLY = 2;
+	public static final int BRIGHT_FLY = 3;
+	public static final int FRIGHT_FLY = 4;
 }
