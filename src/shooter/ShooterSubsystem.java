@@ -3,6 +3,7 @@ package shooter;
 import org.usfirst.frc.team2537.robot.Ports;
 
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
@@ -11,6 +12,7 @@ public class ShooterSubsystem extends Subsystem {
 	private Talon BackRightFly = new Talon(Ports.BRIGHT_FLY);
 	private Talon FrontRightFly = new Talon(Ports.FRIGHT_FLY);
 	public static final int SPEED = 1;
+	public Ultrasonic ultron = 
 	public ShooterSubsystem() {
 		
 	}
