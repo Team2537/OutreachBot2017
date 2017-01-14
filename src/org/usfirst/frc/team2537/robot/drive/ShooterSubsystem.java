@@ -1,4 +1,4 @@
-package shooter;
+package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Ports;
 
@@ -12,9 +12,11 @@ public class ShooterSubsystem extends Subsystem {
 	private Talon BackRightFly = new Talon(Ports.BRIGHT_FLY);
 	private Talon FrontRightFly = new Talon(Ports.FRIGHT_FLY);
 	public static final int SPEED = 1;
-	public Ultrasonic ultron = 
+	private static Ultrasonic ultron;
+	
 	public ShooterSubsystem() {
-		
+		ultron = new Ultrasonic(1, 0);
+		ultron.setAutomaticMode(true);
 	}
 
 	@Override
@@ -40,4 +42,8 @@ public class ShooterSubsystem extends Subsystem {
 		setFlySpeed(FrontRightFly,0);
 	}
 
+	public double UltronRange(){
+		return  ultron.getRangeInches();
+	}
+	
 }
