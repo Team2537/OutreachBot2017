@@ -12,15 +12,15 @@ public class ClimberKillCommand extends Command {
 	}
 
 	protected void initialize() {
-		System.out.println("Climbing has been canceled");
+
+		Robot.climberSys.setCLimberMotor(0);
+		System.out.println("Climber is dead");
 	}
 		
 
 
 	@Override
 	protected void execute(){
-		Robot.climberSys.setCLimberMotor(0);
-		System.out.println("Climber is dead");
 		
 	}
 	
@@ -29,7 +29,7 @@ public class ClimberKillCommand extends Command {
 	
 	@Override
 	protected boolean isFinished(){
-		return false;
+		return true;
 		
 	}
 	

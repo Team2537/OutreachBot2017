@@ -14,13 +14,11 @@ public class ClimberSubsystem extends Subsystem {
 	private CANTalon climberMotor = new CANTalon(Ports.CLIMBER_MOTOR); //creates Talon motor for climber
 	protected static final double SPEED_MULTIPLIER = 1;
 	
-	DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH_BUTTON);
+	
 	
 
 	@Override
 	public void initDefaultCommand() {
-		ClimberCommand dc = new ClimberCommand();
-		this.setDefaultCommand(dc);
 	}
 	
 	public void registerButtons(){ //registers buttons

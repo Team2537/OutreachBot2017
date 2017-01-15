@@ -39,8 +39,8 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 		
 		climberSys = new ClimberSubsystem();
-		climberSys.registerButtons();
 		climberSys.initDefaultCommand();
+		climberSys.registerButtons();
 	}
 
 	/**
