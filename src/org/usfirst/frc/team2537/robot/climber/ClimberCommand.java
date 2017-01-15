@@ -50,7 +50,7 @@ public class ClimberCommand extends Command {
 	
 	@Override
 	protected boolean isFinished(){
-		return false;
+		return Robot.climberSys.limitSwitch.get();
 		
 	}
 	
