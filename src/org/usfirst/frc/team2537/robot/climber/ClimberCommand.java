@@ -40,8 +40,11 @@ public class ClimberCommand extends Command {
 	protected boolean isFinished() {
 		if (System.currentTimeMillis() - climbStartTime > longClimbTimems) {
 			return true;
+		} else if (Robot.climberSys.getEncoderVelocity() == 0) {
+			return true;
 		} else {
 			return false;
+
 		}
 
 	}

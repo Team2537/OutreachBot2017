@@ -15,7 +15,9 @@ public class ClimberSubsystem extends Subsystem {
 	protected static final double SPEED_MULTIPLIER = 1;
 	
 	
-	
+	public int getEncoderVelocity(){
+		return climberMotor.getEncVelocity();
+	}
 
 	@Override
 	public void initDefaultCommand() {
