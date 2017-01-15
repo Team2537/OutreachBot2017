@@ -57,10 +57,12 @@ public class ClimberCommand extends Command {
 	@Override
 	protected void end() {
 		Robot.climberSys.setCLimberMotor(0);
+		System.out.println("The climber is done");
 	}
 	
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setCLimberMotor(0);
+		System.out.println("The climber has been interrupted");
 	}
 }

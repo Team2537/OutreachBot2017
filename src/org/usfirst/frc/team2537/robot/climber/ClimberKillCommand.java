@@ -20,6 +20,7 @@ public class ClimberKillCommand extends Command {
 	@Override
 	protected void execute(){
 		Robot.climberSys.setCLimberMotor(0);
+		System.out.println("Climber is dead");
 		
 	}
 	
