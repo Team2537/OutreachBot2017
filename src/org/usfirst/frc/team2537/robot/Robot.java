@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 		
 		gearSys = new GearSubsystem();
 		gearSys.initDefaultCommand();
+		gearSys.registerButtons();
 	}
 
 	/**

@@ -5,38 +5,46 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GearCommand extends Command {
-	private long startTime;
+	private double speed;
 
-	public GearCommand() {
+	public GearCommand(boolean up) {
+		super(3);
 		requires(Robot.gearSys);
+		if (up) {
+			speed = .5;
+		} else {
+			speed = -.5;
+		}
 	}
 
 	@Override
 	protected void initialize() {
 		System.out.println("Gear Command Initiated");
-		startTime = System.currentTimeMillis();
+		Robot.gearSys.setGearMotor(speed);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.gearSys.gearMove();
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Add Or statement - Return true when Limit Switch is presses
 		// TODO Add Or statement - Return true when Encoder Reaches Limit
-		return System.currentTimeMillis() >= startTime + 100; // .1 seconds of running
+		return this.isTimedOut(); // 3 seconds of
+									// running
 	}
 
 	@Override
 	protected void end() {
-		System.out.println("Gear command end");
+		System.out.println("Gear Command Ended");
+		Robot.gearSys.setGearMotor(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		System.out.println("Gear command interrupted");
+		System.out.println("Gear Command Interrupted");
+		Robot.gearSys.setGearMotor(0);
 	}
 
 }
