@@ -39,7 +39,6 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 		
 		gearSys = new GearSubsystem();
-		gearSys.initDefaultCommand();
 		gearSys.registerButtons();
 	}
 

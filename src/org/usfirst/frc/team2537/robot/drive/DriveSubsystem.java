@@ -6,7 +6,6 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
@@ -56,8 +55,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getLeftJoystick(AxisType axis) {
-		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
+	public double getLeftJoystick(int axis) {
+		double leftJoystickValue = HumanInput.xboxController.getRawAxis(axis);
 		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
 			return leftJoystickValue;
 		else
@@ -70,8 +69,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getRightJoystick(AxisType axis) {
-		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
+	public double getRightJoystick(int axis) {
+		double rightJoystickValue = HumanInput.xboxController.getRawAxis(axis);
 		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
 			return rightJoystickValue;
 		else
