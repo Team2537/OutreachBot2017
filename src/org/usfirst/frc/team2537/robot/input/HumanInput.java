@@ -11,7 +11,8 @@ public class HumanInput {
 
 	public static Joystick leftJoystick = new Joystick(Ports.LEFT_JOYSTICK);
 	public static Joystick rightJoystick = new Joystick(Ports.RIGHT_JOYSTICK);
-	
+	public static Joystick xboxController = new Joystick(Ports.XBOX);
+	public static Button shooterFire = new JoystickButton(xboxController, Ports.FIRE);
 	public static Button driveModeButton = new JoystickButton(rightJoystick, Ports.DRIVE_SWITCH_BUTTON);
 	public static Button driveUltrasonicButton = new JoystickButton(rightJoystick, Ports.DRIVE_ULTRASONIC_BUTTON);
 	public static Button limitSwitchButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_ACTIVATOR);

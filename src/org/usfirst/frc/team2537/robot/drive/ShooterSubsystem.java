@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -12,6 +13,8 @@ public class ShooterSubsystem extends Subsystem {
 	private Talon BackRightFly = new Talon(Ports.BRIGHT_FLY);
 	private Talon FrontRightFly = new Talon(Ports.FRIGHT_FLY);
 	public static final int SPEED = 1;
+	public static final int LEE_WAY = 1;
+	public static final int DISTANCE_TO_BOILER = 10;
 	private static Ultrasonic ultron;
 	
 	public ShooterSubsystem() {
@@ -45,5 +48,7 @@ public class ShooterSubsystem extends Subsystem {
 	public double UltronRange(){
 		return  ultron.getRangeInches();
 	}
-	
+	public void registerButtons(){
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterFire, new ShooterCommand());
+	}
 }
