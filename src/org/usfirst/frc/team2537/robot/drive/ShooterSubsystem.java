@@ -49,6 +49,7 @@ public class ShooterSubsystem extends Subsystem {
 		return  ultron.getRangeInches();
 	}
 	public void registerButtons(){
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterFire, new ShooterCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterFire, new ShooterCommand(true));
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOff, new ShooterCommand(false));
 	}
 }

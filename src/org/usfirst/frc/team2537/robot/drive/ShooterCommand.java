@@ -5,9 +5,10 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCommand extends Command {
-
-	public ShooterCommand() {
+	private boolean b;
+	public ShooterCommand(boolean b) {
 		requires(Robot.shooter);
+		this.b = b;
 	}
 
 	@Override
@@ -19,9 +20,12 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
+	if(b){	
 		if (Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEE_WAY
 				&& Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEE_WAY){
 			Robot.shooter.FlyOn();
+		}}else{
+			Robot.shooter.FlyOff();
 		}
 	}
 
@@ -40,7 +44,7 @@ public class ShooterCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-	return Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEE_WAY
+	return !b || Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEE_WAY
 			|| Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEE_WAY;
 	
 	

@@ -3,7 +3,8 @@ package org.usfirst.frc.team2537.robot;
 public class Ports {
 	public static final int LEFT_MOTOR = 1;
 	public static final int RIGHT_MOTOR = 2;
-	public static final int FIRE = 1;
+	public static final int FIRE_BUTTON = 1;
+	public static final int STOP_FIRING_BUTTON = 1;
 	public static final int XBOX =3;
 	public static final int LEFT_JOYSTICK = 0;
 	public static final int RIGHT_JOYSTICK = 1;
@@ -16,4 +17,5 @@ public class Ports {
 	public static final int FLEFT_FLY = 2;
 	public static final int BRIGHT_FLY = 3;
 	public static final int FRIGHT_FLY = 4;
+
 }
