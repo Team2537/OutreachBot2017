@@ -2,17 +2,17 @@ package org.usfirst.frc.team2537.robot.gear;
 
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
-import org.usfirst.frc.team2537.robot.input.Sensors;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GearSubsystem extends Subsystem {
-	Counter counter = new Counter(Sensors.limitSwitch);
-
 	private CANTalon gearMotor = new CANTalon(Ports.GEAR_MOTOR);
+	private DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH);
+	Counter counter = new Counter(limitSwitch);
 
 	@Override
 	public void initDefaultCommand() {
