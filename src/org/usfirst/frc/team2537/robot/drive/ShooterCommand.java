@@ -5,10 +5,10 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCommand extends Command {
-	private boolean b;
+	private boolean shooterOn;
 	public ShooterCommand(boolean b) {
 		requires(Robot.shooter);
-		this.b = b;
+		this.shooterOn = b;
 	}
 
 	@Override
@@ -20,9 +20,9 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-	if(b){	
-		if (Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEE_WAY
-				&& Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEE_WAY){
+	if(shooterOn){	
+		if (Robot.shooter.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER - ShooterSubsystem.LEEWAY
+				&& Robot.shooter.UltronRange() < ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY){
 			Robot.shooter.FlyOn();
 		}}else{
 			Robot.shooter.FlyOff();
@@ -44,8 +44,8 @@ public class ShooterCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-	return !b || Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEE_WAY
-			|| Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEE_WAY;
+	return !shooterOn || Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEEWAY
+			|| Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEEWAY;
 	
 	
 		

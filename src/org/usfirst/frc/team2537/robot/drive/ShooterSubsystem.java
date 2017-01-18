@@ -13,18 +13,18 @@ public class ShooterSubsystem extends Subsystem {
 	private Talon BackRightFly = new Talon(Ports.BRIGHT_FLY);
 	private Talon FrontRightFly = new Talon(Ports.FRIGHT_FLY);
 	public static final int SPEED = 1;
-	public static final int LEE_WAY = 1;
+	public static final int LEEWAY = 1;
 	public static final int DISTANCE_TO_BOILER = 10;
-	private static Ultrasonic ultron;
+	private static Ultrasonic ultrasonic; 
 	
 	public ShooterSubsystem() {
-		ultron = new Ultrasonic(1, 0);
-		ultron.setAutomaticMode(true);
+		ultrasonic = new Ultrasonic(Ports.ULTRASONIC_INPUT, Ports.ULTRASONIC_OUTPUT); //TODO Change ports to variables in Ports.jav
+		ultrasonic.setAutomaticMode(true);
 	}
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+
 
 	}
 	public void setFlySpeed(Talon t,double speed){
@@ -46,7 +46,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public double UltronRange(){
-		return  ultron.getRangeInches();
+		return  ultrasonic.getRangeInches();
 	}
 	public void registerButtons(){
 		HumanInput.registerWhenPressedCommand(HumanInput.shooterFire, new ShooterCommand(true));
