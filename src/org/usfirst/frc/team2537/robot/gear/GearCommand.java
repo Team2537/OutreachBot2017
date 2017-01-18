@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2537.robot.gear;
 
 import org.usfirst.frc.team2537.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GearCommand extends Command {
@@ -29,10 +28,7 @@ public class GearCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Add Or statement - Return true when Limit Switch is presses
-		// TODO Add Or statement - Return true when Encoder Reaches Limit
-		return this.isTimedOut(); // 3 seconds of
-									// running
+		return this.isTimedOut() || Robot.gearSys.isSwitchSet(); // 3 seconds of running OR limit switch
 	}
 
 	@Override

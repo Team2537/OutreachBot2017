@@ -17,4 +17,6 @@ public class Ports {
 	public static final int LIMIT_SWITCH_BUTTON = 4;
 	public static final int LIMIT_SWITCH_ACTIVATOR = 1;
 	public static final int LIMIT_SWITCH_MODE_OFF = 3;
+	
+	public static final int LIMIT_SWITCH = 1; //temp
 }
