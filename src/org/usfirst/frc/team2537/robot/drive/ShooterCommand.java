@@ -33,7 +33,7 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		if (shooterOn) {
+		if (shooterOn && Robot.shooter.getLimitSwitch()) {
 			if (Robot.shooter.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER - ShooterSubsystem.LEEWAY
 					&& Robot.shooter.UltronRange() < ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
 				Robot.shooter.FlyOn();
@@ -64,7 +64,7 @@ public class ShooterCommand extends Command {
 	 */
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return !shooterOn || Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEEWAY
+		return !shooterOn || Robot.shooter.getLimitSwitch() || Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEEWAY
 				|| Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEEWAY;
 	}
 }
