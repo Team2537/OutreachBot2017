@@ -23,15 +23,30 @@ public class GearSubsystem extends Subsystem {
 		HumanInput.registerWhenPressedCommand(HumanInput.gearUpButton, new GearCommand(true));
 	}
 
+	/**
+	 * sets speed of gear motor
+	 * 
+	 * @param speed
+	 *            double, speed of gear motor
+	 */
 	public void setGearMotor(double speed) {
 		gearMotor.set(speed);
 	}
-	
+
+	/**
+	 * sets speed of gear motor to 0 if the method is ended or interrupted
+	 */
 	public void endOrInterrupted() {
 		gearMotor.set(0);
 	}
-	
+
+	/**
+	 * checks if limit switch is pressed
+	 * 
+	 * @return true if gear set
+	 */
 	public boolean isSwitchSet() {
-		return counter.get() == 0; //check w/ electrical for wiring of limit switch
+		return counter.get() == 0; // check w/ electrical for wiring of limit
+									// switch
 	}
 }
