@@ -28,7 +28,7 @@ public class GearCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return this.isTimedOut() || Robot.gearSys.isSwitchSet(); // 3 seconds of running OR limit switch
+		return this.isTimedOut() /*|| Robot.gearSys.isSwitchSet()*/; // 3 seconds of running OR limit switch
 	}
 
 	@Override

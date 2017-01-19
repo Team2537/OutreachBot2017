@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GearSubsystem extends Subsystem {
 	private CANTalon gearMotor = new CANTalon(Ports.GEAR_MOTOR);
-	private DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH);
-	Counter counter = new Counter(limitSwitch);
+	//private DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH);
+	//Counter counter = new Counter(limitSwitch);
 
 	@Override
 	public void initDefaultCommand() {
@@ -40,13 +40,13 @@ public class GearSubsystem extends Subsystem {
 		gearMotor.set(0);
 	}
 
-	/**
-	 * checks if limit switch is pressed
-	 * 
-	 * @return true if gear set
-	 */
-	public boolean isSwitchSet() {
-		return counter.get() == 0; // check w/ electrical for wiring of limit
-									// switch
-	}
+//	/**
+//	 * checks if limit switch is pressed
+//	 * 
+//	 * @return true if gear set
+//	 */
+//	public boolean isSwitchSet() {
+//		return counter.get() == 0; // check w/ electrical for wiring of limit
+//									// switch
+//	}
 }
