@@ -18,6 +18,7 @@ public class HumanInput {
 	public static Button limitSwitchButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_ACTIVATOR);
 	public static Button limitSwitchOffButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_MODE_OFF);
 	public static Button shooterOff = new JoystickButton(xboxController, Ports.STOP_FIRING_BUTTON);
+	public static Button manShooter = new JoystickButton(xboxController, Ports.MAN_SHOOTER);
 	public static void registerWhenPressedCommand(Button b, Command c){
 		b.whenPressed(c);
 	}

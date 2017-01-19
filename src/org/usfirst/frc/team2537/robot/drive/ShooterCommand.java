@@ -13,9 +13,9 @@ public class ShooterCommand extends Command {
 	 * @param shooterOn
 	 *            - if Fly Wheels are off or on
 	 */
-	public ShooterCommand(boolean shooterOn) {
+	public ShooterCommand() {
 		requires(Robot.shooter);
-		this.shooterOn = shooterOn;
+		this.shooterOn = true;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * if the robot is in range And shooterOn = true - Flywheels to speed 1
+	 * if the robot is in range And shooterOn = true AND Limitswitch is pressed- Flywheels to speed 1
 	 */
 	@Override
 	protected void execute() {
@@ -38,8 +38,6 @@ public class ShooterCommand extends Command {
 					&& Robot.shooter.UltronRange() < ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
 				Robot.shooter.FlyOn();
 			}
-		} else {
-			Robot.shooter.FlyOff();
 		}
 	}
 
@@ -64,7 +62,7 @@ public class ShooterCommand extends Command {
 	 */
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return !shooterOn || Robot.shooter.getLimitSwitch() || Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEEWAY
+		return Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEEWAY
 				|| Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEEWAY;
 	}
 }

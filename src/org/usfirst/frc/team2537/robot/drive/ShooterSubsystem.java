@@ -19,7 +19,6 @@ public class ShooterSubsystem extends Subsystem {
 	public static final int DISTANCE_TO_BOILER = 10;
 	private DigitalInput limitswitch = new DigitalInput(Ports.LIMITSWITCH);
 	private static Ultrasonic ultrasonic_to_boiler;
-	Counter counter = new Counter(limitswitch);
 
 	/**
 	 * Constructor that sets up Ultrasonic by setting Automatic Mode to true
@@ -49,7 +48,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public boolean getLimitSwitch(){
-		return counter.get() == 0;
+		return limitswitch.get();
 	}
 	/**
 	 * Sets all four flywheels to speed SPEED
@@ -84,7 +83,8 @@ public class ShooterSubsystem extends Subsystem {
 	 * Registers Buttons
 	 */
 	public void registerButtons() {
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterFire, new ShooterCommand(true));
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterOff, new ShooterCommand(false));
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterFire, new ShooterCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOff, new ShooterOffCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.manShooter, new ShooterOverrideCommand());
 	}
 }
