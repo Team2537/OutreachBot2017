@@ -2,8 +2,8 @@ package org.usfirst.frc.team2537.robot;
 
 public class Ports {
 
-	public static final int LEFT_MOTOR = 1;
-	public static final int RIGHT_MOTOR = 2;
+	public static final int LEFT_MOTOR = 5;
+	public static final int RIGHT_MOTOR = 3;
 	public static final int GEAR_MOTOR = 1; // temp
 
 	public static final int LEFT_JOYSTICK = 0;

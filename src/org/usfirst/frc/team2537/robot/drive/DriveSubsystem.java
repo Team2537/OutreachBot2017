@@ -6,6 +6,7 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
@@ -69,8 +70,22 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getRightJoystick(int axis) {
-		double rightJoystickValue = HumanInput.xboxController.getRawAxis(axis);
+	public double getLeftJoystick(AxisType axis) {
+		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
+		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
+			return leftJoystickValue;
+		else
+			return 0;
+	} 
+
+	/**
+	 * Gets value based on direction right joy stick is pressed
+	 * 
+	 * @param axis
+	 * @return
+	 */
+	public double getRightJoystick(AxisType axis) {
+		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
 		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
 			return rightJoystickValue;
 		else

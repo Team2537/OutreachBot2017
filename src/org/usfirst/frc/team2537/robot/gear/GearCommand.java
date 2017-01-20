@@ -12,9 +12,9 @@ public class GearCommand extends Command {
 		requires(Robot.gearSys);
 		this.up = up;
 		if (up) {
-			speed = .1;
+			speed = .3;
 		} else {
-			speed = -.1;
+			speed = -.3;
 		}
 	}
 
@@ -26,6 +26,7 @@ public class GearCommand extends Command {
 
 	@Override
 	protected void execute() {
+		Robot.gearSys.setGearMotor(speed);
 	}
 
 	@Override
