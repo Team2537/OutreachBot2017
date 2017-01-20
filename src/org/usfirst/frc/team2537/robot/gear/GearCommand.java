@@ -5,14 +5,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GearCommand extends Command {
 	private double speed;
+	private boolean up;
 
 	public GearCommand(boolean up) {
-		super(3);
+		super(10);
 		requires(Robot.gearSys);
+		this.up = up;
 		if (up) {
-			speed = .5;
+			speed = .1;
 		} else {
-			speed = -.5;
+			speed = -.1;
 		}
 	}
 
@@ -28,7 +30,7 @@ public class GearCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return this.isTimedOut() /*|| Robot.gearSys.isSwitchSet()*/; // 3 seconds of running OR limit switch
+		return this.isTimedOut() || Robot.gearSys.getLimitSwitch(up); // 3 seconds of running OR limit switch
 	}
 
 	@Override

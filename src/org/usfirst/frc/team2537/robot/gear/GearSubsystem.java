@@ -5,14 +5,14 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GearSubsystem extends Subsystem {
 	private CANTalon gearMotor = new CANTalon(Ports.GEAR_MOTOR);
-	//private DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH);
-	//Counter counter = new Counter(limitSwitch);
+	private DigitalInput limitSwitchDown = new DigitalInput(Ports.LIMIT_SWITCH_GEAR_DOWN);
+	private DigitalInput limitSwitchUp = new DigitalInput(Ports.LIMIT_SWITCH_GEAR_UP);
+
 
 	@Override
 	public void initDefaultCommand() {
@@ -39,14 +39,12 @@ public class GearSubsystem extends Subsystem {
 	public void endOrInterrupted() {
 		gearMotor.set(0);
 	}
-
-//	/**
-//	 * checks if limit switch is pressed
-//	 * 
-//	 * @return true if gear set
-//	 */
-//	public boolean isSwitchSet() {
-//		return counter.get() == 0; // check w/ electrical for wiring of limit
-//									// switch
-//	}
+	
+	public boolean getLimitSwitch(boolean up) {
+		if (up) {
+			return limitSwitchUp.get();
+		} else {
+			return limitSwitchDown.get();
+		}
+	}
 }

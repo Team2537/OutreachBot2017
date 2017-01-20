@@ -4,7 +4,7 @@ public class Ports {
 
 	public static final int LEFT_MOTOR = 1;
 	public static final int RIGHT_MOTOR = 2;
-	public static final int GEAR_MOTOR = 4; // temp
+	public static final int GEAR_MOTOR = 1; // temp
 
 	public static final int LEFT_JOYSTICK = 0;
 	public static final int RIGHT_JOYSTICK = 1;
@@ -18,5 +18,6 @@ public class Ports {
 	public static final int LIMIT_SWITCH_ACTIVATOR = 1;
 	public static final int LIMIT_SWITCH_MODE_OFF = 3;
 	
-	public static final int LIMIT_SWITCH = 1; //temp
+	public static final int LIMIT_SWITCH_GEAR_UP = 7; //temp
+	public static final int LIMIT_SWITCH_GEAR_DOWN = 8;
 }
