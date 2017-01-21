@@ -3,9 +3,11 @@ package org.usfirst.frc.team2537.robot.drive;
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
-import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
@@ -14,11 +16,12 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon rightMotor = new CANTalon(Ports.RIGHT_MOTOR);
 	private CANTalon frontLeftMotor = new CANTalon(Ports.FRONT_LEFT_MOTOR);
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
+	private Ultrasonic ultron = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
 
 	public DriveSubsystem() {
-
+		ultron.setAutomaticMode(true);
 	}
 
 	DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH_BUTTON);
@@ -110,5 +113,9 @@ public class DriveSubsystem extends Subsystem {
 			return rightJoystickValue;
 		else
 			return 0;
+	}
+	
+	public double getUltron() {
+		return ultron.getRangeInches();
 	}
 }
