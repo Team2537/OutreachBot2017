@@ -5,22 +5,22 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
 
-	private static final double DEFAULT_SPEED = 0.5;
-	private static final double CORRECTION_PROPORTION = 45; // it just worked,
-															// y'no?
+	private static final double DEFAULT_SPEED = 0.4;
+	private static final double SLOWDOWN_START = 60;
+	private static final double MINIMUM_SPEED = 0.05;
+	private static final double CORRECTION_PROPORTION = 90; // it just worked, y'no?
 	private static final double TOLERANCE = 1;
 	private static final boolean debug = false;
 	private double speed;
 	private double startAngle;
 	private double distance;
-	private AHRS ahrs;
-	private boolean slowingDown = false;
+	private final double startSpeed;
+	private AHRS ahrs = Robot.driveSys.getAhrs();
 	public static final double DEFAULT_TIMEOUT = 3;
 
 	/**
@@ -50,53 +50,32 @@ public class CourseCorrect extends Command {
 		requires(Robot.driveSys);
 		this.distance = distance;
 		this.speed = speed;
-		try {
-			/* Communicate w/navX-MXP via the MXP SPI Bus. */
-			/*
-			 * Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or
-			 * SerialPort.Port.kUSB
-			 */
-			/*
-			 * See
-			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/
-			 * for details.
-			 */
-			ahrs = new AHRS(SPI.Port.kMXP);
-		} catch (RuntimeException ex) {
-			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
-		}
+		startSpeed = speed;
 	}
 
 	@Override
 	protected void initialize() {
 		startAngle = ahrs.getAngle();
-		if (debug)
-			System.out.println("CourseCorrect init: startAngle: " + startAngle);
+		if (debug) System.out.println("CourseCorrect init: startAngle: " + startAngle);
+		Robot.driveSys.resetEncoders();
+		Robot.driveSys.setDriveMotors(speed);
 	}
 
 	@Override
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
-		if (!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getDisplacement())) < 6) {
-			speed /= 2;
-			slowingDown = true;
+		if (Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage())) < SLOWDOWN_START) {
+			speed = Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage()))/SLOWDOWN_START*startSpeed + MINIMUM_SPEED ;
 		}
 
 		double left = speed;
 		double right = speed;
 		double correction = 0;
 
-		double angleDiff = startAngle - currentAngle;
-		if (debug)
-			System.out.println("CourseCorrect exec: start: " + startAngle + "\tdiff: " + angleDiff);
+		double angleDiff = (currentAngle - startAngle)%360;
+		if (debug) System.out.println("CourseCorrect exec: start: " + startAngle + "\tdiff: " + angleDiff);
 
-		if (angleDiff < -180)
-			angleDiff += 360;
-		else if (angleDiff > 180)
-			angleDiff -= 360;
-
-		if (Math.abs(angleDiff) > TOLERANCE)
-			correction = angleDiff / CORRECTION_PROPORTION;
+		if (Math.abs(angleDiff) > TOLERANCE) correction = angleDiff / CORRECTION_PROPORTION;
 
 		left += correction;
 		right -= correction;
@@ -106,10 +85,8 @@ public class CourseCorrect extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (isTimedOut())
-			return true;
-		return distance < 0 ? getDisplacement() <= distance
-				: getDisplacement() >= distance;
+		//if (isTimedOut()) return true;
+		return distance < 0 ? Robot.driveSys.getEncoderAverage() <= distance : Robot.driveSys.getEncoderAverage() >= distance;
 	}
 
 	@Override
@@ -120,9 +97,5 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void interrupted() {
 		Robot.driveSys.setDriveMotors(0);
-	}
-	
-	protected double getDisplacement(){
-		return Math.sqrt(Math.pow(ahrs.getDisplacementX(), 2) + Math.pow(ahrs.getDisplacementY(), 2));
 	}
 }

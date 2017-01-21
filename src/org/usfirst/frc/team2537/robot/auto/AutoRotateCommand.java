@@ -4,89 +4,67 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoRotateCommand extends Command{
+public class AutoRotateCommand extends Command {
+	private AHRS ahrs;
+	private double destinationAngle, startAngle;
+
+	
+	private static final double DEFAULT_SPEED = 0.2;
+	private static final double MINIMUM_SPEED = 0.06;
+	private static final double TOLERANCE = 0.03; // degrees
+
 	private double speed;
-	private double gangle; //are we using angle sensors (magnetometer, etc) or distance sensors (encoders)?
-	private static final boolean debug = false;
-	private static final double DEFAULT_SPEED = 0.5;
-	private static final double ROBOT_DIAMETER = 10; //Inches  TODO: Magic numbers are fun
-	AHRS ahrs;
-	RobotDrive myRobot;
-	  
-	PIDController turnController;
-	double rotateToAngleRate;
-	  
+
 	/**
-	 * spins 10000000 degrees at default speed
-	 * counterclockwise (untested)
-	 * Don't know why anybody would want the robot to spin forever
+	 * spins destinationAngle degrees
+	 * 
+	 * @param destinationAngle
+	 *            relative angle in degrees
 	 */
-	public AutoRotateCommand(){
-		this(10000000, DEFAULT_SPEED);
-	}
-	
-	/**
-	 * Spins [angle] at default speed
-	 * @param angle
-	 */
-	public AutoRotateCommand(double angle){
-		AHRS ahrs = new AHRS(Port.kMXP);
+	public AutoRotateCommand(double destinationAngle) {
 		requires(Robot.driveSys);
-		double gangle = ahrs.getAngle();	
-		if(gangle < angle)
-			speed = -DEFAULT_SPEED;
-		else
-			speed = DEFAULT_SPEED;
+		ahrs = Robot.driveSys.getAhrs();
+		this.destinationAngle = destinationAngle;
+		speed = DEFAULT_SPEED;
 	}
-	 
-	  
-	/**
-	 * spins [angle] degrees at [speed]
-	 * counterclockwise (untested)
-	 * @param angle]
-	 * @param speed
-	 */
-	public AutoRotateCommand(double angle, double speed){
-		AHRS ahrs = new AHRS(Port.kMXP);
-		requires(Robot.driveSys);
-		angle = ahrs.getAngle();
-		this.speed = speed;
-	}
-	
+
 	@Override
 	protected void initialize() {
-		if(debug) System.out.println("[AutoRotateCommand] Initializing. speed: " + speed + " angle: " + gangle);
-		Robot.driveSys.setDriveMotors(-speed, speed);
+		startAngle = ahrs.getAngle();
 	}
 
 	@Override
 	protected void execute() {
-		if(debug) System.out.println("[AutoRotateCommand] Current angle: " + ahrs.getAngle());
+		double currentAngle = ahrs.getAngle();
+		
+		//System.out.println("Current Angle"+(currentAngle-startAngle)%360);
+		if (currentAngle-startAngle <= destinationAngle - TOLERANCE)
+			Robot.driveSys.setDriveMotors(-speed, speed);
+		if (currentAngle-startAngle >= destinationAngle + TOLERANCE)
+			Robot.driveSys.setDriveMotors(speed, -speed);
+		//distance between relative destination angle and relative angle from start over the relative destination angle
+		//e.g. (dest 90, curr 45) ratio = (90-45)/90 = 0.5
+		//      resulatant speed = 0.5*DEFAULT_SPEED + MINIMUM_SPEED
+		speed = Math.abs((destinationAngle-(currentAngle-startAngle))/destinationAngle)*DEFAULT_SPEED+MINIMUM_SPEED;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return ahrs.getAngle() >= gangle;
+		double currentAngle = ahrs.getAngle();
+		return (currentAngle-startAngle <= destinationAngle + TOLERANCE && currentAngle-startAngle >= destinationAngle - TOLERANCE);
 	}
 
 	@Override
 	protected void end() {
-		if(debug) System.out.println("[AutoRotateCommand] good end");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		if(debug) System.out.println("[AutoRotateCommand] bad end");
 		Robot.driveSys.setDriveMotors(0);
 	}
-
 
 }
