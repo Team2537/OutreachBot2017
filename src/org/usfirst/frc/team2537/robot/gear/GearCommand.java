@@ -8,7 +8,7 @@ public class GearCommand extends Command {
 	private boolean up;
 
 	public GearCommand(boolean up) {
-		super(10);
+		super(3);
 		requires(Robot.gearSys);
 		this.up = up;
 		if (up) {
