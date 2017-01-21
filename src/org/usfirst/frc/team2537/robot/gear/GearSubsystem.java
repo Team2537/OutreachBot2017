@@ -13,7 +13,6 @@ public class GearSubsystem extends Subsystem {
 	private DigitalInput limitSwitchDown = new DigitalInput(Ports.LIMIT_SWITCH_GEAR_DOWN);
 	private DigitalInput limitSwitchUp = new DigitalInput(Ports.LIMIT_SWITCH_GEAR_UP);
 
-
 	@Override
 	public void initDefaultCommand() {
 	}
@@ -39,7 +38,7 @@ public class GearSubsystem extends Subsystem {
 	public void endOrInterrupted() {
 		gearMotor.set(0);
 	}
-	
+
 	public boolean getLimitSwitch(boolean up) {
 		if (up) {
 			return limitSwitchUp.get();

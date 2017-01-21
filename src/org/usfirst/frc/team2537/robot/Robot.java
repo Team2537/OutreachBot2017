@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
 		
 		gearSys = new GearSubsystem();
 		gearSys.registerButtons();
+		
 		CameraServer.getInstance().startAutomaticCapture("cam", 0);
 	}
 

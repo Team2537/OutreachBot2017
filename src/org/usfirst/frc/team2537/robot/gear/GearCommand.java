@@ -27,6 +27,7 @@ public class GearCommand extends Command {
 	@Override
 	protected void execute() {
 		Robot.gearSys.setGearMotor(speed);
+		
 	}
 
 	@Override
