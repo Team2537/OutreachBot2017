@@ -18,36 +18,44 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		/*
 		climbStartTime = System.currentTimeMillis();
 		System.out.println("The climber is running");
 		Robot.climberSys.setCLimberMotor(.25);
 		System.out.println("The climber is running slowly");
 		startedLongClimb = false;
+		*/
 
 	}
 
 	@Override
 	protected void execute() {
-		if (System.currentTimeMillis() - climbStartTime > shortClimbTimems && !startedLongClimb) {
+		/*if (System.currentTimeMillis() - climbStartTime > shortClimbTimems && !startedLongClimb) {
 			Robot.climberSys.setCLimberMotor(.75);
-			System.out.println("The climber is running quickly");
+			System.out.println("The climber is running quiRobotckly");
 			Robot.climberSys.setCLimberMotor(longClimbTimems);
 			startedLongClimb = true;
 		}
+		*/
+		Robot.climberSys.setCLimberMotor(Robot.climberSys.getRightXboxTrigger(3));
 	}
 
 	@Override
 	protected boolean isFinished() {
-		if (System.currentTimeMillis() - climbStartTime > longClimbTimems) {
+		return false;
+		/*if (System.currentTimeMillis() - climbStartTime > longClimbTimems) {
 			return true;
 		} else if (Robot.climberSys.getEncoderVelocity() == 0) {
 			return true;
-		} else {
-			return false;
+		} else if {
+			return Robot.climberSys.climberPressureSensor.get();
+		} 
+		*/	
+		} 
 
-		}
+		
 
-	}
+	
 
 	@Override
 	protected void end() {
