@@ -3,9 +3,11 @@ package org.usfirst.frc.team2537.robot.drive;
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
@@ -29,8 +31,8 @@ public class DriveSubsystem extends Subsystem {
 		this.setDefaultCommand(dc);
 	}
 
- 	public void registerButtons() {
-	} 
+	public void registerButtons() {
+	}
 
 	/**
 	 * Set left motor to speed
@@ -42,7 +44,6 @@ public class DriveSubsystem extends Subsystem {
 		leftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
 
-	
 	/**
 	 * Set right motor to speed
 	 * 
@@ -51,6 +52,7 @@ public class DriveSubsystem extends Subsystem {
 	public void setRightMotor(double speed) {
 		rightMotor.set(speed * SPEED_MULTIPLIER);
 	}
+
 	/**
 	 * Set front left motor to speed
 	 * 
@@ -60,6 +62,7 @@ public class DriveSubsystem extends Subsystem {
 	public void setfrontLeftMotor(double speed) {
 		frontLeftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
+
 	/**
 	 * Set front left motor to speed
 	 * 
@@ -67,9 +70,9 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 */
 	public void setfrontRightMotor(double speed) {
-	frontRightMotor.set(speed * SPEED_MULTIPLIER);
+		frontRightMotor.set(speed * SPEED_MULTIPLIER);
 	}
-	
+
 	/**
 	 * Gets value based on direction left joy stick is pressed
 	 * 
@@ -82,7 +85,7 @@ public class DriveSubsystem extends Subsystem {
 			return leftJoystickValue;
 		else
 			return 0;
-	} 
+	}
 
 	/**
 	 * Gets value based on direction right joy stick is pressed
@@ -97,4 +100,13 @@ public class DriveSubsystem extends Subsystem {
 		else
 			return 0;
 	}
+
+	Encoder firstEncoder = new Encoder(3, 4, false, Encoder.EncodingType.k4X);
+	int count = firstEncoder.get();
+	double distance = firstEncoder.getRaw();
+	double RawCount = firstEncoder.getDistance();
+	double period = firstEncoder.getPeriod();
+	double rate = firstEncoder.getRate();
+	boolean direction = firstEncoder.getDirection();
+	boolean stopped = firstEncoder.getStopped();
 }
