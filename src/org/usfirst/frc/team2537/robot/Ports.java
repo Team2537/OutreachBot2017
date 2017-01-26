@@ -16,6 +16,6 @@ public class Ports {
 	public static final int CLIMBER_ACTIVATOR_BUTTON = 2; //subject to change
 	public static final int CLIMBER_KILL_SWITCH = 3;
 	
-	public static final int CLIMBER_PRESSURE_SENSOR = 5; 
+	public static final int CLIMBER_PRESSURE_SENSOR = 1; //subject to change
 
 }

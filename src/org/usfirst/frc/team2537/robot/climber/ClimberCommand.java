@@ -11,6 +11,7 @@ public class ClimberCommand extends Command {
 	public int longClimbTimems = 30000;
 	private long climbStartTime;
 	private boolean startedLongClimb;
+	private boolean pressureReturn = Robot.climberSys.climberPressureSensor.get();
 
 	public ClimberCommand() {
 		requires(Robot.climberSys);
@@ -18,44 +19,44 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		System.out.println("Climber is running");
 		/*
-		climbStartTime = System.currentTimeMillis();
-		System.out.println("The climber is running");
-		Robot.climberSys.setCLimberMotor(.25);
-		System.out.println("The climber is running slowly");
-		startedLongClimb = false;
-		*/
+		 * climbStartTime = System.currentTimeMillis();
+		 * System.out.println("The climber is running");
+		 * Robot.climberSys.setCLimberMotor(.25);
+		 * System.out.println("The climber is running slowly"); startedLongClimb
+		 * = false;
+		 */
 
 	}
 
 	@Override
 	protected void execute() {
-		/*if (System.currentTimeMillis() - climbStartTime > shortClimbTimems && !startedLongClimb) {
-			Robot.climberSys.setCLimberMotor(.75);
-			System.out.println("The climber is running quiRobotckly");
-			Robot.climberSys.setCLimberMotor(longClimbTimems);
-			startedLongClimb = true;
+		/*
+		 * if (System.currentTimeMillis() - climbStartTime > shortClimbTimems &&
+		 * !startedLongClimb) { Robot.climberSys.setCLimberMotor(.75);
+		 * System.out.println("The climber is running quiRobotckly");
+		 * Robot.climberSys.setCLimberMotor(longClimbTimems); startedLongClimb =
+		 * true; }
+		 */
+		if (pressureReturn = true) {
+			Robot.climberSys.setCLimberMotor(0);
+		} else {
+			Robot.climberSys.setCLimberMotor(Robot.climberSys.getRightXboxTrigger(3));
 		}
-		*/
-		Robot.climberSys.setCLimberMotor(Robot.climberSys.getRightXboxTrigger(3));
+
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return false;
-		/*if (System.currentTimeMillis() - climbStartTime > longClimbTimems) {
-			return true;
-		} else if (Robot.climberSys.getEncoderVelocity() == 0) {
-			return true;
-		} else if {
-			return Robot.climberSys.climberPressureSensor.get();
-		} 
-		*/	
-		} 
+		/*
+		 * if (System.currentTimeMillis() - climbStartTime > longClimbTimems) {
+		 * return true; } else if (Robot.climberSys.getEncoderVelocity() == 0) {
+		 * return true; }
+		 */
 
-		
-
-	
+	}
 
 	@Override
 	protected void end() {
