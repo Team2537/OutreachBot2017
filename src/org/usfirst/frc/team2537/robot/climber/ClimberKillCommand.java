@@ -43,6 +43,3 @@ public class ClimberKillCommand extends Command {
 		Robot.climberSys.setCLimberMotor(0);
 	}
 }
-
-
-

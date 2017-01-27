@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
-	
-	public DriveCommand(){
+
+	public DriveCommand() {
 		requires(Robot.driveSys);
 	}
-	
+
 	@Override
 	protected void initialize() {
-		
+
 	}
 
 	@Override
@@ -27,15 +27,13 @@ public class DriveCommand extends Command {
 		// TODO Auto-generated method stub
 		return false;
 	}
-		
-		
 
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
 		Robot.driveSys.setLeftMotor(0);
 		Robot.driveSys.setRightMotor(0);
-		
+
 	}
 
 	@Override

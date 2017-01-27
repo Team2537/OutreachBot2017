@@ -6,51 +6,60 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem {
 
-	private CANTalon climberMotor = new CANTalon(Ports.CLIMBER_MOTOR); //creates Talon motor for climber
+	private CANTalon climberMotor = new CANTalon(Ports.CLIMBER_MOTOR); // creates
+																		// Talon
+																		// motor
+																		// for
+																		// climber
 	protected static final double SPEED_MULTIPLIER = 1;
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	
-	
-	public int getEncoderVelocity(){
+	public ClimberSubsystem() {
+		ropeCheck.setAutomaticMode(true);
+	}
+
+	public int getEncoderVelocity() {
 		return climberMotor.getEncVelocity();
 	}
-	
+
 	private DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
-	
-	public boolean getClimberPressureSensor(){
+	private Ultrasonic ropeCheck = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
+
+	public boolean getClimberPressureSensor() {
 		return climberPressureSensor.get();
 	}
-		 
+
+	public double getRopeCheck() {
+		return ropeCheck.getRangeInches();
+	}
 
 	@Override
 	public void initDefaultCommand() {
 	}
-	
-	public void registerButtons(){ //registers buttons
+
+	public void registerButtons() { // registers buttons
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
-		
+
 	}
-	
-	public void setCLimberMotor(double speed){
+
+	public void setCLimberMotor(double speed) {
 		climberMotor.set(speed * SPEED_MULTIPLIER);
 	}
-	
+
 	public double getRightXboxTrigger(int axis) {
 		double rightXboxTrigger = HumanInput.xboxController.getRawAxis(axis);
-		if (Math.abs(rightXboxTrigger) > DEADZONE_THRESHOLD){
+		if (Math.abs(rightXboxTrigger) > DEADZONE_THRESHOLD) {
 			return rightXboxTrigger;
 		} else {
 			return 0;
 		}
-		
-		
-	}
-		
+
 	}
 
+}
