@@ -20,7 +20,12 @@ public class ClimberSubsystem extends Subsystem {
 		return climberMotor.getEncVelocity();
 	}
 	
-	DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
+	private DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
+	
+	public boolean getClimberPressureSensor(){
+		return climberPressureSensor.get();
+	}
+		 
 
 	@Override
 	public void initDefaultCommand() {

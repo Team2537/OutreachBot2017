@@ -11,7 +11,7 @@ public class ClimberCommand extends Command {
 	public int longClimbTimems = 30000;
 	private long climbStartTime;
 	private boolean startedLongClimb;
-	private boolean pressureReturn = Robot.climberSys.climberPressureSensor.get();
+
 
 	public ClimberCommand() {
 		requires(Robot.climberSys);
@@ -39,13 +39,15 @@ public class ClimberCommand extends Command {
 		 * Robot.climberSys.setCLimberMotor(longClimbTimems); startedLongClimb =
 		 * true; }
 		 */
-		if (pressureReturn = true) {
+		if (Robot.climberSys.getClimberPressureSensor()) {
+			System.out.println("The Pressure Sensor is pressed");
 			Robot.climberSys.setCLimberMotor(0);
 		} else {
-			Robot.climberSys.setCLimberMotor(Robot.climberSys.getRightXboxTrigger(3));
+			
+		Robot.climberSys.setCLimberMotor(Robot.climberSys.getRightXboxTrigger(3));
 		}
-
 	}
+	
 
 	@Override
 	protected boolean isFinished() {
