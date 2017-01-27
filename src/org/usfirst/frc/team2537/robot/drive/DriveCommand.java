@@ -23,21 +23,17 @@ public class DriveCommand extends Command {
 
 	protected void execute() {
 		// System.out.println(Robot.driveSys.getUltron());
-		/*
-		 * SmartDashboard.putNumber("Ultrasonic Range",
-		 * Robot.driveSys.getUltron());
-		 * SmartDashboard.putBoolean("Ultrasonic Close", ultronClose); if
-		 * (Robot.driveSys.getUltron() < ultronRange) { ultronClose = true; }
-		 * else { ultronClose = false; }
-		 * Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(
-		 * AxisType.kY));
-		 * Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.
-		 * kY));
-		 * Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType
-		 * .kY));
-		 * Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(
-		 * AxisType.kY));
-		 */
+		/*SmartDashboard.putNumber("Ultrasonic Range", Robot.driveSys.getUltron());
+		SmartDashboard.putBoolean("Ultrasonic Close", ultronClose);
+		if (Robot.driveSys.getUltron() < ultronRange) {
+			ultronClose = true;
+		} else {
+			ultronClose = false;
+		}*/
+		Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
+		Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
+		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
+		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
 	}
 
 	@Override
