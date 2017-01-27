@@ -18,6 +18,7 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
+	private boolean iMessedUp = true;
 
 	public DriveSubsystem() {
 
