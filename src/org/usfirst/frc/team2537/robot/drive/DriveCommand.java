@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveCommand extends Command {
-	public int ultronRange = 5; // temp
+	private int ultronRange = 5; // temp
+	private boolean ultronClose = false;
 
 	public DriveCommand() {
 		requires(Robot.driveSys);
@@ -22,18 +23,21 @@ public class DriveCommand extends Command {
 
 	protected void execute() {
 		// System.out.println(Robot.driveSys.getUltron());
-		SmartDashboard.putNumber("Ultrasonic Range", Robot.driveSys.getUltron());
-		if (Robot.driveSys.getUltron() < ultronRange) {
-			HumanInput.xboxController.setRumble(RumbleType.kLeftRumble, 1);
-			HumanInput.xboxController.setRumble(RumbleType.kRightRumble, 1);
-		} else {
-			HumanInput.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-			HumanInput.xboxController.setRumble(RumbleType.kRightRumble, 0);
-		}
-		Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
-		Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
-		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
-		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
+		/*
+		 * SmartDashboard.putNumber("Ultrasonic Range",
+		 * Robot.driveSys.getUltron());
+		 * SmartDashboard.putBoolean("Ultrasonic Close", ultronClose); if
+		 * (Robot.driveSys.getUltron() < ultronRange) { ultronClose = true; }
+		 * else { ultronClose = false; }
+		 * Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(
+		 * AxisType.kY));
+		 * Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.
+		 * kY));
+		 * Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType
+		 * .kY));
+		 * Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(
+		 * AxisType.kY));
+		 */
 	}
 
 	@Override
