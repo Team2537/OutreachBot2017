@@ -101,12 +101,54 @@ public class DriveSubsystem extends Subsystem {
 			return 0;
 	}
 
-	Encoder firstEncoder = new Encoder(3, 4, false, Encoder.EncodingType.k4X);
-	int count = firstEncoder.get();
-	double distance = firstEncoder.getRaw();
-	double RawCount = firstEncoder.getDistance();
-	double period = firstEncoder.getPeriod();
-	double rate = firstEncoder.getRate();
-	boolean direction = firstEncoder.getDirection();
-	boolean stopped = firstEncoder.getStopped();
+	Encoder leftEncoder = new Encoder(3, 4, false, Encoder.EncodingType.k4X);
+	int lCount = leftEncoder.get();
+	double lDistance = leftEncoder.getRaw();
+	double lRawCount = leftEncoder.getDistance();
+	double lRate = leftEncoder.getRate();
+	boolean lDirection = leftEncoder.getDirection();
+	boolean lStopped = leftEncoder.getStopped();
+	
+	Encoder rightEncoder = new Encoder(5, 6, false, Encoder.EncodingType.k4X);
+	int rCount = rightEncoder.get();
+	double rDistance = rightEncoder.getRaw();
+	double rRawCount = rightEncoder.getDistance();
+	double rRate = rightEncoder.getRate();
+	boolean rDirection = rightEncoder.getDirection();
+	boolean rStopped = rightEncoder.getStopped();
+	
+	public double getLeftEncoderDouble() {
+		return lDistance;
+		return lRawCount;
+		return lRate;
+	}
+	
+	public int getLeftEncoderInt(){
+		return lCount;
+	}
+	
+	public boolean getLeftEncoderBoolean(){
+		return lDirection;
+		return lStopped;
+	}
+	
+	public double getRightEncoderDouble(){
+		return rDistance;
+		return rRawCount;
+		return rRate ;
+		
+	}
+	
+	public int getRightEncoderInt(){
+		return rCount;
+		
+	}
+	
+	public boolean getRightEncoderBoolean(){
+		return rDirection;
+		return rStopped;
+	}
+	
+		
+		
 }
