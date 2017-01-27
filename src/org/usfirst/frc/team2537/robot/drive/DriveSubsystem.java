@@ -117,35 +117,54 @@ public class DriveSubsystem extends Subsystem {
 	boolean rDirection = rightEncoder.getDirection();
 	boolean rStopped = rightEncoder.getStopped();
 	
-	public double getLeftEncoderDouble() {
+	public double getLeftEncoderDistance() {
 		return lDistance;
+		
+	}
+	
+	public double getLeftEncoderRaw(){
 		return lRawCount;
+	}
+	
+	public double getLeftEncoderRate(){
 		return lRate;
 	}
 	
-	public int getLeftEncoderInt(){
+	public int getLeftEncoderCount(){
 		return lCount;
 	}
 	
-	public boolean getLeftEncoderBoolean(){
+	public boolean getLeftEncoderDirection(){
 		return lDirection;
+	}
+	
+	public boolean getLeftEncoderStopped(){
 		return lStopped;
 	}
 	
-	public double getRightEncoderDouble(){
+	public double getRightEncoderDistance(){
 		return rDistance;
+		
+	}
+	
+	public double getRightEncoderRaw(){
 		return rRawCount;
-		return rRate ;
 		
 	}
 	
-	public int getRightEncoderInt(){
+	public double getRightEncoderRate(){
+		return rRate;
+	}
+	
+	public int getRightEncoderCount(){
 		return rCount;
-		
 	}
 	
-	public boolean getRightEncoderBoolean(){
+	public boolean getRightEncoderDirection(){
 		return rDirection;
+	}
+	
+	public boolean getRightEncoderStopped(){
 		return rStopped;
 	}
 	
