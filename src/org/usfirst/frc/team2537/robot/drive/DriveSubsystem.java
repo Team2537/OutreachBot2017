@@ -88,7 +88,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	/**
-	 * Gets value based on direction right joy stick is pressed
+	 * Gets value based on direction left joy stick is pressed
 	 * 
 	 * @param axis
 	 * @return

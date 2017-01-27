@@ -5,15 +5,15 @@ public class Ports {
 	public static final int RIGHT_MOTOR = 1;
 	public static final int FRONT_LEFT_MOTOR = 6;
 	public static final int FRONT_RIGHT_MOTOR = 5;
-	public static final int GEAR_MOTOR = 4;
+	public static final int GEAR_SERVO = 0;
 
 	public static final int LEFT_JOYSTICK = 0;
 	public static final int RIGHT_JOYSTICK = 1;
 
 	public static final int XBOX = 3;
 
-	public static final int GEAR_DOWN_BUTTON = 1;
-	public static final int GEAR_UP_BUTTON = 2;
+	public static final int GEAR_DOWN_BUTTON = 2;
+	public static final int GEAR_UP_BUTTON = 1;
 	public static final int DRIVE_ULTRASONIC_BUTTON = 2;
 	
 	public static final int DRIVE_SWITCH_BUTTON = 5;
