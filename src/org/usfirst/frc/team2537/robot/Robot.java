@@ -2,7 +2,7 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.drive.ShooterSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	public static DriveSubsystem driveSys;
-	public static ShooterSubsystem shooter;
+	public static ShooterSubsystem shooterSys;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
-		shooter = new ShooterSubsystem();
+		shooterSys = new ShooterSubsystem();
 		
 	}
 

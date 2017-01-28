@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2537.robot.drive;
+package org.usfirst.frc.team2537.robot.shooter;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
@@ -14,7 +14,7 @@ public class ShooterCommand extends Command {
 	 *            - if Fly Wheels are off or on
 	 */
 	public ShooterCommand() {
-		requires(Robot.shooter);
+		requires(Robot.shooterSys);
 		this.shooterOn = true;
 	}
 
@@ -24,7 +24,7 @@ public class ShooterCommand extends Command {
 	 */
 	protected void end() {
 		// TODO Auto-generated method stub
-		Robot.shooter.FlyOff();
+		Robot.shooterSys.FlyOff();
 	}
 
 	/**
@@ -32,11 +32,11 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-		if (shooterOn && Robot.shooter.getLimitSwitch()) {
-			if (Robot.shooter.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER - ShooterSubsystem.LEEWAY
-					&& Robot.shooter.UltronRange() < ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
-				Robot.shooter.FlyOn();
+		// TODO make sure this shit works
+		if (shooterOn && Robot.shooterSys.getLimitSwitch()) {
+			if (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER - ShooterSubsystem.LEEWAY
+					&& Robot.shooterSys.UltronRange() < ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
+				Robot.shooterSys.FlyOn();
 			}
 		}
 	}
@@ -53,7 +53,7 @@ public class ShooterCommand extends Command {
 	 */
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-		Robot.shooter.FlyOff();
+		Robot.shooterSys.FlyOff();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class ShooterCommand extends Command {
 	 */
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return Robot.shooter.UltronRange() < Robot.shooter.DISTANCE_TO_BOILER - Robot.shooter.LEEWAY
-				|| Robot.shooter.UltronRange() > Robot.shooter.DISTANCE_TO_BOILER + Robot.shooter.LEEWAY;
+		return Robot.shooterSys.UltronRange() < Robot.shooterSys.DISTANCE_TO_BOILER - Robot.shooterSys.LEEWAY
+				|| Robot.shooterSys.UltronRange() > Robot.shooterSys.DISTANCE_TO_BOILER + Robot.shooterSys.LEEWAY;
 	}
 }
