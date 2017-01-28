@@ -18,7 +18,7 @@ public final class Ports {
 		/////// CAN Talons ///////
 		// Drive
 		FRONT_LEFT_MOTOR_PORT = 1, FRONT_RIGHT_MOTOR_PORT = 2,
-		BACK_LEFT_MOTOR_PORT = 3, BACK_RIGHT_MOTOR_PORT = 4,
+		BACK_LEFT_MOTOR_PORT = 8, BACK_RIGHT_MOTOR_PORT = 4,
 		
 		// Shooter
 		LEFT_FLYWHEEL_PORT = 5, RIGHT_FLYWHEEL_PORT = 6,

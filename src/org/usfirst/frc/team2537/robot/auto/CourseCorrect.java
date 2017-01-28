@@ -86,11 +86,14 @@ public class CourseCorrect extends Command {
 	@Override
 	protected boolean isFinished() {
 		//if (isTimedOut()) return true;
+		System.out.println("CourseCorrect :" + Robot.driveSys.getEncoderAverage());
 		return distance < 0 ? Robot.driveSys.getEncoderAverage() <= distance : Robot.driveSys.getEncoderAverage() >= distance;
 	}
 
 	@Override
 	protected void end() {
+		System.out.println("CourseCorrect : end");
+
 		Robot.driveSys.setDriveMotors(0);
 	}
 

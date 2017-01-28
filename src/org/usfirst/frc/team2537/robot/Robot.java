@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.auto.Pentagon;
+import org.usfirst.frc.team2537.maps.FigureEight;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new Pentagon());
+		Scheduler.getInstance().add(new FigureEight());
 		System.out.println("Autonomous start");
 	}
 
@@ -86,6 +86,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledInit() {
+		driveSys.getAhrs().reset();
 	}
 	
 	@Override
