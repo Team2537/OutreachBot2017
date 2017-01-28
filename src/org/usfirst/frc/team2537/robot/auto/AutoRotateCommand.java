@@ -15,7 +15,7 @@ public class AutoRotateCommand extends Command {
 	private static final double DEFAULT_SPEED = 0.2;
 	private static final double MINIMUM_SPEED = 0.06;
 	private static final double SLOWDOWN_ANGLE = 45;
-	private static final double TOLERANCE = 0.03; // degrees
+	private static final double TOLERANCE = 1; // degrees
 
 	private double speed;
 
