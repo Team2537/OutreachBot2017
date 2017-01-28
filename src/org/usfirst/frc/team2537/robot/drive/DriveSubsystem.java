@@ -18,6 +18,7 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
+	private boolean iMessedUp = true;
 
 	public DriveSubsystem() {
 
@@ -101,12 +102,73 @@ public class DriveSubsystem extends Subsystem {
 			return 0;
 	}
 
-	Encoder firstEncoder = new Encoder(3, 4, false, Encoder.EncodingType.k4X);
-	int count = firstEncoder.get();
-	double distance = firstEncoder.getRaw();
-	double RawCount = firstEncoder.getDistance();
-	double period = firstEncoder.getPeriod();
-	double rate = firstEncoder.getRate();
-	boolean direction = firstEncoder.getDirection();
-	boolean stopped = firstEncoder.getStopped();
+	Encoder leftEncoder = new Encoder(3, 4, false, Encoder.EncodingType.k4X);
+	int lCount = leftEncoder.get();
+	double lDistance = leftEncoder.getRaw();
+	double lRawCount = leftEncoder.getDistance();
+	double lRate = leftEncoder.getRate();
+	boolean lDirection = leftEncoder.getDirection();
+	boolean lStopped = leftEncoder.getStopped();
+	
+	Encoder rightEncoder = new Encoder(5, 6, false, Encoder.EncodingType.k4X);
+	int rCount = rightEncoder.get();
+	double rDistance = rightEncoder.getRaw();
+	double rRawCount = rightEncoder.getDistance();
+	double rRate = rightEncoder.getRate();
+	boolean rDirection = rightEncoder.getDirection();
+	boolean rStopped = rightEncoder.getStopped();
+	
+	public double getLeftEncoderDistance() {
+		return lDistance;
+		
+	}
+	
+	public double getLeftEncoderRaw(){
+		return lRawCount;
+	}
+	
+	public double getLeftEncoderRate(){
+		return lRate;
+	}
+	
+	public int getLeftEncoderCount(){
+		return lCount;
+	}
+	
+	public boolean getLeftEncoderDirection(){
+		return lDirection;
+	}
+	
+	public boolean getLeftEncoderStopped(){
+		return lStopped;
+	}
+	
+	public double getRightEncoderDistance(){
+		return rDistance;
+		
+	}
+	
+	public double getRightEncoderRaw(){
+		return rRawCount;
+		
+	}
+	
+	public double getRightEncoderRate(){
+		return rRate;
+	}
+	
+	public int getRightEncoderCount(){
+		return rCount;
+	}
+	
+	public boolean getRightEncoderDirection(){
+		return rDirection;
+	}
+	
+	public boolean getRightEncoderStopped(){
+		return rStopped;
+	}
+	
+		
+		
 }
