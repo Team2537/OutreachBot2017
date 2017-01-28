@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.auto.Pentagon;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
+import org.usfirst.frc.team2537.robot.vision.TargetAlign;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
+	public static PWMSubsystem pwm;
 
 	@Override
 	/**
@@ -32,6 +34,9 @@ public class Robot extends IterativeRobot {
 		driveSys = new DriveSubsystem();
 		driveSys.registerButtons();
 		driveSys.initDefaultCommand();
+		
+		pwm = new PWMSubsystem();
+		pwm.initDefaultCommand();
 	}
 
 	/**
@@ -46,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new Pentagon());
+		Scheduler.getInstance().add(new TargetAlign(0));
 		System.out.println("Autonomous start");
 	}
 
