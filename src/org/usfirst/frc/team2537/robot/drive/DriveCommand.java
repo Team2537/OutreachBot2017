@@ -28,7 +28,7 @@ public class DriveCommand extends Command {
 		
 		if (System.currentTimeMillis() - startTime > 5000) {
 			System.out.println(Robot.driveSys.getLeftEncoderCount());
-			System.out.println(Robot.driveSys.getLeftEncoderDirection());
+			System.out.println(Robot.driveSys.getLeftEncoderDirection()); 
 			System.out.println(Robot.driveSys.getLeftEncoderDistance());
 			System.out.println(Robot.driveSys.getLeftEncoderRate());
 			System.out.println(Robot.driveSys.getLeftEncoderRaw());

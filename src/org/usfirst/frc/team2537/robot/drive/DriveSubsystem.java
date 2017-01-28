@@ -42,7 +42,7 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 */
 	public void setLeftMotor(double speed) {
-		leftMotor.set(-speed * SPEED_MULTIPLIER);
+		leftMotor.set(-speed * SPEED_MULTIPLIER); 
 	}
 
 	/**
