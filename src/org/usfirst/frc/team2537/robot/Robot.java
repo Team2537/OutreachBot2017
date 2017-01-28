@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
@@ -55,7 +58,9 @@ public class Robot extends IterativeRobot {
 			while (!Thread.interrupted()) {
 				cvSink.grabFrame(source);
 				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-				outputStream.putFrame(output);
+				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(0, 35, 255), 1);
+				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1);
+				outputStream.putFrame(source); 
 			}
 		}).start();
 	}
