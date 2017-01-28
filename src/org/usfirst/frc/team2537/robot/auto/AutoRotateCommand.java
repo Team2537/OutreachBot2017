@@ -5,7 +5,6 @@ import org.usfirst.frc.team2537.robot.Robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoRotateCommand extends Command {
 	private AHRS ahrs;
@@ -14,7 +13,7 @@ public class AutoRotateCommand extends Command {
 	
 	private static final double DEFAULT_SPEED = 0.2;
 	private static final double MINIMUM_SPEED = 0.06;
-	private static final double SLOWDOWN_ANGLE = 45;
+	private static final double SLOWDOWN_ANGLE = 60;
 	private static final double TOLERANCE = 0.03; // degrees
 
 	private double speed;
