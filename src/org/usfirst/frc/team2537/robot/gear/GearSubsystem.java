@@ -12,7 +12,7 @@ public class GearSubsystem extends Subsystem {
 	private DigitalInput limitSwitchDown = new DigitalInput(Ports.LIMIT_SWITCH_GEAR_DOWN);
 	private DigitalInput limitSwitchUp = new DigitalInput(Ports.LIMIT_SWITCH_GEAR_UP);
 	int upAngle = 50;
-	int downAngle = 65;
+	int downAngle = 90;
 
 	@Override
 	public void initDefaultCommand() {
