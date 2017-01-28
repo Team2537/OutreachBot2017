@@ -1,16 +1,11 @@
 package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Robot;
-import org.usfirst.frc.team2537.robot.input.HumanInput;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveCommand extends Command {
-	private int ultronRange = 5; // temp
-	private boolean ultronClose = false;
 
 	public DriveCommand() {
 		requires(Robot.driveSys);
@@ -23,13 +18,6 @@ public class DriveCommand extends Command {
 
 	protected void execute() {
 		// System.out.println(Robot.driveSys.getUltron());
-		/*SmartDashboard.putNumber("Ultrasonic Range", Robot.driveSys.getUltron());
-		SmartDashboard.putBoolean("Ultrasonic Close", ultronClose);
-		if (Robot.driveSys.getUltron() < ultronRange) {
-			ultronClose = true;
-		} else {
-			ultronClose = false;
-		}*/
 		Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
 		Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
 		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));

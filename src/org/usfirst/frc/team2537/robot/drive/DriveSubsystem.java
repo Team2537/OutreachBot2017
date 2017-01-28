@@ -19,6 +19,7 @@ public class DriveSubsystem extends Subsystem {
 	private Ultrasonic ultron = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
+	public int ultronRange = 12;
 
 	public DriveSubsystem() {
 		ultron.setAutomaticMode(true);

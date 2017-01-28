@@ -1,7 +1,9 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.gear.GearSubsystem;
@@ -52,7 +54,9 @@ public class Robot extends IterativeRobot {
 
 			while (!Thread.interrupted()) {
 				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+				if (driveSys.getUltron() < driveSys.ultronRange) {
+					Core.add(source, new Scalar(0,0,50), output);
+				}
 				outputStream.putFrame(output);
 			}
 		}).start();
