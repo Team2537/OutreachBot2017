@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.maps.Straight;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
 import org.usfirst.frc.team2537.robot.vision.TargetAlign;

@@ -5,7 +5,6 @@ import org.usfirst.frc.team2537.robot.Robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoRotateCommand extends Command {
 	private AHRS ahrs;
