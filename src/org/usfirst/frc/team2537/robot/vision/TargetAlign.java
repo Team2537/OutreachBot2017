@@ -21,10 +21,10 @@ public class TargetAlign extends AutoRotateCommand {
 		super.end();
 		dutyCycle = Robot.pwm.getDutyCycle();
 		if(dutyCycle > 0.5 + TOLERANCE / 2){
-			Scheduler.getInstance().add(new TargetAlign((0.5 + TOLERANCE - dutyCycle)*90));
+			Scheduler.getInstance().add(new TargetAlign((0.5 + TOLERANCE - dutyCycle)*-90));
 		} else
 		if(dutyCycle < 0.5 - TOLERANCE / 2){
-			Scheduler.getInstance().add(new TargetAlign((0.5 - TOLERANCE + dutyCycle)*90));
+			Scheduler.getInstance().add(new TargetAlign((0.5 - TOLERANCE - dutyCycle)*-90));
 		}
 	}
 	
