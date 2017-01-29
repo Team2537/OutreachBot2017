@@ -39,16 +39,22 @@ public class ClimberCommand extends Command {
 		 * Robot.climberSys.setCLimberMotor(longClimbTimems); startedLongClimb =
 		 * true; }
 		 */
-		if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
-			System.out.println("The rope is within range");
-		}
-		if (Robot.climberSys.getClimberPressureSensor()) {
-			System.out.println("The Pressure Sensor is pressed");
-			Robot.climberSys.setCLimberMotor(0);
+//		if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
+//			System.out.println("The rope is within range");
+//		}
+//		if (Robot.climberSys.getClimberPressureSensor()) {
+//			System.out.println("The Pressure Sensor is pressed");
+//			Robot.climberSys.setCLimberMotor(0);
+//		} else {
+		
+		if (Robot.climberSys.getXboxTrigger(3) > 0.1) {
+			Robot.climberSys.setCLimberMotor(Robot.climberSys.getXboxTrigger(3));
+		} else if (Robot.climberSys.getXboxTrigger(2) > 0.1) {
+			Robot.climberSys.setCLimberMotor(Robot.climberSys.getXboxTrigger(2));
 		} else {
-
-			Robot.climberSys.setCLimberMotor(Robot.climberSys.getRightXboxTrigger(3));
+			Robot.climberSys.setCLimberMotor(0);
 		}
+//		}
 	}
 
 	@Override

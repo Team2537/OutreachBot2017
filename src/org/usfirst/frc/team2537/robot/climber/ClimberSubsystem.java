@@ -3,15 +3,14 @@ package org.usfirst.frc.team2537.robot.climber;
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem {
 
-	private CANTalon climberMotor = new CANTalon(Ports.CLIMBER_MOTOR); // creates
+	private Talon climberMotor = new Talon(Ports.CLIMBER_MOTOR); // creates
 																		// Talon
 																		// motor
 																		// for
@@ -23,9 +22,9 @@ public class ClimberSubsystem extends Subsystem {
 		ropeCheck.setAutomaticMode(true);
 	}
 
-	public int getEncoderVelocity() {
-		return climberMotor.getEncVelocity();
-	}
+//	public int getEncoderVelocity() {
+//		return climberMotor.getEncVelocity();
+//	}
 
 	private DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
 	private Ultrasonic ropeCheck = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
@@ -52,7 +51,7 @@ public class ClimberSubsystem extends Subsystem {
 		climberMotor.set(speed * SPEED_MULTIPLIER);
 	}
 
-	public double getRightXboxTrigger(int axis) {
+	public double getXboxTrigger(int axis) {
 		double rightXboxTrigger = HumanInput.xboxController.getRawAxis(axis);
 		if (Math.abs(rightXboxTrigger) > DEADZONE_THRESHOLD) {
 			return rightXboxTrigger;
