@@ -16,7 +16,7 @@ public class ShooterSubsystem extends Subsystem {
 	public static final double SLOW_SPEED = .5;
 	public static final int LEEWAY = 1;
 	public static final int DISTANCE_TO_BOILER = 10;
-	private DigitalInput limitswitch = new DigitalInput(Ports.LIMITSWITCH);
+	private DigitalInput limitSwitch = new DigitalInput(Ports.LIMITSWITCH);
 	private static Ultrasonic ultrasonic_to_boiler;
 	private CANTalon slowMotor=new CANTalon(Ports.SLOW_SHOOTER);
 	private CANTalon fastMotor=new CANTalon(Ports.FAST_SHOOTER);
@@ -36,7 +36,7 @@ public class ShooterSubsystem extends Subsystem {
 
 
 	public boolean getLimitSwitch(){
-		return limitswitch.get();
+		return limitSwitch.get();
 	}
 	/**
 	 * Sets all 2 flywheels to speed SPEED

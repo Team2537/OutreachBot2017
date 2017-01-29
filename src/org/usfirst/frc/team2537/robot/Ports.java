@@ -20,5 +20,5 @@ public class Ports {
 //	public static final int FRIGHT_FLY = 4;
 	public static final int SLOW_SHOOTER=1; //temp
 	public static final int FAST_SHOOTER=2; //temp
-
+	public static final int SHOOTER_BUTTON = 1; //temp
 }
