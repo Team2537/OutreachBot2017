@@ -28,23 +28,25 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * if the robot is in range And shooterOn = true AND Limitswitch is pressed- Flywheels to speed 1
+	 * if the robot is in range And shooterOn = true AND Limitswitch is pressed-
+	 * Flywheels to speed 1
 	 */
 	@Override
 	protected void execute() {
 		// TODO make sure this shit works
-		if (shooterOn && Robot.shooterSys.getLimitSwitch()) {
-			if (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER - ShooterSubsystem.LEEWAY
-					&& Robot.shooterSys.UltronRange() < ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
-				Robot.shooterSys.FlyOn();
-			}
-		}
+		/*
+		 * if (shooterOn && Robot.shooterSys.getLimitSwitch()) { if
+		 * (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER
+		 * - ShooterSubsystem.LEEWAY && Robot.shooterSys.UltronRange() <
+		 * ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
+		 * Robot.shooterSys.FlyOn(); } }
+		 */
 	}
 
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-
+		Robot.shooterSys.FlyOn();
 	}
 
 	@Override

@@ -18,20 +18,20 @@ public class ShooterSubsystem extends Subsystem {
 	public static final int LEEWAY = 1;
 	public static final int DISTANCE_TO_BOILER = 10;
 	private DigitalInput limitSwitch = new DigitalInput(Ports.LIMITSWITCH);
-	private static Ultrasonic ultrasonic_to_boiler;
-	private CANTalon slowMotor=new CANTalon(Ports.SLOW_SHOOTER);
-	private CANTalon fastMotor=new CANTalon(Ports.FAST_SHOOTER);
-	
+	private Ultrasonic ultrasonicToBoiler = new Ultrasonic(Ports.ULTRASONIC_INPUT, Ports.ULTRASONIC_OUTPUT);
+	private CANTalon slowMotor = new CANTalon(Ports.SLOW_SHOOTER);
+	private CANTalon fastMotor = new CANTalon(Ports.FAST_SHOOTER);
+
 	/**
 	 * Constructor that sets up Ultrasonic by setting Automatic Mode to true
 	 */
 	public ShooterSubsystem() {
-		ultrasonic_to_boiler = new Ultrasonic(Ports.ULTRASONIC_INPUT, Ports.ULTRASONIC_OUTPUT); 
-		ultrasonic_to_boiler.setAutomaticMode(true);
+		// ultrasonicToBoiler.setAutomaticMode(true);
 	}
-	
+
 	public void registerButtons() {
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterButton, );
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOnButton, new ShooterCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOffButton, new ShooterOffCommand());
 	}
 
 	@Override
@@ -39,14 +39,14 @@ public class ShooterSubsystem extends Subsystem {
 
 	}
 
-
-	public boolean getLimitSwitch(){
+	public boolean getLimitSwitch() {
 		return limitSwitch.get();
 	}
+
 	/**
 	 * Sets all 2 flywheels to speed SPEED
 	 */
-	public void FlyOn(){
+	public void FlyOn() {
 		slowMotor.set(SLOW_SPEED);
 		fastMotor.set(FAST_SPEED);
 	}
@@ -64,7 +64,7 @@ public class ShooterSubsystem extends Subsystem {
 	 * @return the distance of the ultrasonic on the robot to the boiler
 	 */
 	public double UltronRange() {
-		return ultrasonic_to_boiler.getRangeInches();
+		return ultrasonicToBoiler.getRangeInches();
 	}
 
 }

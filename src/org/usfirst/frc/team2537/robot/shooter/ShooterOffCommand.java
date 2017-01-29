@@ -6,19 +6,20 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterOffCommand extends Command {
 
-	public ShooterOffCommand(){
+	public ShooterOffCommand() {
 		requires(Robot.shooterSys);
 	}
+
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -30,7 +31,7 @@ public class ShooterOffCommand extends Command {
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

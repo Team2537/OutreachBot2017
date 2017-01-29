@@ -16,9 +16,11 @@ public class HumanInput {
 	public static Button driveUltrasonicButton = new JoystickButton(rightJoystick, Ports.DRIVE_ULTRASONIC_BUTTON);
 	public static Button limitSwitchButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_ACTIVATOR);
 	public static Button limitSwitchOffButton = new JoystickButton(rightJoystick, Ports.LIMIT_SWITCH_MODE_OFF);
-	public static Button shooterButton = new JoystickButton(xboxController, Ports.SHOOTER_BUTTON);
-	public static void registerWhenPressedCommand(Button b, Command c){
+	public static Button shooterOnButton = new JoystickButton(xboxController, Ports.SHOOTER_ON_BUTTON);
+	public static Button shooterOffButton = new JoystickButton(xboxController, Ports.SHOOTER_OFF_BUTTON);
+
+	public static void registerWhenPressedCommand(Button b, Command c) {
 		b.whenPressed(c);
 	}
-	
+
 }
