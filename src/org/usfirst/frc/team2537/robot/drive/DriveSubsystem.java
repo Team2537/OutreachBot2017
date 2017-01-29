@@ -79,8 +79,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getLeftJoystick(AxisType axis) {
-		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
+	public double getLeftJoystick() {
+		double leftJoystickValue = HumanInput.xboxController.getRawAxis(1);
 		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
 			return leftJoystickValue;
 		else
@@ -93,8 +93,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getRightJoystick(AxisType axis) {
-		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
+	public double getRightJoystick() {
+		double rightJoystickValue = HumanInput.xboxController.getRawAxis(5);
 		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
 			return rightJoystickValue;
 		else

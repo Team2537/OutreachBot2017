@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
@@ -20,10 +19,10 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
-		Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
-		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
-		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
+		Robot.driveSys.setLeftMotor(Robot.driveSys.getLeftJoystick());
+		Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick());
+		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick());
+		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick());
 		
 		
 		System.out.println(Robot.driveSys.getLeftEncoderCount());

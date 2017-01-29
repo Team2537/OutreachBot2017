@@ -50,7 +50,7 @@ public class ClimberCommand extends Command {
 		if (Robot.climberSys.getXboxTrigger(3) > 0.1) {
 			Robot.climberSys.setCLimberMotor(Robot.climberSys.getXboxTrigger(3));
 		} else if (Robot.climberSys.getXboxTrigger(2) > 0.1) {
-			Robot.climberSys.setCLimberMotor(Robot.climberSys.getXboxTrigger(2));
+			Robot.climberSys.setCLimberMotor(-Robot.climberSys.getXboxTrigger(2));
 		} else {
 			Robot.climberSys.setCLimberMotor(0);
 		}
