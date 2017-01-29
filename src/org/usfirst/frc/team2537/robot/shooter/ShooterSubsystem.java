@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
@@ -27,6 +28,10 @@ public class ShooterSubsystem extends Subsystem {
 	public ShooterSubsystem() {
 		ultrasonic_to_boiler = new Ultrasonic(Ports.ULTRASONIC_INPUT, Ports.ULTRASONIC_OUTPUT); 
 		ultrasonic_to_boiler.setAutomaticMode(true);
+	}
+	
+	public void registerButtons() {
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterButton, );
 	}
 
 	@Override
