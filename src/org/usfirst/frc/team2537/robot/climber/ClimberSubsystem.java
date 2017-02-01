@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem {
 
-	private CANTalon climberMotor = new CANTalon(Ports.CLIMBER_MOTOR); // creates
-																		// Talon
+	private CANTalon climberMotor1 = new CANTalon(Ports.CLIMBER_MOTOR_ONE); // creates
+	private CANTalon climberMotor2 = new CANTalon(Ports.CLIMBER_MOTOR_TWO);																	// Talon
 																		// motor
 																		// for
 																		// climber
@@ -48,8 +48,12 @@ public class ClimberSubsystem extends Subsystem {
 
 	}
 
-	public void setCLimberMotor(double speed) {
-		climberMotor.set(speed * SPEED_MULTIPLIER);
+	public void setClimberMotor1(double speed) {
+		climberMotor1.set(speed * SPEED_MULTIPLIER);
+	}
+	
+	public void setClimberMotor2(double speed) {
+		climberMotor2.set(speed * SPEED_MULTIPLIER); 
 	}
 
 	public double getXboxTrigger(int axis) {

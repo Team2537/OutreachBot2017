@@ -48,11 +48,14 @@ public class ClimberCommand extends Command {
 //		} else {
 		
 		if (Robot.climberSys.getXboxTrigger(3) > 0.1) {
-			Robot.climberSys.setCLimberMotor(Robot.climberSys.getXboxTrigger(3));
+			Robot.climberSys.setClimberMotor1(Robot.climberSys.getXboxTrigger(3));
+			Robot.climberSys.setClimberMotor2(Robot.climberSys.getXboxTrigger(3));
 		} else if (Robot.climberSys.getXboxTrigger(2) > 0.1) {
-			Robot.climberSys.setCLimberMotor(-Robot.climberSys.getXboxTrigger(2));
+			Robot.climberSys.setClimberMotor1(-1 * Robot.climberSys.getXboxTrigger(2));
+			Robot.climberSys.setClimberMotor1(-1 * Robot.climberSys.getXboxTrigger(2));
 		} else {
-			Robot.climberSys.setCLimberMotor(0);
+			Robot.climberSys.setClimberMotor1(0);
+			Robot.climberSys.setClimberMotor2(0);
 		}
 //		}
 	}
@@ -70,13 +73,15 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.climberSys.setCLimberMotor(0);
+		Robot.climberSys.setClimberMotor1(0);
+		Robot.climberSys.setClimberMotor2(0);
 		System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.climberSys.setCLimberMotor(0);
+		Robot.climberSys.setClimberMotor1(0);
+		Robot.climberSys.setClimberMotor2(0);
 		System.out.println("The climber has been interrupted");
 	}
 }
