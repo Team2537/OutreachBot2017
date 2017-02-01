@@ -11,7 +11,7 @@ public class ClimberCommand extends Command {
 	public int longClimbTimems = 30000;
 	private long climbStartTime;
 	private boolean startedLongClimb;
-	private int ropeRange = 2; //range away from ultrasonic that rope is
+	private int ropeRange = 2; // range away from ultrasonic that rope is
 
 	public ClimberCommand() {
 		requires(Robot.climberSys);
@@ -39,26 +39,41 @@ public class ClimberCommand extends Command {
 		 * Robot.climberSys.setCLimberMotor(longClimbTimems); startedLongClimb =
 		 * true; }
 		 */
-//		if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
-//			System.out.println("The rope is within range");
-//		}
-//		if (Robot.climberSys.getClimberPressureSensor()) {
-//			System.out.println("The Pressure Sensor is pressed");
-//			Robot.climberSys.setCLimberMotor(0);
-//		} else {
-		
+		// if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
+		// System.out.println("The rope is within range");
+		// }
+		// if (Robot.climberSys.getClimberPressureSensor()) {
+		// System.out.println("The Pressure Sensor is pressed");
+		// Robot.climberSys.setCLimberMotor(0);
+		// } else {
+
 		if (Robot.climberSys.getXboxTrigger(3) > 0.1) {
+			if (Robot.climberSys.getClimber1Velocity() == 0) {
+				System.out.println("Climber Motor One is Offline");
+			}
+			if (Robot.climberSys.getClimber2Velocity() == 0) {
+				System.out.println("Climber Motor Two is Offline");
+			}
 			Robot.climberSys.setClimberMotor1(Robot.climberSys.getXboxTrigger(3));
 			Robot.climberSys.setClimberMotor2(Robot.climberSys.getXboxTrigger(3));
 		} else if (Robot.climberSys.getXboxTrigger(2) > 0.1) {
+			if (Robot.climberSys.getClimber1Velocity() == 0) {
+				System.out.println("Climber Motor One is offline");
+			}
+			if (Robot.climberSys.getClimber2Velocity() == 0) {
+				System.out.println("Climber Motor One is offline");
+			}
 			Robot.climberSys.setClimberMotor1(-1 * Robot.climberSys.getXboxTrigger(2));
 			Robot.climberSys.setClimberMotor1(-1 * Robot.climberSys.getXboxTrigger(2));
-		} else {
+		} else if (Robot.climberSys.getClimberMotorOneLimitswitch()) {
+			Robot.climberSys.setClimberMotor1(0);
+			Robot.climberSys.setClimberMotor2(0);
+		} else if (Robot.climberSys.getClimberMotorTwoLimitswitch()) {
 			Robot.climberSys.setClimberMotor1(0);
 			Robot.climberSys.setClimberMotor2(0);
 		}
-//		}
 	}
+	// }
 
 	@Override
 	protected boolean isFinished() {

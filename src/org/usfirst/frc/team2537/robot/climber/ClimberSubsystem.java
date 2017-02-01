@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.climber;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
@@ -41,8 +42,24 @@ public class ClimberSubsystem extends Subsystem {
 	@Override
 	public void initDefaultCommand() {
 	}
+	
+	public boolean getClimberMotorOneLimitswitch(){
+		return climberMotor1.isFwdLimitSwitchClosed();
+	}
+	
+	public boolean getClimberMotorTwoLimitswitch(){
+		return climberMotor2.isFwdLimitSwitchClosed();
+	}
+	
+	public double getClimber1Velocity(){
+		return Robot.climberSys.climberMotor1.getAnalogInVelocity();
+	}
+	
+	public double getClimber2Velocity(){
+		return Robot.climberSys.climberMotor2.getAnalogInVelocity();
+	}
 
-	public void registerButtons() { // registers buttons
+	public void registerButtons() { // registers sbuttons
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
 
