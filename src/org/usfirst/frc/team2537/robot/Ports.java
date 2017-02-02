@@ -24,6 +24,6 @@ public class Ports {
 	public static final int LIMIT_SWITCH_GEAR_UP = 7;
 	public static final int LIMIT_SWITCH_GEAR_DOWN = 8;
 	
-	public static final int ULTRASONIC_TRIGGER = 0; //temp
-	public static final int ULTRASONIC_ECHO = 1; //temp
+	public static final int ULTRASONIC_TRIGGER = 2; //temp
+	public static final int ULTRASONIC_ECHO = 3; //temp
 }

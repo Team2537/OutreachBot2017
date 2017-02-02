@@ -19,7 +19,8 @@ public class DriveSubsystem extends Subsystem {
 	private Ultrasonic ultron = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
-	public int ultronRange = 12;
+	public int ultronFarRange = 12; // temp
+	public int ultronCloseRange = 6; // temp
 
 	public DriveSubsystem() {
 		ultron.setAutomaticMode(true);
@@ -33,8 +34,8 @@ public class DriveSubsystem extends Subsystem {
 		this.setDefaultCommand(dc);
 	}
 
- 	public void registerButtons() {
-	} 
+	public void registerButtons() {
+	}
 
 	/**
 	 * Set left motor to speed
@@ -46,7 +47,6 @@ public class DriveSubsystem extends Subsystem {
 		leftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
 
-	
 	/**
 	 * Set right motor to speed
 	 * 
@@ -55,6 +55,7 @@ public class DriveSubsystem extends Subsystem {
 	public void setRightMotor(double speed) {
 		rightMotor.set(speed * SPEED_MULTIPLIER);
 	}
+
 	/**
 	 * Set front left motor to speed
 	 * 
@@ -64,6 +65,7 @@ public class DriveSubsystem extends Subsystem {
 	public void setfrontLeftMotor(double speed) {
 		frontLeftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
+
 	/**
 	 * Set front left motor to speed
 	 * 
@@ -71,9 +73,9 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 */
 	public void setfrontRightMotor(double speed) {
-	frontRightMotor.set(speed * SPEED_MULTIPLIER);
+		frontRightMotor.set(speed * SPEED_MULTIPLIER);
 	}
-	
+
 	/**
 	 * Gets value based on direction left joy stick is pressed
 	 * 
@@ -100,7 +102,7 @@ public class DriveSubsystem extends Subsystem {
 			return leftJoystickValue;
 		else
 			return 0;
-	} 
+	}
 
 	/**
 	 * Gets value based on direction right joy stick is pressed
@@ -115,7 +117,7 @@ public class DriveSubsystem extends Subsystem {
 		else
 			return 0;
 	}
-	
+
 	public double getUltron() {
 		return ultron.getRangeInches();
 	}
