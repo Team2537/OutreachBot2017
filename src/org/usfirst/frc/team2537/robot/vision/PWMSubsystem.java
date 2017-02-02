@@ -4,8 +4,12 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class PWMSubsystem extends Subsystem {
-    Counter count;
+    private static final Counter count = new Counter(5);
     final double frequency = 191.9;
+    
+    public PWMSubsystem(){
+        count.setSemiPeriodMode(true);
+    }
    
     public double getDutyCycle() {
         double dutyCycle = count.getPeriod()*frequency;
@@ -16,7 +20,6 @@ public class PWMSubsystem extends Subsystem {
  
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        count = new Counter(0);
-        count.setSemiPeriodMode(true);
+        
     }
 }
