@@ -19,7 +19,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void initialize() {
-//		System.out.println("Climber is running");
+		// System.out.println("Climber is running");
 		/*
 		 * climbStartTime = System.currentTimeMillis();
 		 * System.out.println("The climber is running");
@@ -40,14 +40,14 @@ public class ClimberCommand extends Command {
 		 * Robot.climberSys.setCLimberMotor(longClimbTimems); startedLongClimb =
 		 * true; }
 		 */
-		// if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
-		// System.out.println("The rope is within range");
-		// }
-		// if (Robot.climberSys.getClimberPressureSensor()) {
-		// System.out.println("The Pressure Sensor is pressed");
-		// Robot.climberSys.setCLimberMotor(0);
-		// } else {
-		if (Robot.climberSys.getXboxTrigger(3) > 0) {
+		/*
+		 * if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
+		 * System.out.println("The rope is within range"); }
+		 */
+		if (Robot.climberSys.getClimberPressureSensor()) {
+			System.out.println("The Pressure Sensor is pressed");
+			Robot.climberSys.setClimberMotor(0);
+		} else if (Robot.climberSys.getXboxTrigger(3) > 0) {
 			Robot.climberSys.setClimberMotor(Robot.climberSys.getXboxTrigger(3));
 		} else if (Robot.climberSys.getXboxTrigger(2) > 0) {
 			Robot.climberSys.setClimberMotor(-1 * Robot.climberSys.getXboxTrigger(2));
@@ -55,6 +55,7 @@ public class ClimberCommand extends Command {
 		} else {
 			Robot.climberSys.setClimberMotor(0);
 		}
+
 		/*
 		 * if (Robot.climberSys.getXboxTrigger(3) > 0.1) { if
 		 * (Robot.climberSys.getClimber1Velocity() == 0) {
@@ -85,12 +86,12 @@ public class ClimberCommand extends Command {
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
-//		System.out.println("The climber is done");
+		// System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);
-//		System.out.println("The climber has been interrupted");
+		// System.out.println("The climber has been interrupted");
 	}
 }
