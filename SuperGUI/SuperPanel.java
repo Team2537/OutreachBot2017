@@ -23,7 +23,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Panel
- * 
+ *
  * @author Arden Zhang
  *
  */
@@ -46,7 +46,8 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		addMouseWheelListener(this);
-		setPreferredSize(new Dimension((int) (SuperGUI.FIELD_LENGTH * SuperGUI.SCALE), (int) (SuperGUI.FIELD_WIDTH * SuperGUI.SCALE)));
+		setPreferredSize(new Dimension((int) (SuperGUI.FIELD_LENGTH * SuperGUI.SCALE),
+				(int) (SuperGUI.FIELD_WIDTH * SuperGUI.SCALE)));
 		snap = false;
 		mousePos = new Point(0, 0);
 		frame = 0;
@@ -86,7 +87,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		g.setColor(new Color(255, 0, 255));
 		g.drawOval(mousePos.x - mouseSize / 2, mousePos.y - mouseSize / 2, mouseSize, mouseSize);
 
-		if (frame >= 0 && frame <= SuperGUI.FIELD_LENGTH + 1)  {
+		if (frame >= 0 && frame <= SuperGUI.FIELD_LENGTH + 1) {
 			try {
 				Thread.sleep(animationGap);
 			} catch (InterruptedException e) {
@@ -105,14 +106,8 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		if (k.getKeyCode() == snapKey) snap = !snap;
 		if (k.getKeyCode() == KeyEvent.VK_ENTER) {
 			System.out.println("Course================" + bot.getNumBots());
-			String s = (String)JOptionPane.showInputDialog(
-                    jframe,
-                    "Complete the sentence:\n",
-                    "File Name",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    "");
+			String s = (String) JOptionPane.showInputDialog(jframe, "Complete the sentence:\n", "File Name",
+					JOptionPane.PLAIN_MESSAGE, null, null, "");
 			File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + s + ".java");
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
@@ -121,8 +116,8 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 				writer.write("import edu.wpi.first.wpilibj.command.CommandGroup;\n");
 				writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n");
 				writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n\n");
-				writer.write("public class "+ s +" extends CommandGroup {\n");
-				writer.write("\tpublic "+ s +"(){\n");
+				writer.write("public class " + s + " extends CommandGroup {\n");
+				writer.write("\tpublic " + s + "(){\n");
 				SuperPoint.printCourse(bot, SuperGUI.ROBOT_START_ANGLE, writer);
 				writer.write("\t}\n");
 				writer.write("}\n");
@@ -164,8 +159,9 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void mouseClicked(MouseEvent m) {
-		if (SwingUtilities.isRightMouseButton(m)) return;
-		if (bot == null) bot = new SuperBot(mousePos);
+		if (SwingUtilities.isRightMouseButton(m)) {
+			if (bot != null) if (bot.contains(mousePos) == -1) bot.point(mousePos); // point
+		} else if (bot == null) bot = new SuperBot(mousePos);
 		else bot.add(mousePos);
 		repaint();
 	}
