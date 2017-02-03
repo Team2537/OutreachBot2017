@@ -1,4 +1,4 @@
-package cameras;
+package org.usfirst.frc.team2537.robot.cameras;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
