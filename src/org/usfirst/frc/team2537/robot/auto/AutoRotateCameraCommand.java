@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotateCameraCommand extends Command {
 	private AHRS ahrs;
-	private double destinationDuty;
-
 	
-	private static final double DEFAULT_SPEED = 0.2;
-	private static final double MINIMUM_SPEED = 0.06;
-	private static final double SLOWDOWN_DUTY = 0.7;
-	private static final double TOLERANCE = 1; // degrees
+	//values are from 0 to 1 (0 is left of camera, 1 is right)
+	private static final double DESTINATION_DUTY = 0.5;
+	private static final double DEFAULT_SPEED = 0.15;
+	private static final double MINIMUM_SPEED = 0.0;
+	private static final double SLOWDOWN_DUTY = 0.5; //distance value from destination
+	private static final double TOLERANCE = 0.025;
 
 	private double speed;
 
@@ -27,7 +27,6 @@ public class AutoRotateCameraCommand extends Command {
 	public AutoRotateCameraCommand() {
 		requires(Robot.driveSys);
 		ahrs = Robot.driveSys.getAhrs();
-		this.destinationDuty = 0.5;
 		speed = DEFAULT_SPEED;
 	}
 
@@ -37,20 +36,20 @@ public class AutoRotateCameraCommand extends Command {
 
 	@Override
 	protected void execute() {
-		double currentDuty = Robot.pwm.getDutyCycle();
-		
-		//System.out.println("Current Angle: "+(currentAngle-startAngle));
-		if (currentDuty <= destinationDuty - TOLERANCE)
+		double currentDuty;
+		if(Robot.pwm.getDutyCycle()<= 1){
+			currentDuty = Robot.pwm.getDutyCycle();
+		}
+		else{
+			currentDuty = 1;
+		}
+		if (currentDuty >= DESTINATION_DUTY - TOLERANCE)
 			Robot.driveSys.setDriveMotors(-speed, speed);
-		if (currentDuty >= destinationDuty + TOLERANCE)
+		if (currentDuty <= DESTINATION_DUTY + TOLERANCE)
 			Robot.driveSys.setDriveMotors(speed, -speed);
-		//distance between relative destination angle and relative angle from start over the relative destination angle
-		//e.g. (dest 90, curr 45) ratio = (90-45)/90 = 0.5
-		//      resulatant speed = 0.5*DEFAULT_SPEED + MINIMUM_SPEED
 		
-		//System.out.println("Ratio: "+Math.abs((destinationAngle-currentAngle-startAngle)/SLOWDOWN_ANGLE));
-		speed = Math.abs((destinationDuty-currentDuty)/SLOWDOWN_DUTY)*DEFAULT_SPEED+MINIMUM_SPEED;
-		//System.out.println("AutoRotateCommand :" + speed);
+		speed = Math.abs((DESTINATION_DUTY-currentDuty)/SLOWDOWN_DUTY)*DEFAULT_SPEED+MINIMUM_SPEED;
+		//System.out.println("AutoRotateCameraCommand :" + speed);
 		if(speed>DEFAULT_SPEED){
 			speed = DEFAULT_SPEED;
 		}
