@@ -14,7 +14,7 @@ public class ClimberKillCommand extends Command {
 	protected void initialize() {
 
 		Robot.climberSys.setClimberMotor(0);
-		System.out.println("Climber is dead");
+//		System.out.println("Climber is dead");
 	}
 		
 

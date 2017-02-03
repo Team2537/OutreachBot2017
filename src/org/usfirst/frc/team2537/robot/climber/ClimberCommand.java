@@ -19,7 +19,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		System.out.println("Climber is running");
+//		System.out.println("Climber is running");
 		/*
 		 * climbStartTime = System.currentTimeMillis();
 		 * System.out.println("The climber is running");
@@ -85,12 +85,12 @@ public class ClimberCommand extends Command {
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
-		System.out.println("The climber is done");
+//		System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);
-		System.out.println("The climber has been interrupted");
+//		System.out.println("The climber has been interrupted");
 	}
 }
