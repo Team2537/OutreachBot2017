@@ -3,6 +3,7 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 
 import cameras.Cameras;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -19,6 +20,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	public static Cameras cams;
 	public static ClimberSubsystem climberSys;
+	public static ShooterSubsystem shooterSys;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -29,6 +31,9 @@ public class Robot extends IterativeRobot {
 		driveSys.initDefaultCommand();
 		
 		cams = new Cameras();
+
+		shooterSys = new ShooterSubsystem();
+		shooterSys.registerButtons();
 	}
 
 	/**
