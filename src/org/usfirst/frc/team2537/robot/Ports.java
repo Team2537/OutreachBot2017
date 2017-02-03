@@ -32,7 +32,7 @@ public final class Ports {
 		// Climber
 		CLIMBER_MOTOR_1 = 9,
 		CLIMBER_MOTOR_2 = 10,
-		ELECTROMAGNET_RELAY_PORT=0;
+		ELECTROMAGNET_RELAY_PORT = 0,
 		
 		/////// PWM Output ///////
 		//SHOOTER_SERVO = 1,
@@ -46,8 +46,7 @@ public final class Ports {
 		//DRIVE_ULTRASONIC_ECHO = 4,
 		//SHOOTER_SIDE_LIDAR_SENSOR_INPUT_PORT = 5,
 		//SHOOTER_SIDE_LIDAR_SENSOR_TRIGGER_PORT = 6,
-		//RASP_PI_HORIZONTAL = 8,
-		//RASP_PI_VERTICAL = 9;
+		RASP_PI = 9;
 	
 	public static final String
 	

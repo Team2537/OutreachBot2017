@@ -1,9 +1,8 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.maps.Straight;
+import org.usfirst.frc.team2537.robot.auto.AutoRotateCameraCommand;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
-import org.usfirst.frc.team2537.robot.vision.TargetAlign;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -52,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new TargetAlign(0));
+		Scheduler.getInstance().add(new AutoRotateCameraCommand());
 		System.out.println("Autonomous start");
 	}
 
