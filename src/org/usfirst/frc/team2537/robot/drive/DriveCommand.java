@@ -24,9 +24,7 @@ public class DriveCommand extends Command {
 		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick());
 		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick());
 		
-		
-		System.out.println(Robot.driveSys.getLeftEncoderCount());
-		System.out.println(Robot.driveSys.getLeftEncoderVelocity());
+	
 		
 	}
 	

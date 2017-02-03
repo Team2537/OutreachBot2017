@@ -32,6 +32,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void execute() {
+
 		/*
 		 * if (System.currentTimeMillis() - climbStartTime > shortClimbTimems &&
 		 * !startedLongClimb) { Robot.climberSys.setCLimberMotor(.75);
@@ -46,32 +47,27 @@ public class ClimberCommand extends Command {
 		// System.out.println("The Pressure Sensor is pressed");
 		// Robot.climberSys.setCLimberMotor(0);
 		// } else {
+		if (Robot.climberSys.getXboxTrigger(3) > 0) {
+			Robot.climberSys.setClimberMotor(Robot.climberSys.getXboxTrigger(3));
+		} else if (Robot.climberSys.getXboxTrigger(2) > 0) {
+			Robot.climberSys.setClimberMotor(-1 * Robot.climberSys.getXboxTrigger(2));
 
-		if (Robot.climberSys.getXboxTrigger(3) > 0.1) {
-			if (Robot.climberSys.getClimber1Velocity() == 0) {
-				System.out.println("Climber Motor One is Offline");
-			}
-			if (Robot.climberSys.getClimber2Velocity() == 0) {
-				System.out.println("Climber Motor Two is Offline");
-			}
-			Robot.climberSys.setClimberMotor1(Robot.climberSys.getXboxTrigger(3));
-			Robot.climberSys.setClimberMotor2(Robot.climberSys.getXboxTrigger(3));
-		} else if (Robot.climberSys.getXboxTrigger(2) > 0.1) {
-			if (Robot.climberSys.getClimber1Velocity() == 0) {
-				System.out.println("Climber Motor One is offline");
-			}
-			if (Robot.climberSys.getClimber2Velocity() == 0) {
-				System.out.println("Climber Motor One is offline");
-			}
-			Robot.climberSys.setClimberMotor1(-1 * Robot.climberSys.getXboxTrigger(2));
-			Robot.climberSys.setClimberMotor1(-1 * Robot.climberSys.getXboxTrigger(2));
-		} else if (Robot.climberSys.getClimberMotorOneLimitswitch()) {
-			Robot.climberSys.setClimberMotor1(0);
-			Robot.climberSys.setClimberMotor2(0);
-		} else if (Robot.climberSys.getClimberMotorTwoLimitswitch()) {
-			Robot.climberSys.setClimberMotor1(0);
-			Robot.climberSys.setClimberMotor2(0);
+		} else {
+			Robot.climberSys.setClimberMotor(0);
 		}
+		/*
+		 * if (Robot.climberSys.getXboxTrigger(3) > 0.1) { if
+		 * (Robot.climberSys.getClimber1Velocity() == 0) {
+		 * System.out.println("Motor one is offline"); } if
+		 * (Robot.climberSys.getClimber2Velocity() == 0) {
+		 * System.out.println("Climber Motor Two is Offline"); }
+		 * 
+		 * } else if (Robot.climberSys.getXboxTrigger(2) > 0.1) { if
+		 * (Robot.climberSys.getClimber1Velocity() == 0) {
+		 * System.out.println("Climber Motor One is offline"); } if
+		 * (Robot.climberSys.getClimber2Velocity() == 0) {
+		 * System.out.println("Climber Motor One is offline"); }
+		 */
 	}
 	// }
 
@@ -88,15 +84,13 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.climberSys.setClimberMotor1(0);
-		Robot.climberSys.setClimberMotor2(0);
+		Robot.climberSys.setClimberMotor(0);
 		System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.climberSys.setClimberMotor1(0);
-		Robot.climberSys.setClimberMotor2(0);
+		Robot.climberSys.setClimberMotor(0);
 		System.out.println("The climber has been interrupted");
 	}
 }

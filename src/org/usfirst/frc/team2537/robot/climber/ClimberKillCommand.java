@@ -13,8 +13,7 @@ public class ClimberKillCommand extends Command {
 
 	protected void initialize() {
 
-		Robot.climberSys.setClimberMotor1(0);
-		Robot.climberSys.setClimberMotor2(0);
+		Robot.climberSys.setClimberMotor(0);
 		System.out.println("Climber is dead");
 	}
 		
@@ -36,13 +35,11 @@ public class ClimberKillCommand extends Command {
 	
 	@Override
 	protected void end() {
-		Robot.climberSys.setClimberMotor1(0);
-		Robot.climberSys.setClimberMotor2(0);
+		Robot.climberSys.setClimberMotor(0);
 	}
 	
 	@Override
 	protected void interrupted() {
-		Robot.climberSys.setClimberMotor1(0);
-		Robot.climberSys.setClimberMotor2(0);
+		Robot.climberSys.setClimberMotor(0);
 	}
 }

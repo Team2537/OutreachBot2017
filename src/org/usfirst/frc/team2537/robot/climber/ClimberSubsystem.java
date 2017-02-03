@@ -5,6 +5,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -18,10 +19,12 @@ public class ClimberSubsystem extends Subsystem {
 																		// for
 																		// climber
 	protected static final double SPEED_MULTIPLIER = 1;
-	private static final double DEADZONE_THRESHOLD = 0.1;
+	private static final double DEADZONE_THRESHOLD = 0;
 	
 	public ClimberSubsystem() {
 		ropeCheck.setAutomaticMode(true);
+		climberMotor2.changeControlMode(TalonControlMode.Follower);
+		climberMotor2.set(Ports.CLIMBER_MOTOR_ONE);
 	}
 
 //	public int getEncoderVelocity() {
@@ -43,14 +46,6 @@ public class ClimberSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 	}
 	
-	public boolean getClimberMotorOneLimitswitch(){
-		return climberMotor1.isFwdLimitSwitchClosed();
-	}
-	
-	public boolean getClimberMotorTwoLimitswitch(){
-		return climberMotor2.isFwdLimitSwitchClosed();
-	}
-	
 	public double getClimber1Velocity(){
 		return Robot.climberSys.climberMotor1.getAnalogInVelocity();
 	}
@@ -65,12 +60,8 @@ public class ClimberSubsystem extends Subsystem {
 
 	}
 
-	public void setClimberMotor1(double speed) {
+	public void setClimberMotor(double speed) {
 		climberMotor1.set(speed * SPEED_MULTIPLIER);
-	}
-	
-	public void setClimberMotor2(double speed) {
-		climberMotor2.set(speed * SPEED_MULTIPLIER); 
 	}
 
 	public double getXboxTrigger(int axis) {
