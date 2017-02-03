@@ -12,15 +12,15 @@ public class DriveCommand extends Command {
 	public DriveCommand(){
 		requires(Robot.driveSys);
 	}
-	
+
 	@Override
 	protected void initialize() {
-		
+
 	}
 
 	protected void execute() {
-		Robot.driveSys.setLeftMotors(Robot.driveSys.getLeftJoystick(AxisType.kY));
-		Robot.driveSys.setRightMotors(Robot.driveSys.getRightJoystick(AxisType.kY));
+		Robot.driveSys.setLeftMotors(Robot.driveSys.getLeftJoystick());
+		Robot.driveSys.setRightMotors(Robot.driveSys.getRightJoystick());
 	}
 	
 
@@ -40,5 +40,4 @@ public class DriveCommand extends Command {
 		Robot.driveSys.setLeftMotors(0);
 		Robot.driveSys.setRightMotors(0);
 	}
-
 }

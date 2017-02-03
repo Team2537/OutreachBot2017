@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
-
 	private CANTalon backLeftMotor = new CANTalon(Ports.BACK_LEFT_MOTOR);
 	private CANTalon backRightMotor = new CANTalon(Ports.BACK_RIGHT_MOTOR);
 	private CANTalon frontLeftMotor = new CANTalon(Ports.FRONT_LEFT_MOTOR);
@@ -68,8 +67,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getLeftJoystick(AxisType axis) {
-		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
+	public double getLeftJoystick() {
+		double leftJoystickValue = HumanInput.leftJoystick.getAxis(AxisType.kY);
 		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
 			return leftJoystickValue;
 		else
@@ -82,8 +81,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getRightJoystick(AxisType axis) {
-		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
+	public double getRightJoystick() {
+		double rightJoystickValue = HumanInput.rightJoystick.getAxis(AxisType.kY);
 		
 		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD) return rightJoystickValue;
 		

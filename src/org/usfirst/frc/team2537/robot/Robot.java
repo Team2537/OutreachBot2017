@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import cameras.Cameras;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	public static Cameras cams;
+	public static ClimberSubsystem climberSys;
 
 	/**
 	 * This function is run when the robot is first started up and should be
