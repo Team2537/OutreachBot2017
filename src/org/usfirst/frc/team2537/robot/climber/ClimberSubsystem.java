@@ -54,7 +54,7 @@ public class ClimberSubsystem extends Subsystem {
 		return Robot.climberSys.climberMotor2.getAnalogInVelocity();
 	}
 
-	public void registerButtons() { // registers sbuttons
+	public void registerButtons() { // registers buttons
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
 
