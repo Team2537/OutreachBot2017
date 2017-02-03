@@ -18,7 +18,6 @@ public class DriveCommand extends Command {
 		
 	}
 
-	@Override
 	protected void execute() {
 		Robot.driveSys.setLeftMotors(Robot.driveSys.getLeftJoystick(AxisType.kY));
 		Robot.driveSys.setRightMotors(Robot.driveSys.getRightJoystick(AxisType.kY));
@@ -27,10 +26,8 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return false;  
+		return false;
 	}
-		
-		
 
 	@Override
 	protected void end() {
