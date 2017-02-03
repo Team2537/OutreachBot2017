@@ -29,12 +29,8 @@ import javax.swing.SwingUtilities;
  */
 public class SuperPanel extends JPanel implements KeyListener, MouseMotionListener, MouseListener, MouseWheelListener {
 
-	/**
-	 * I hate java warnings. Therefore, I shall generate a default serial version UID.
-	 */
-	private static final long serialVersionUID = 1L;
 	private static final int mouseSize = 8; // pixels
-	private static final int animationGap = 6; // ms
+	private static final int animationGap = 3; // ms
 	private static final int snapKey = KeyEvent.VK_SPACE;
 	private Image field;
 	private boolean snap;
@@ -90,7 +86,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		g.setColor(new Color(255, 0, 255));
 		g.drawOval(mousePos.x - mouseSize / 2, mousePos.y - mouseSize / 2, mouseSize, mouseSize);
 
-		if (frame >= 0 && frame <= SuperGUI.FIELD_LENGTH) {
+		if (frame >= 0 && frame <= SuperGUI.FIELD_LENGTH + 1)  {
 			try {
 				Thread.sleep(animationGap);
 			} catch (InterruptedException e) {
@@ -106,7 +102,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void keyPressed(KeyEvent k) {
-		if (k.getKeyCode() == snapKey) snap = true;
+		if (k.getKeyCode() == snapKey) snap = !snap;
 		if (k.getKeyCode() == KeyEvent.VK_ENTER) {
 			System.out.println("Course================" + bot.getNumBots());
 			String s = (String)JOptionPane.showInputDialog(
@@ -142,7 +138,6 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void keyReleased(KeyEvent k) {
-		if (k.getKeyCode() == snapKey) snap = false;
 		repaint();
 	}
 
