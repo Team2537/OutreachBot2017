@@ -12,8 +12,17 @@ public class SuperPoint {
 	public static void printCourse(SuperBot bot, double currentAngle, BufferedWriter writer) {
 		if (bot == null)
 			throw new IllegalArgumentException("Null bot");
-		if (bot.getNext() == null)
+		if (bot.getNext() == null){
+			if(bot.getMode() != null){
+				try {
+					writer.write(bot.getMode().codesnippet);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			return;
+		}
 
 		int y2 = bot.getNext().getPoint().y;
 		int x2 = bot.getNext().getPoint().x;
@@ -33,7 +42,9 @@ public class SuperPoint {
 		try {
 			writer.write("\t\taddSequential(new AutoRotateCommand("+angleDiff+"));\n");
 			writer.write("\t\taddSequential(new CourseCorrect("+ distance +"));\n");
+
 			if(bot.getMode() != null){
+				System.out.println(bot.getMode().codesnippet);
 				writer.write(bot.getMode().codesnippet);
 			}
 		} catch (IOException e) {

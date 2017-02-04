@@ -63,7 +63,7 @@ public class SuperPanel extends JPanel implements KeyListener,
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(field, 0, 0, null);
-		g.drawImage(mode.image, 0, 0,50,50, null);
+		g.drawImage(mode.image, 0, 0, 50, 50, null);
 
 		if (bot != null)
 			bot.draw(g, botTransparency);
@@ -117,33 +117,42 @@ public class SuperPanel extends JPanel implements KeyListener,
 		if (k.getKeyCode() == KeyEvent.VK_ENTER) {
 			System.out.println("Course================" + bot.getNumBots());
 			String s = (String) JOptionPane.showInputDialog(jframe,
-					"Complete the sentence:\n", "File Name",
+					"Enter map name:\n", "File Name",
 					JOptionPane.PLAIN_MESSAGE, null, null, "");
-			File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + s
-					+ ".java");
-			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
-				writer.flush();
-				writer.write("package org.usfirst.frc.team2537.maps;\n\n");
-				writer.write("import edu.wpi.first.wpilibj.command.CommandGroup;\n");
-				writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n");
-				writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n\n");
-				writer.write("public class " + s + " extends CommandGroup {\n");
-				writer.write("\tpublic " + s + "(){\n");
-				SuperPoint.printCourse(bot, SuperGUI.ROBOT_START_ANGLE, writer);
-				writer.write("\t}\n");
-				writer.write("}\n");
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (s != null) {
+				File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\"
+						+ s + ".java");
+				try {
+					BufferedWriter writer = new BufferedWriter(new FileWriter(
+							fl));
+					writer.flush();
+					writer.write("package org.usfirst.frc.team2537.maps;\n\n");
+					writer.write("import edu.wpi.first.wpilibj.command.CommandGroup;\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCameraCommand;\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.UltraSonicCourseCorrect;\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n\n");
+					writer.write("public class " + s
+							+ " extends CommandGroup {\n");
+					writer.write("\tpublic " + s + "(){\n");
+					SuperPoint.printCourse(bot, SuperGUI.ROBOT_START_ANGLE,
+							writer);
+					writer.write("\t}\n");
+					writer.write("}\n");
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+
 		}
 		if (k.getKeyCode() == KeyEvent.VK_M) {
 			SuperEnum[] enumVals = SuperEnum.values();
 
 			for (int i = 0; i < enumVals.length; i++) {
-				if(enumVals[i] == mode){
-					mode = enumVals[(i+1)%(enumVals.length)];
+				if (enumVals[i] == mode) {
+					mode = enumVals[(i + 1) % (enumVals.length)];
 					break;
 				}
 			}
@@ -187,16 +196,15 @@ public class SuperPanel extends JPanel implements KeyListener,
 	@Override
 	public void mouseClicked(MouseEvent m) {
 		if (SwingUtilities.isRightMouseButton(m)) {
-			if (bot != null){
-				if (bot.contains(mousePos) == -1){
+			if (bot != null) {
+				if (bot.contains(mousePos) == -1) {
 					bot.point(mousePos); // point
-				}
-				else{
-					System.out.println(mode+" "+ bot.contains(mousePos));
-					bot.setMode(mode,bot.contains(mousePos));
+				} else {
+					System.out.println(mode + " " + bot.contains(mousePos));
+					bot.setMode(mode, bot.contains(mousePos));
 				}
 			}
-				
+
 		} else if (bot == null)
 			bot = new SuperBot(mousePos);
 		else

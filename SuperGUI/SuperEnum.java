@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 
 public enum SuperEnum {
-	GEAR("GEAR.png","\t\taddSequential(AutoRotateCameraCommand());\n\t\taddSequential(new UltraSonicCourseCorrect())\n"), SHOOT("SHOOT.png","\t\taddSequential(AutoRotateCameraCommand());\n\t\taddSequential(new Shoot())\n");
+	GEAR("GEAR.png","\t\taddSequential(new AutoRotateCameraCommand());\n\t\taddSequential(new UltraSonicCourseCorrect(0));\n"), SHOOT("SHOOT.png","\t\taddSequential(AutoRotateCameraCommand());\n\t\taddSequential(new Shoot())\n");
 	Image image;
 	String codesnippet;
 	SuperEnum(String filename, String code){

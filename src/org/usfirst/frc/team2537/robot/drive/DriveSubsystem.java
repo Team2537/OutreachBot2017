@@ -30,8 +30,8 @@ public class DriveSubsystem extends Subsystem {
 												// resetEncoders)
 
 	// Atlas encoder code
-	public Encoder lencoder = new Encoder(3, 4);
-	public Encoder rencoder = new Encoder(0, 1);
+	public Encoder lencoder = new Encoder(4 ,5);
+	public Encoder rencoder = new Encoder(6, 7);
 	public Ultrasonic ultraSanic = new Ultrasonic(2,3); 
 
 	private AHRS ahrs;
