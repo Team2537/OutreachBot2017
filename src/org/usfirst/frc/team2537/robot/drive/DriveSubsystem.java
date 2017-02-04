@@ -76,7 +76,7 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getLeftJoystick(AxisType axis) {
+	public double getLeftJoystick(AxisType axis) { 
 		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
 		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
 			return leftJoystickValue;

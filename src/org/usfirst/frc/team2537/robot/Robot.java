@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot {   
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
@@ -46,11 +46,11 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 
 		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam", 0);
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
 			camera.setResolution(640, 480);
 
 			CvSink cvSink = CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("Cogsworth", 640, 480);
+			CvSource outputStream = CameraServer.getInstance().putVideo("cam0", 640, 480); 
 
 			Mat source = new Mat();
 			Mat output = new Mat();
@@ -59,15 +59,36 @@ public class Robot extends IterativeRobot {
 				cvSink.grabFrame(source);
 				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
 				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(0, 35, 255), 1);
-				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1);
+				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1); 
 				outputStream.putFrame(source); 
+				
 			}
 		}).start();
+
+/*		new Thread(() -> {
+			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
+			camera1.setResolution(640, 480);
+
+			CvSink cvSink = CameraServer.getInstance().getVideo();
+			CvSource outputStream = CameraServer.getInstance().putVideo("cam1", 640, 480);
+
+			Mat source = new Mat();
+			Mat output = new Mat();
+
+			while (!Thread.interrupted()) {
+				cvSink.grabFrame(source);
+				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(255, 35, 0), 1);
+				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(255, 35, 0), 1);
+				outputStream.putFrame(source);  
+			}
+			
+		}).start();*/
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
+	 * This autonomous (along with the chooser code above) shows how to select  
+	 * between different autonomous modes using the dashboard. The sendable 
 	 * chooser code works with the Java SmartDashboard. If you prefer the
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
 	 * getString line to get the auto name from the text box below the Gyro
@@ -93,7 +114,7 @@ public class Robot extends IterativeRobot {
 			break;
 		case defaultAuto:
 		default:
-			// Put default auto code here
+			// Put default auto code here    
 			break;
 		}
 	}
@@ -111,4 +132,4 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 
 	}
-}
+}                           
