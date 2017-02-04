@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -56,7 +57,7 @@ public class ClimberCommand extends Command {
 		}
 		writer.println("Time (ms),Current (amps)");
 		startTime = System.currentTimeMillis();
-		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(6));
+		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
 	}
 
 	@Override
@@ -95,15 +96,15 @@ public class ClimberCommand extends Command {
 		 * (Robot.climberSys.getClimber2Velocity() == 0) { System.out.println(
 		 * "Climber Motor One is offline"); }
 		 */
-		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(6));
-		System.out.println(Robot.pdp.getCurrent(6));
+		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
+		System.out.println(Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
 
 	}
 	// }
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > 11; //TODO this number almost definetly isn't right. Measure # on actual robot
 	}
 
 	@Override

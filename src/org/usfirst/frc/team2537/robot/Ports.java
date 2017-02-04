@@ -4,10 +4,10 @@ public class Ports {
 	//TODO: Change ports to line up with actual ports
 	
 	// Drive Talon Ports
-	public static final int FRONT_LEFT_MOTOR = 1, FRONT_RIGHT_MOTOR = 2, BACK_LEFT_MOTOR = 3, BACK_RIGHT_MOTOR = 4;
+	public static final int FRONT_LEFT_MOTOR = 5, FRONT_RIGHT_MOTOR = 6, BACK_LEFT_MOTOR = 7, BACK_RIGHT_MOTOR = 8;
 
 	// Mechanism Talon Ports
-	public static final int CLIMBER_MOTOR_ONE = 0, CLIMBER_MOTOR_TWO = 62;
+	public static final int CLIMBER_MOTOR_ONE = 1, CLIMBER_MOTOR_TWO = 2;
 
 	public static final int SLOW_SHOOTER = 3, FAST_SHOOTER = 4;
 
@@ -23,5 +23,8 @@ public class Ports {
 	public static final int ULTRASONIC_TRIGGER = 2, ULTRASONIC_ECHO = 3;
 
 	public static final int CLIMBER_PRESSURE_SENSOR = 0;
+	
+	// PDP ports
+	public static final int CLIMBER_MOTOR_PDP_CHANNEL = 6;
 
 }
