@@ -1,17 +1,10 @@
 
 package org.usfirst.frc.team2537.robot;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team2537.robot.cameras.Cameras;
+import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.gear.GearSubsystem;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -23,11 +16,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
 	public static DriveSubsystem driveSys;
-	public static GearSubsystem gearSys;
+	public static ClimberSubsystem climberSys;
+	public static ShooterSubsystem shooterSys;
+	public static Cameras cams;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -36,31 +28,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
-		driveSys.registerButtons();
 		
-		gearSys = new GearSubsystem();
-		gearSys.registerButtons();
+		shooterSys = new ShooterSubsystem();
+		shooterSys.registerButtons();
 		
-
-		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
-			camera.setResolution(640, 480);
-
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("cam0", 640, 480); 
-
-			Mat source = new Mat();
-			Mat output = new Mat();
-
-			while (!Thread.interrupted()) {
-				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(0, 35, 255), 1);
-				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1); 
-				outputStream.putFrame(source); 
-				
-			}
-		}).start();
+		climberSys = new ClimberSubsystem();
+		climberSys.registerButtons();
+		
+		cams = new Cameras();
 	}
 
 	/**
@@ -74,24 +49,15 @@ public class Robot extends IterativeRobot {
 	 * switch structure below with additional strings. If using the
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
-    public void autonomousInit() {
-//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+	public void autonomousInit() {
+
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
+		
 	}
 
 	/**

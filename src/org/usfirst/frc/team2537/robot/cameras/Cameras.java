@@ -1,4 +1,4 @@
-package cameras;
+package org.usfirst.frc.team2537.robot.cameras;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -11,6 +11,9 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 
 public class Cameras {
+
+	private int driveCloseRange = 6, driveFarRange = 9;
+
 	public Cameras() {
 		new Thread(() -> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam", 0);
@@ -25,11 +28,12 @@ public class Cameras {
 			while (!Thread.interrupted()) {
 				cvSink.grabFrame(source);
 				output = source;
-				if (Robot.driveSys.getUltron() < Robot.driveSys.ultronFarRange
-						&& !(Robot.driveSys.getUltron() < Robot.driveSys.ultronCloseRange)) {
-					Core.add(source, new Scalar(0, 100, 0), output);
-				} else if (Robot.driveSys.getUltron() < Robot.driveSys.ultronCloseRange) {
-					Core.add(source, new Scalar(0, 0, 100), output);
+				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
+					if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
+						Core.add(source, new Scalar(0, 100, 0), output);
+					} else {
+						Core.add(source, new Scalar(0, 0, 100), output);
+					}
 				}
 				outputStream.putFrame(output);
 			}
