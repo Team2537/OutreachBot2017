@@ -73,7 +73,7 @@ public class ClimberCommand extends Command {
 		 */
 		if (Robot.climberSys.getClimberPressureSensor()) {
 			//System.out.println("The Pressure Sensor is pressed");
-			Robot.climberSys.setClimberMotor(0);
+//			Robot.climberSys.setClimberMotor(0);
 		} else if (Robot.climberSys.getXboxTrigger(3) > 0) {
 			Robot.climberSys.setClimberMotor(-Robot.climberSys.getXboxTrigger(3));
 		} else {
