@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class PWMSubsystem extends Subsystem {
 
-    private static final Counter count = new Counter(5);
+    private static final Counter count = new Counter(Ports.RASP_PI);
     final double frequency = 191.9;
     
     public PWMSubsystem(){
