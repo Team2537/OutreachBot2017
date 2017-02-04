@@ -7,6 +7,7 @@ import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
@@ -21,15 +22,17 @@ public class Robot extends IterativeRobot {
 	public static Cameras cams;
 	public static ClimberSubsystem climberSys;
 	public static ShooterSubsystem shooterSys;
+	public static PowerDistributionPanel pdp;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
+	@Override
 	public void robotInit() {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
-		
+
 		cams = new Cameras();
 
 		shooterSys = new ShooterSubsystem();
@@ -47,6 +50,7 @@ public class Robot extends IterativeRobot {
 	 * switch structure below with additional strings. If using the
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
+	@Override
 	public void autonomousInit() {
 
 	}
@@ -54,13 +58,15 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
+	@Override
 	public void autonomousPeriodic() {
-		
+
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
+	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	}
@@ -68,6 +74,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode
 	 */
+	@Override
 	public void testPeriodic() {
 
 	}
