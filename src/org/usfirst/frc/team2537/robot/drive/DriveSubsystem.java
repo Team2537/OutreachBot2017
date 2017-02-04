@@ -5,24 +5,24 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
-
-	private CANTalon leftMotor = new CANTalon(Ports.LEFT_MOTOR);
-	private CANTalon rightMotor = new CANTalon(Ports.RIGHT_MOTOR);
+	private CANTalon backLeftMotor = new CANTalon(Ports.BACK_LEFT_MOTOR);
+	private CANTalon backRightMotor = new CANTalon(Ports.BACK_RIGHT_MOTOR);
 	private CANTalon frontLeftMotor = new CANTalon(Ports.FRONT_LEFT_MOTOR);
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
+
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
-
+	
+	private Ultrasonic driveUltrasonic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
+	
 	public DriveSubsystem() {
-
+		driveUltrasonic.setAutomaticMode(true);
 	}
-
-	DigitalInput limitSwitch = new DigitalInput(Ports.LIMIT_SWITCH_BUTTON);
 
 	@Override
 	public void initDefaultCommand() {
@@ -30,17 +30,15 @@ public class DriveSubsystem extends Subsystem {
 		this.setDefaultCommand(dc);
 	}
 
-	public void registerButtons() {
-	}
-
 	/**
-	 * Set left motor to speed
+	 * Set left motor to speed; inverted due to wiring
 	 * 
 	 * @param speed
 	 * 
 	 */
-	public void setLeftMotor(double speed) {
-		leftMotor.set(-speed * SPEED_MULTIPLIER); 
+	public void setLeftMotors(double speed) {
+		backLeftMotor.set(-speed * SPEED_MULTIPLIER);
+		frontLeftMotor.set(-speed * SPEED_MULTIPLIER);
 	}
 
 	/**
@@ -48,28 +46,19 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 * @param speed
 	 */
-	public void setRightMotor(double speed) {
-		rightMotor.set(speed * SPEED_MULTIPLIER);
-	}
-
-	/**
-	 * Set front left motor to speed
-	 * 
-	 * @param speed
-	 * 
-	 */
-	public void setfrontLeftMotor(double speed) {
-		frontLeftMotor.set(-speed * SPEED_MULTIPLIER);
-	}
-
-	/**
-	 * Set front left motor to speed
-	 * 
-	 * @param speed
-	 * 
-	 */
-	public void setfrontRightMotor(double speed) {
+	public void setRightMotors(double speed) {
+		backRightMotor.set(-speed * SPEED_MULTIPLIER);
 		frontRightMotor.set(speed * SPEED_MULTIPLIER);
+	}
+	
+	/**
+	 * Set both motors to speed
+	 * 
+	 * @param speed
+	 */
+	public void setMotors(double speed) {
+		setLeftMotors(speed);
+		setRightMotors(speed);
 	}
 
 	/**
@@ -78,8 +67,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getLeftJoystick(AxisType axis) { 
-		double leftJoystickValue = HumanInput.leftJoystick.getAxis(axis);
+	public double getLeftJoystick() {
+		double leftJoystickValue = HumanInput.leftJoystick.getAxis(AxisType.kY);
 		if (Math.abs(leftJoystickValue) > DEADZONE_THRESHOLD)
 			return leftJoystickValue;
 		else
@@ -92,21 +81,23 @@ public class DriveSubsystem extends Subsystem {
 	 * @param axis
 	 * @return
 	 */
-	public double getRightJoystick(AxisType axis) {
-		double rightJoystickValue = HumanInput.rightJoystick.getAxis(axis);
-		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
-			return rightJoystickValue;
-		else
-			return 0;
+	public double getRightJoystick() {
+		double rightJoystickValue = HumanInput.rightJoystick.getAxis(AxisType.kY);
+		
+		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD) return rightJoystickValue;
+		
+		return 0;
 	}
 
 	public double getLeftEncoderCount() {
-		return leftMotor.getEncPosition();
+		return backLeftMotor.getEncPosition();
 	}
 	
 	public double getLeftEncoderVelocity() {
-		return leftMotor.getEncVelocity();
+		return backLeftMotor.getEncVelocity();
 	}
-		
-		
+	
+	public double getUltrasonic() {
+		return driveUltrasonic.getRangeInches();
+	}
 }

@@ -1,23 +1,13 @@
 
 package org.usfirst.frc.team2537.robot;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team2537.robot.cameras.Cameras;
+import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import java.util.Scanner;
-import java.util.Scanner; 
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -25,46 +15,28 @@ import java.util.Scanner;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {   
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
-	SendableChooser chooser;
+public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
+	public static Cameras cams;
+	public static ClimberSubsystem climberSys;
+	public static ShooterSubsystem shooterSys;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
-
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
-		driveSys.registerButtons();
-
-		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
-			camera.setResolution(640, 480);
-
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("cam0", 640, 480); 
-
-			Mat source = new Mat();
-			Mat output = new Mat();
-
-			while (!Thread.interrupted()) {
-				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(0, 35, 255), 1);
-				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1); 
-				outputStream.putFrame(source);   
-				
-			}
-		}).start();
+		
+		shooterSys = new ShooterSubsystem();
+		shooterSys.registerButtons();
+		
+		climberSys = new ClimberSubsystem();
+		climberSys.registerButtons();
+		
+		cams = new Cameras();
+	}
 
 /*		new Thread(() -> {
 			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
@@ -85,10 +57,6 @@ public class Robot extends IterativeRobot {
 			}
 			
 		}).start();*/
-	}
-	 public static void  main(String[] args){   
-	 UsbCamera camera	 
-	 }
 	 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select  
@@ -102,25 +70,14 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoSelected = (String) chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here    
-			break;
-		}
+
 	}
 
 	/**
