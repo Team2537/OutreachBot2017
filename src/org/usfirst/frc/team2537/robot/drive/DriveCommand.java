@@ -26,22 +26,9 @@ public class DriveCommand extends Command {
 		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
 		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
 		
-		if (System.currentTimeMillis() - startTime > 5000) {
-			System.out.println(Robot.driveSys.getLeftEncoderCount());
-			System.out.println(Robot.driveSys.getLeftEncoderDirection()); 
-			System.out.println(Robot.driveSys.getLeftEncoderDistance());
-			System.out.println(Robot.driveSys.getLeftEncoderRate());
-			System.out.println(Robot.driveSys.getLeftEncoderRaw());
-			System.out.println(Robot.driveSys.getLeftEncoderStopped());
-			
-			System.out.println(Robot.driveSys.getRightEncoderCount());
-			System.out.println(Robot.driveSys.getRightEncoderDirection());
-			System.out.println(Robot.driveSys.getRightEncoderDistance());
-			System.out.println(Robot.driveSys.getRightEncoderRate());
-			System.out.println(Robot.driveSys.getRightEncoderRaw());
-			System.out.println(Robot.driveSys.getRightEncoderStopped());
-			startTime = System.currentTimeMillis();
-		}
+		
+		System.out.println(Robot.driveSys.getLeftEncoderCount());
+		System.out.println(Robot.driveSys.getLeftEncoderVelocity());
 		
 	}
 	
