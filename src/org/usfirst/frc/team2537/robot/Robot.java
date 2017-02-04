@@ -32,11 +32,16 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
+		
+		climberSys = new ClimberSubsystem();
+		climberSys.registerButtons();
 
 		cams = new Cameras();
 
 		shooterSys = new ShooterSubsystem();
 		shooterSys.registerButtons();
+		
+		pdp = new PowerDistributionPanel();
 	}
 
 	/**

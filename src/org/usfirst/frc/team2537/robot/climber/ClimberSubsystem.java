@@ -22,7 +22,7 @@ public class ClimberSubsystem extends Subsystem {
 	private static final double DEADZONE_THRESHOLD = 0;
 	
 	public ClimberSubsystem() {
-		ropeCheck.setAutomaticMode(true);
+
 		climberMotor2.changeControlMode(TalonControlMode.Follower);
 		climberMotor2.set(Ports.CLIMBER_MOTOR_ONE);
 	}
@@ -32,15 +32,11 @@ public class ClimberSubsystem extends Subsystem {
 //	}
 
 	private DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
-	private Ultrasonic ropeCheck = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 
 	public boolean getClimberPressureSensor() {
 		return climberPressureSensor.get();
 	}
 
-	public double getRopeCheck() {
-		return ropeCheck.getRangeInches();
-	}
 
 	@Override
 	public void initDefaultCommand() {
