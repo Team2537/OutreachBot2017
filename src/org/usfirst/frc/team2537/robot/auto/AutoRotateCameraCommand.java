@@ -11,9 +11,9 @@ public class AutoRotateCameraCommand extends Command {
 	
 	//values are from 0 to 1 (0 is left of camera, 1 is right)
 	private static final double DESTINATION_DUTY = 0.5;
-	private static final double DEFAULT_SPEED = 0.15;
-	private static final double MINIMUM_SPEED = 0.0;
-	private static final double SLOWDOWN_DUTY = 0.5; //distance value from destination
+	private static final double DEFAULT_SPEED = 0.1;
+	private static final double MINIMUM_SPEED = 0.06;
+	private static final double SLOWDOWN_DUTY = 0.7; //distance value from destination
 	private static final double TOLERANCE = 0.025;
 
 	private double speed;
@@ -57,8 +57,9 @@ public class AutoRotateCameraCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		double currentDuty = Robot.pwm.getDutyCycle();
-		return (currentDuty <= destinationDuty + TOLERANCE && currentDuty >= destinationDuty - TOLERANCE);
+		return false;
+		//double currentDuty = Robot.pwm.getDutyCycle();
+		//return (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE);
 	}
 
 	@Override

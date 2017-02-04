@@ -33,6 +33,9 @@ public class SuperPoint {
 		try {
 			writer.write("\t\taddSequential(new AutoRotateCommand("+angleDiff+"));\n");
 			writer.write("\t\taddSequential(new CourseCorrect("+ distance +"));\n");
+			if(bot.getMode() != null){
+				writer.write(bot.getMode().codesnippet);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

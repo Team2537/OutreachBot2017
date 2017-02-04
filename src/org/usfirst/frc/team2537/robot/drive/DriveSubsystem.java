@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
@@ -15,13 +16,14 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon talonFrontRight;
 	private CANTalon talonBackRight;
 	private CANTalon talonBackLeft;
+
 	private boolean drivingStraight;
 	private boolean driveLowerSpeed;
 	private boolean reversed;
 	public static final double WHEEL_DIAMETER = 8.25; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 180; // for encoders
+	public static final double PulsesPerRevolution = 20; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -30,6 +32,7 @@ public class DriveSubsystem extends Subsystem {
 	// Atlas encoder code
 	public Encoder lencoder = new Encoder(3, 4);
 	public Encoder rencoder = new Encoder(0, 1);
+	public Ultrasonic ultraSanic = new Ultrasonic(2,3); 
 
 	private AHRS ahrs;
 

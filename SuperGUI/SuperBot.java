@@ -1,13 +1,17 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
 
 public class SuperBot {
 
 	private SuperBot next;
 	private Point p;
-	private double angle;
+	private final double angle;
+	private SuperEnum mode = null;
 	private int alpha;
 
 	/**
@@ -17,6 +21,7 @@ public class SuperBot {
 	 *            - position of the last bot in the chain
 	 */
 	public SuperBot(Point p) {
+		this.angle = 550;
 		this.p = (Point) p.clone();
 		next = null;
 		alpha = 255;
@@ -54,10 +59,8 @@ public class SuperBot {
 			next.point(p);
 			return;
 		}
-		double tmpAngle = Math.atan2(p.y - this.p.y, p.x - this.p.x);
-		System.out.println(tmpAngle);
-		System.out.println(this.p);
-		System.out.println(p);
+		double tmpAngle = -Math.atan2(p.y - this.p.y, p.x - this.p.x);
+
 		next = new SuperBot(this.p, tmpAngle);
 	}
 
@@ -124,7 +127,18 @@ public class SuperBot {
 
 	public void draw(Graphics g, int alpha) {
 		this.alpha = alpha;
-
+		// draw mode of robot
+		if(mode != null){
+			Graphics2D g2d = (Graphics2D)g;
+			AffineTransform identity = new AffineTransform();
+			AffineTransform trans = new AffineTransform();
+			trans.setTransform(identity);
+			trans.translate(p.x-SuperGUI.ROBOT_WIDTH*SuperGUI.SCALE, p.y-SuperGUI.ROBOT_LENGTH*SuperGUI.SCALE);
+			//trans.rotate(angle, p.x, p.y);
+			trans.scale(0.1, 0.1);
+			Image image = mode.image;
+			g2d.drawImage(image, trans, null);
+		}
 		if (next != null && !next.p.equals(p)) {
 			double angle = Math.atan2(-next.p.y + p.y, next.p.x - p.x);
 
@@ -186,9 +200,8 @@ public class SuperBot {
 				(int) (SuperGUI.SCALE * SuperGUI.ROBOT_DIAMETER), (int) (SuperGUI.SCALE * SuperGUI.ROBOT_DIAMETER));
 
 		if (next != null) {
-			double angle = next.p.equals(p) ? this.angle
-					: Math.atan2(-next.getPoint().y + p.y, next.getPoint().x - p.x);
-
+			double angle = next.p.equals(p) ? 
+					next.angle:Math.atan2(-next.getPoint().y + p.y, next.getPoint().x - p.x);
 			// draw square for bot
 			g.setColor(new Color(0, 255, 0, botAlpha));
 			double cornerAngle = Math.atan2(SuperGUI.ROBOT_WIDTH, SuperGUI.ROBOT_LENGTH);
@@ -209,7 +222,6 @@ public class SuperBot {
 									* Math.sin(Math.PI + angle - cornerAngle)) },
 
 					4);
-
 			// draw arrow within bot
 			g.setColor(new Color(0, 0, 255, botAlpha));
 			double distance = SuperGUI.ROBOT_DIAMETER * SuperGUI.SCALE / 2.0;
@@ -246,5 +258,18 @@ public class SuperBot {
 
 	public SuperBot getNext() {
 		return next;
+	}
+
+	public SuperEnum getMode() {
+		return mode;
+	}
+
+	public void setMode(SuperEnum mode, int index) {
+		if(index>0){
+			next.setMode(mode, index-1);
+		}
+		else{
+			this.mode = mode;
+		}
 	}
 }

@@ -27,11 +27,13 @@ import javax.swing.SwingUtilities;
  * @author Arden Zhang
  *
  */
-public class SuperPanel extends JPanel implements KeyListener, MouseMotionListener, MouseListener, MouseWheelListener {
+public class SuperPanel extends JPanel implements KeyListener,
+		MouseMotionListener, MouseListener, MouseWheelListener {
 
 	private static final int mouseSize = 8; // pixels
 	private static final int animationGap = 3; // ms
 	private static final int snapKey = KeyEvent.VK_SPACE;
+	private SuperEnum mode = SuperEnum.GEAR;
 	private Image field;
 	private boolean snap;
 	private Point mousePos;
@@ -42,11 +44,13 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	public SuperPanel() {
 		field = new ImageIcon("SuperGUI/FIELD.jpg").getImage();
+		SuperEnum[] enumVals = SuperEnum.values();
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		addMouseWheelListener(this);
-		setPreferredSize(new Dimension((int) (SuperGUI.FIELD_LENGTH * SuperGUI.SCALE),
+		setPreferredSize(new Dimension(
+				(int) (SuperGUI.FIELD_LENGTH * SuperGUI.SCALE),
 				(int) (SuperGUI.FIELD_WIDTH * SuperGUI.SCALE)));
 		snap = false;
 		mousePos = new Point(0, 0);
@@ -59,8 +63,10 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(field, 0, 0, null);
+		g.drawImage(mode.image, 0, 0,50,50, null);
 
-		if (bot != null) bot.draw(g, botTransparency);
+		if (bot != null)
+			bot.draw(g, botTransparency);
 
 		Color line = new Color(0, 255, 255);
 		Color xFill = new Color(255, 255, 255, 40);
@@ -81,11 +87,14 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		}
 
 		if (snap) {
-			if (frame <= SuperGUI.FIELD_LENGTH) frame++;
-		} else if (frame >= 0) frame--;
+			if (frame <= SuperGUI.FIELD_LENGTH)
+				frame++;
+		} else if (frame >= 0)
+			frame--;
 
-		g.setColor(new Color(255, 0, 255));
-		g.drawOval(mousePos.x - mouseSize / 2, mousePos.y - mouseSize / 2, mouseSize, mouseSize);
+		g.setColor(new Color(255, 255, 0));
+		g.drawOval(mousePos.x - mouseSize, mousePos.y - mouseSize,
+				mouseSize * 2, mouseSize * 2);
 
 		if (frame >= 0 && frame <= SuperGUI.FIELD_LENGTH + 1) {
 			try {
@@ -103,12 +112,15 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void keyPressed(KeyEvent k) {
-		if (k.getKeyCode() == snapKey) snap = !snap;
+		if (k.getKeyCode() == snapKey)
+			snap = !snap;
 		if (k.getKeyCode() == KeyEvent.VK_ENTER) {
 			System.out.println("Course================" + bot.getNumBots());
-			String s = (String) JOptionPane.showInputDialog(jframe, "Complete the sentence:\n", "File Name",
+			String s = (String) JOptionPane.showInputDialog(jframe,
+					"Complete the sentence:\n", "File Name",
 					JOptionPane.PLAIN_MESSAGE, null, null, "");
-			File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + s + ".java");
+			File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + s
+					+ ".java");
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
 				writer.flush();
@@ -126,8 +138,18 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 				e.printStackTrace();
 			}
 		}
+		if (k.getKeyCode() == KeyEvent.VK_M) {
+			SuperEnum[] enumVals = SuperEnum.values();
 
-		if (k.getKeyCode() == KeyEvent.VK_ESCAPE) quit();
+			for (int i = 0; i < enumVals.length; i++) {
+				if(enumVals[i] == mode){
+					mode = enumVals[(i+1)%(enumVals.length)];
+					break;
+				}
+			}
+		}
+		if (k.getKeyCode() == KeyEvent.VK_ESCAPE)
+			quit();
 		repaint();
 	}
 
@@ -140,7 +162,8 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	public void mouseMoved(MouseEvent m) {
 		mousePos.x = m.getX();
 		mousePos.y = m.getY();
-		if (snap) mousePos = snap(mousePos);
+		if (snap)
+			mousePos = snap(mousePos);
 		repaint();
 	}
 
@@ -148,11 +171,15 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		int x = p.x;
 		int y = p.y;
 
-		if (x % SuperGUI.SCALE > SuperGUI.SCALE / 2) x += SuperGUI.SCALE - x % SuperGUI.SCALE;
-		else x -= x % SuperGUI.SCALE;
+		if (x % SuperGUI.SCALE > SuperGUI.SCALE / 2)
+			x += SuperGUI.SCALE - x % SuperGUI.SCALE;
+		else
+			x -= x % SuperGUI.SCALE;
 
-		if (y % SuperGUI.SCALE > SuperGUI.SCALE / 2) y += SuperGUI.SCALE - y % SuperGUI.SCALE;
-		else y -= y % SuperGUI.SCALE;
+		if (y % SuperGUI.SCALE > SuperGUI.SCALE / 2)
+			y += SuperGUI.SCALE - y % SuperGUI.SCALE;
+		else
+			y -= y % SuperGUI.SCALE;
 
 		return new Point(x, y);
 	}
@@ -160,28 +187,44 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	@Override
 	public void mouseClicked(MouseEvent m) {
 		if (SwingUtilities.isRightMouseButton(m)) {
-			if (bot != null) if (bot.contains(mousePos) == -1) bot.point(mousePos); // point
-		} else if (bot == null) bot = new SuperBot(mousePos);
-		else bot.add(mousePos);
+			if (bot != null){
+				if (bot.contains(mousePos) == -1){
+					bot.point(mousePos); // point
+				}
+				else{
+					System.out.println(mode+" "+ bot.contains(mousePos));
+					bot.setMode(mode,bot.contains(mousePos));
+				}
+			}
+				
+		} else if (bot == null)
+			bot = new SuperBot(mousePos);
+		else
+			bot.add(mousePos);
 		repaint();
 	}
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent m) {
 		botTransparency -= 10 * m.getPreciseWheelRotation();
-		if (botTransparency > 255) botTransparency = 255;
-		if (botTransparency < 0) botTransparency = 0;
+		if (botTransparency > 255)
+			botTransparency = 255;
+		if (botTransparency < 0)
+			botTransparency = 0;
 		repaint();
 	}
 
 	@Override
-	public void keyTyped(KeyEvent k) {}
+	public void keyTyped(KeyEvent k) {
+	}
 
 	@Override
-	public void mousePressed(MouseEvent m) {}
+	public void mousePressed(MouseEvent m) {
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent m) {}
+	public void mouseReleased(MouseEvent m) {
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent m) {
@@ -189,9 +232,11 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent m) {}
+	public void mouseEntered(MouseEvent m) {
+	}
 
 	@Override
-	public void mouseExited(MouseEvent m) {}
+	public void mouseExited(MouseEvent m) {
+	}
 
 }
