@@ -11,7 +11,6 @@ public class PWMSubsystem extends Subsystem {
     final double frequency = 191.9;
     
     public PWMSubsystem(){
-
         count.setSemiPeriodMode(true);
     }
    
