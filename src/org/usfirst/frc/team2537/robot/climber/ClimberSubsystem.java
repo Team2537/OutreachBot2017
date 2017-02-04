@@ -8,12 +8,12 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem {
 
-	private CANTalon climberMotor1 = new CANTalon(Ports.CLIMBER_MOTOR_ONE); // creates
+	private Talon climberMotor1 = new Talon(Ports.CLIMBER_MOTOR_ONE); // creates
 	private CANTalon climberMotor2 = new CANTalon(Ports.CLIMBER_MOTOR_TWO);																	// Talon
 																		// motor
 																		// for
@@ -42,9 +42,9 @@ public class ClimberSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 	}
 	
-	public double getClimber1Velocity(){
+	/*public double getClimber1Velocity(){
 		return Robot.climberSys.climberMotor1.getAnalogInVelocity();
-	}
+	}*/
 	
 	public double getClimber2Velocity(){
 		return Robot.climberSys.climberMotor2.getAnalogInVelocity();

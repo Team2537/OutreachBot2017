@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 		climberSys = new ClimberSubsystem();
 		climberSys.registerButtons();
 
-		cams = new Cameras();
+//		cams = new Cameras();
 
 		shooterSys = new ShooterSubsystem();
 		shooterSys.registerButtons();
