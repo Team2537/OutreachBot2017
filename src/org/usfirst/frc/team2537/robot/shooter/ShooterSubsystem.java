@@ -21,8 +21,8 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterOnButton, new ShooterCommand());
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterOffButton, new ShooterOffCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOnButton, new ShooterCommand(false));
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOffButton, new ShooterCommand(true));
 	}
 
 	@Override
@@ -31,18 +31,19 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	/**
-	 * Sets all 2 flywheels to speed SPEED
+	 * sets both flywheels to their respective speeds
 	 */
-	public void FlyOn() {
+	public void flyOn() {
 		slowMotor.set(SLOW_SPEED);
 		fastMotor.set(FAST_SPEED);
 	}
 
 	/**
-	 * Sets all 2 Flywheels to speed 0
+	 * turns both flywheels off
 	 */
-	public void FlyOff() {
+	public void flyOff() {
 		slowMotor.set(0);
 		fastMotor.set(0);
 	}
+	
 }
