@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
 				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(0, 35, 255), 1);
 				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1); 
-				outputStream.putFrame(source); 
+				outputStream.putFrame(source);   
 				
 			}
 		}).start();
