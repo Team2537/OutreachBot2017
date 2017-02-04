@@ -27,7 +27,7 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void initialize() {
 		if (shooterOff) {
-			Robot.shooterSys.flyOff();
+			Robot.shooterSys.flyOff(); //TODO: Repeatability test
 		} else {
 			Robot.shooterSys.flyOn();
 		}

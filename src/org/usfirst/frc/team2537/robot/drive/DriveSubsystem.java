@@ -47,8 +47,8 @@ public class DriveSubsystem extends Subsystem {
 	 * @param speed
 	 */
 	public void setRightMotors(double speed) {
-		backRightMotor.set(speed * SPEED_MULTIPLIER);
-		frontRightMotor.set(-speed * SPEED_MULTIPLIER);
+		backRightMotor.set(-speed * SPEED_MULTIPLIER);
+		frontRightMotor.set(speed * SPEED_MULTIPLIER);
 	}
 	
 	/**

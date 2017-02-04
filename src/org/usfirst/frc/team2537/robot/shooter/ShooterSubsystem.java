@@ -3,18 +3,17 @@ package org.usfirst.frc.team2537.robot.shooter;
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
-import com.ctre.CANTalon;
-
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
 
 	public static final double FAST_SPEED = 1;
-	public static final double SLOW_SPEED = .5;
+	public static final double SLOW_SPEED = 1;
 	public static final int LEEWAY = 1;
 	public static final int DISTANCE_TO_BOILER = 10;
-	private CANTalon slowMotor = new CANTalon(Ports.SLOW_SHOOTER);
-	private CANTalon fastMotor = new CANTalon(Ports.FAST_SHOOTER);
+	private Talon slowMotor = new Talon(Ports.SLOW_SHOOTER);
+	private Talon fastMotor = new Talon(Ports.FAST_SHOOTER);
 
 	public ShooterSubsystem() {
 

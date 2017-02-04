@@ -5,16 +5,16 @@ import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem {
 
-	private CANTalon climberMotor1 = new CANTalon(Ports.CLIMBER_MOTOR_ONE); // creates
-	private CANTalon climberMotor2 = new CANTalon(Ports.CLIMBER_MOTOR_TWO);																	// Talon
+	private Talon climberMotor1 = new Talon(Ports.CLIMBER_MOTOR_ONE); // creates
+//	private CANTalon climberMotor2 = new CANTalon(Ports.CLIMBER_MOTOR_TWO);																	// Talon
 																		// motor
 																		// for
 																		// climber
@@ -22,9 +22,8 @@ public class ClimberSubsystem extends Subsystem {
 	private static final double DEADZONE_THRESHOLD = 0;
 	
 	public ClimberSubsystem() {
-		ropeCheck.setAutomaticMode(true);
-		climberMotor2.changeControlMode(TalonControlMode.Follower);
-		climberMotor2.set(Ports.CLIMBER_MOTOR_ONE);
+//		climberMotor2.changeControlMode(TalonControlMode.Follower);
+//		climberMotor2.set(Ports.CLIMBER_MOTOR_ONE);
 	}
 
 //	public int getEncoderVelocity() {
@@ -32,27 +31,22 @@ public class ClimberSubsystem extends Subsystem {
 //	}
 
 	private DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
-	private Ultrasonic ropeCheck = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 
 	public boolean getClimberPressureSensor() {
-		return climberPressureSensor.get();
-	}
-
-	public double getRopeCheck() {
-		return ropeCheck.getRangeInches();
+		return !climberPressureSensor.get(); //TODO: Ask electrical to fix wiring
 	}
 
 	@Override
 	public void initDefaultCommand() {
 	}
 	
-	public double getClimber1Velocity(){
-		return Robot.climberSys.climberMotor1.getAnalogInVelocity();
-	}
+//	public double getClimber1Velocity(){
+//		return Robot.climberSys.climberMotor1.getAnalogInVelocity();
+//	}
 	
-	public double getClimber2Velocity(){
-		return Robot.climberSys.climberMotor2.getAnalogInVelocity();
-	}
+//	public double getClimber2Velocity(){
+//		return Robot.climberSys.climberMotor2.getAnalogInVelocity();
+//	}
 
 	public void registerButtons() { // registers buttons
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
