@@ -2,6 +2,8 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.gear.GearSubsystem;
@@ -41,11 +43,11 @@ public class Robot extends IterativeRobot {
 		
 
 		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam", 0);
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
 			camera.setResolution(640, 480);
 
 			CvSink cvSink = CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("Cogsworth", 640, 480);
+			CvSource outputStream = CameraServer.getInstance().putVideo("cam0", 640, 480); 
 
 			Mat source = new Mat();
 			Mat output = new Mat();
@@ -53,7 +55,10 @@ public class Robot extends IterativeRobot {
 			while (!Thread.interrupted()) {
 				cvSink.grabFrame(source);
 				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-				outputStream.putFrame(output);
+				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(0, 35, 255), 1);
+				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(0, 35, 255), 1); 
+				outputStream.putFrame(source); 
+				
 			}
 		}).start();
 	}
