@@ -58,8 +58,8 @@ public class AutoRotateCameraCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		double currentDuty = ahrs.getAngle();
-		return false;//(currentDuty <= destinationDuty + TOLERANCE && currentDuty >= destinationDuty - TOLERANCE);
+		double currentDuty = Robot.pwm.getDutyCycle();
+		return (currentDuty <= destinationDuty + TOLERANCE && currentDuty >= destinationDuty - TOLERANCE);
 	}
 
 	@Override
