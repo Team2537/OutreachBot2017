@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
 	
+	long startTime = System.currentTimeMillis();
+	
 	public DriveCommand(){
 		requires(Robot.driveSys);
 	}
@@ -23,7 +25,13 @@ public class DriveCommand extends Command {
 		Robot.driveSys.setfrontLeftMotor(Robot.driveSys.getLeftJoystick(AxisType.kY));
 		Robot.driveSys.setRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
 		Robot.driveSys.setfrontRightMotor(Robot.driveSys.getRightJoystick(AxisType.kY));
+		
+		
+		System.out.println(Robot.driveSys.getLeftEncoderCount());
+		System.out.println(Robot.driveSys.getLeftEncoderVelocity());
+		
 	}
+	
 
 	@Override
 	protected boolean isFinished() {
