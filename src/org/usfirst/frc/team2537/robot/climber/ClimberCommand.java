@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2537.robot.climber;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -8,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.StringJoiner;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
@@ -23,31 +21,13 @@ public class ClimberCommand extends Command {
 	private boolean startedLongClimb;
 	private int ropeRange = 2; // range away from ultrasonic that rope is
 
-	private String filename; // name of file to write current/time to (ex.
-								// climberstats20170204_113440.csv)
-	private Path dataPath; // used to check if the file already exists (it
-							// shouldn't exist)
-	private StringJoiner current; // list of currents (amperes)
-	private StringJoiner time; // list of times since start of command
-								// (milliseconds)
+	private String filename; // name of file to write current/time to (ex. /home/lvuser/climberstats20170204_113440.csv)
+	private Path dataPath; // used to check if the file already exists (it shouldn't exist)
+	private PrintWriter writer;
 	private long startTime; // time the command initializes
 
 	public ClimberCommand() {
 		requires(Robot.climberSys);
-		
-
-		filename = "/home/lvuser/climberstats"
-				+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".csv";
-		dataPath = Paths.get(filename);
-		if (Files.exists(dataPath))
-			System.out.println("File " + dataPath + " already exists. It shouldn't.");
-		try {
-			Files.createFile(dataPath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		time = new StringJoiner(",");
-		current = new StringJoiner(",");
 	}
 
 	@Override
@@ -60,9 +40,21 @@ public class ClimberCommand extends Command {
 		 * System.out.println("The climber is running slowly"); startedLongClimb
 		 * = false;
 		 */
+		filename = "/home/lvuser/climberstats" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".csv";
+		dataPath = Paths.get(filename);
+		if (Files.exists(dataPath)) {
+			System.out.println("File " + dataPath + " already exists. It shouldn't.");
+		}
+		
+		try {
+			Files.createFile(dataPath);
+			writer = new PrintWriter(filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		writer.println("Time (ms),Current (amps)");
 		startTime = System.currentTimeMillis();
-		time.add(System.currentTimeMillis() - startTime + "");
-		current.add(Robot.pdp.getCurrent(12) + "");
+		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(12));
 	}
 
 	@Override
@@ -101,8 +93,6 @@ public class ClimberCommand extends Command {
 		 * System.out.println("Climber Motor One is offline"); }
 		 */
 
-		time.add(System.currentTimeMillis() - startTime + "");
-		current.add(Robot.pdp.getCurrent(6) + "");
 
 	}
 	// }
@@ -115,19 +105,14 @@ public class ClimberCommand extends Command {
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
+		writer.close();
 		 //System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);
-		try (PrintWriter writer = new PrintWriter(filename)) {
-			writer.print(current.toString());
-			writer.println();
-			writer.print(time.toString());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		writer.close();
 		//System.out.println("The climber has been interrupted");
 	}
 }
