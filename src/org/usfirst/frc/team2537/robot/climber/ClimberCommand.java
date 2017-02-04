@@ -21,8 +21,10 @@ public class ClimberCommand extends Command {
 	private boolean startedLongClimb;
 	private int ropeRange = 2; // range away from ultrasonic that rope is
 
-	private String filename; // name of file to write current/time to (ex. /home/lvuser/climberstats20170204_113440.csv)
-	private Path dataPath; // used to check if the file already exists (it shouldn't exist)
+	private String filename; // name of file to write current/time to (ex.
+								// /home/lvuser/climberstats20170204_113440.csv)
+	private Path dataPath; // used to check if the file already exists (it
+							// shouldn't exist)
 	private PrintWriter writer;
 	private long startTime; // time the command initializes
 
@@ -32,7 +34,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		// System.out.println("Climber is running");
+		//System.out.println("Climber is running");
 		/*
 		 * climbStartTime = System.currentTimeMillis();
 		 * System.out.println("The climber is running");
@@ -40,12 +42,13 @@ public class ClimberCommand extends Command {
 		 * System.out.println("The climber is running slowly"); startedLongClimb
 		 * = false;
 		 */
-		filename = "/home/lvuser/climberstats" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".csv";
+		filename = "/home/lvuser/climberstats"
+				+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".csv";
 		dataPath = Paths.get(filename);
 		if (Files.exists(dataPath)) {
 			System.out.println("File " + dataPath + " already exists. It shouldn't.");
 		}
-		
+
 		try {
 			Files.createFile(dataPath);
 			writer = new PrintWriter(filename);
@@ -59,7 +62,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected void execute() {
-		//System.out.println("Climber Running");
+		// System.out.println("Climber Running");
 		/*
 		 * if (System.currentTimeMillis() - climbStartTime > shortClimbTimems &&
 		 * !startedLongClimb) { Robot.climberSys.setCLimberMotor(.75);
@@ -71,10 +74,10 @@ public class ClimberCommand extends Command {
 		 * if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
 		 * System.out.println("The rope is within range"); }
 		 */
-		if (Robot.climberSys.getClimberPressureSensor()) {
-			//System.out.println("The Pressure Sensor is pressed");
-//			Robot.climberSys.setClimberMotor(0);
-		} else if (Robot.climberSys.getXboxTrigger(3) > 0) {
+		/* if (Robot.climberSys.getClimberPressureSensor()) { */
+		// System.out.println("The Pressure Sensor is pressed");
+		// Robot.climberSys.setClimberMotor(0);
+		if (Robot.climberSys.getXboxTrigger(3) > 0) {
 			Robot.climberSys.setClimberMotor(-Robot.climberSys.getXboxTrigger(3));
 		} else {
 			Robot.climberSys.setClimberMotor(0);
@@ -92,7 +95,7 @@ public class ClimberCommand extends Command {
 		 * (Robot.climberSys.getClimber2Velocity() == 0) {
 		 * System.out.println("Climber Motor One is offline"); }
 		 */
-
+		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(12));
 
 	}
 	// }
@@ -100,19 +103,19 @@ public class ClimberCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		return false;
-}
+	}
 
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
 		writer.close();
-		 //System.out.println("The climber is done");
+		//System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);
 		writer.close();
-		//System.out.println("The climber has been interrupted");
+		// System.out.println("The climber has been interrupted");
 	}
 }
