@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
-
+	private long startTime;
 	/**
 	 * constructor that requires Robot.shooterSys
 	 * 
@@ -26,15 +26,27 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void initialize() {
+		startTime = System.currentTimeMillis();
+		
+		
+		
 		if (shooterOff) {
 			Robot.shooterSys.flyOff(); //TODO: Repeatability test
 		} else {
-			Robot.shooterSys.flyOn();
+			Robot.shooterSys.activateFastMotor();
 		}
 	}
 
 	@Override
 	protected void execute() {
+		if (System.currentTimeMillis() - 1500 > startTime){
+			Robot.shooterSys.activateSlowMotor();
+		} /* else if (Robot.shooterSys.getFastVelocity > whateverSpeed) {
+			Robot.shooterSys.acivateSlowMotor();
+		}
+		//Above code also to be used if using an encoder
+		
+		
 		/*
 		 * if (shooterOn && Robot.shooterSys.getLimitSwitch()) { if
 		 * (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER

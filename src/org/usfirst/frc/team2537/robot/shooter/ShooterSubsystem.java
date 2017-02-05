@@ -28,13 +28,21 @@ public class ShooterSubsystem extends Subsystem {
 	protected void initDefaultCommand() {
 
 	}
+	//This comment should be uncommented if using speed to determine when the inner flywheel should be turned on
+	//If using this code, the Talon fastMotor needs to be changed to CANTalon
+	/*public double getFastVelocity(){
+		return fastMotor.getAnalogInVelocity();
+	}*/
 
 	/**
 	 * sets both flywheels to their respective speeds
 	 */
-	public void flyOn() {
-		slowMotor.set(SLOW_SPEED);
+	public void activateFastMotor(){
 		fastMotor.set(FAST_SPEED);
+	}
+	
+	public void activateSlowMotor(){
+		slowMotor.set(SLOW_SPEED);
 	}
 
 	/**
