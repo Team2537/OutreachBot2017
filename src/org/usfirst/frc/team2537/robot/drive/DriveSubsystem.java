@@ -17,9 +17,9 @@ public class DriveSubsystem extends Subsystem {
 
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
-	
+
 	private Ultrasonic driveUltrasonic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
-	
+
 	public DriveSubsystem() {
 		driveUltrasonic.setAutomaticMode(true);
 	}
@@ -50,7 +50,7 @@ public class DriveSubsystem extends Subsystem {
 		backRightMotor.set(speed * SPEED_MULTIPLIER);
 		frontRightMotor.set(-speed * SPEED_MULTIPLIER);
 	}
-	
+
 	/**
 	 * Set both motors to speed
 	 * 
@@ -83,20 +83,21 @@ public class DriveSubsystem extends Subsystem {
 	 */
 	public double getRightJoystick() {
 		double rightJoystickValue = HumanInput.rightJoystick.getAxis(AxisType.kY);
-		
-		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD) return rightJoystickValue;
-		
+
+		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
+			return rightJoystickValue;
+
 		return 0;
 	}
 
 	public double getLeftEncoderCount() {
 		return backLeftMotor.getEncPosition();
 	}
-	
+
 	public double getLeftEncoderVelocity() {
 		return backLeftMotor.getEncVelocity();
 	}
-	
+
 	public double getUltrasonic() {
 		return driveUltrasonic.getRangeInches();
 	}

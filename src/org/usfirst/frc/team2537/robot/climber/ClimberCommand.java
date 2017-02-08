@@ -21,6 +21,7 @@ public class ClimberCommand extends Command {
 	private long climbStartTime;
 	private boolean startedLongClimb;
 	private int ropeRange = 2; // range away from ultrasonic that rope is
+	private int limitCurrent = 11; //TODO this number almost definetly isn't right. Measure # on actual robot
 
 	private String filename; // name of file to write current/time to (ex.
 								// /home/lvuser/climberstats20170204_113440.csv)
@@ -104,7 +105,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > 11; //TODO this number almost definetly isn't right. Measure # on actual robot
+		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > limitCurrent; 
 	}
 
 	@Override
