@@ -30,10 +30,16 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	/**
-	 * sets both flywheels to their respective speeds
+	 * sets the inner flywheel to its speed
 	 */
-	public void flyOn() {
+	public void slowOn() {
 		slowMotor.set(SLOW_SPEED);
+	}
+	
+	/**
+	 * sets the outer flywheel to its speed
+	 */
+	public void fastOn() {
 		fastMotor.set(FAST_SPEED);
 	}
 

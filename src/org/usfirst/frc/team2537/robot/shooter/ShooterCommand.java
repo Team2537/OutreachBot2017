@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
+	private final static int WAIT_TIME = 1;
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -16,20 +17,23 @@ public class ShooterCommand extends Command {
 	 *            are on
 	 */
 	public ShooterCommand(boolean shooterOff) {
+		super(WAIT_TIME);
 		requires(Robot.shooterSys);
 		this.shooterOff = shooterOff;
 	}
 
 	/**
-	 * turns shooter motors on if shooter on button is pressed, or turning them
-	 * off if shooter off button is pressed
+	 * turns both flywheels on, the inner one WAIT_TIME seconds after the outer
+	 * one, in order to allow the outer one to spin up, if the shooter on button
+	 * is pressed, or turns both flywheels off if the shooter off buttons is
+	 * pressed
 	 */
 	@Override
 	protected void initialize() {
 		if (shooterOff) {
-			Robot.shooterSys.flyOff(); //TODO: Repeatability test
+			Robot.shooterSys.flyOff(); // TODO: Repeatability test
 		} else {
-			Robot.shooterSys.flyOn();
+			Robot.shooterSys.fastOn();
 		}
 	}
 
@@ -44,17 +48,16 @@ public class ShooterCommand extends Command {
 		 */
 	}
 
-	/**
-	 * finishes immediately because it only has function in initialize()
-	 * @return
-	 */
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return this.isTimedOut();
 	}
 
 	@Override
 	protected void end() {
+		if (!shooterOff) {
+			Robot.shooterSys.slowOn();
+		}
 	}
 
 	/**

@@ -16,9 +16,7 @@ public class Cameras {
 
 	public Cameras() {
 		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam", 0);
-			camera.setResolution(640, 480);
-
+			
 			CvSink cvSink = CameraServer.getInstance().getVideo();
 			CvSource outputStream = CameraServer.getInstance().putVideo("Cogsworth", 640, 480);
 
