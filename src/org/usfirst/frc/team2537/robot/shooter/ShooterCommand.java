@@ -8,6 +8,7 @@ public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
 	private final static int WAIT_TIME = 1;
+
 	/**
 	 * constructor that requires Robot.shooterSys
 	 * 
@@ -38,14 +39,13 @@ public class ShooterCommand extends Command {
 
 	@Override
 	protected void execute() {
-		/* else if (Robot.shooterSys.getFastVelocity > whateverSpeed) {
-			Robot.shooterSys.acivateSlowMotor();
-		}
-		//Above code also to be used if using an encoder
-		
-		
 		/*
-		 * if (shooterOn && Robot.shooterSys.getLimitSwitch()) { if
+		 * else if (Robot.shooterSys.getFastVelocity > whateverSpeed) {
+		 * Robot.shooterSys.acivateSlowMotor(); } //Above code also to be used
+		 * if using an encoder
+		 * 
+		 * 
+		 * /* if (shooterOn && Robot.shooterSys.getLimitSwitch()) { if
 		 * (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER
 		 * - ShooterSubsystem.LEEWAY && Robot.shooterSys.UltronRange() <
 		 * ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {

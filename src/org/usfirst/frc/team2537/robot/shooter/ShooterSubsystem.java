@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
 
-	public static final double FAST_SPEED = 1;
-	public static final double SLOW_SPEED = 1;
+	public static final double EXTERIOR_SPEED = 5000;
+	public static final double INTERIOR_SPEED = 1;
 	public static final int LEEWAY = 1;
 	public static final int DISTANCE_TO_BOILER = 10;
 	private Talon slowMotor = new Talon(Ports.SLOW_SHOOTER);
@@ -38,18 +38,18 @@ public class ShooterSubsystem extends Subsystem {
 	 * sets the inner flywheel to its speed
 	 */
 	public void slowOn() {
-		slowMotor.set(SLOW_SPEED);
+		slowMotor.set(INTERIOR_SPEED);
 	}
 	
 	/**
 	 * sets the outer flywheel to its speed
 	 */
 	public void fastOn() {
-		fastMotor.set(FAST_SPEED);
+		fastMotor.set(EXTERIOR_SPEED);
 	}
 	
 	public void activateSlowMotor(){
-		slowMotor.set(SLOW_SPEED);
+		slowMotor.set(INTERIOR_SPEED);
 	}
 
 	/**
@@ -59,5 +59,5 @@ public class ShooterSubsystem extends Subsystem {
 		slowMotor.set(0);
 		fastMotor.set(0);
 	}
-	
+
 }
