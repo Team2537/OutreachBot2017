@@ -21,7 +21,8 @@ public class ClimberCommand extends Command {
 	private long climbStartTime;
 	private boolean startedLongClimb;
 	private int ropeRange = 2; // range away from ultrasonic that rope is
-	private int limitCurrent = 11; //TODO this number almost definetly isn't right. Measure # on actual robot
+	private int limitCurrent = 11; // TODO this number almost definetly isn't
+									// right. Measure # on actual robot
 
 	private String filename; // name of file to write current/time to (ex.
 								// /home/lvuser/climberstats20170204_113440.csv)
@@ -58,7 +59,8 @@ public class ClimberCommand extends Command {
 		}
 		writer.println("Time (ms),Current (amps)");
 		startTime = System.currentTimeMillis();
-		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
+		writer.println(
+				System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
 	}
 
 	@Override
@@ -97,7 +99,8 @@ public class ClimberCommand extends Command {
 		 * (Robot.climberSys.getClimber2Velocity() == 0) { System.out.println(
 		 * "Climber Motor One is offline"); }
 		 */
-		writer.println(System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
+		writer.println(
+				System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
 		System.out.println(Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
 
 	}
@@ -105,7 +108,7 @@ public class ClimberCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > limitCurrent; 
+		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > limitCurrent;
 	}
 
 	@Override
