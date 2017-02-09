@@ -11,8 +11,8 @@ public class AutoRotateCommand extends Command {
 	private double destinationAngle, startAngle;
 
 	
-	private static final double DEFAULT_SPEED = 0.2;
-	private static final double MINIMUM_SPEED = 0.06;
+	private static final double DEFAULT_SPEED = 0.5;
+	private static final double MINIMUM_SPEED = 0.3;
 	private static final double SLOWDOWN_ANGLE = 60;
 	private static final double TOLERANCE = 1; // degrees
 
@@ -42,7 +42,7 @@ public class AutoRotateCommand extends Command {
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
 		
-		//System.out.println("Current Angle: "+(currentAngle-startAngle));
+		System.out.println("Current Angle: "+(currentAngle-startAngle));
 		if (currentAngle-startAngle <= destinationAngle - TOLERANCE)
 			Robot.driveSys.setDriveMotors(-speed, speed);
 		if (currentAngle-startAngle >= destinationAngle + TOLERANCE)
@@ -53,9 +53,12 @@ public class AutoRotateCommand extends Command {
 		
 		//System.out.println("Ratio: "+Math.abs((destinationAngle-currentAngle-startAngle)/SLOWDOWN_ANGLE));
 		speed = Math.abs((destinationAngle-(currentAngle-startAngle))/SLOWDOWN_ANGLE)*DEFAULT_SPEED+MINIMUM_SPEED;
-		//System.out.println("AutoRotateCommand :" + speed);
+		System.out.println("AutoRotateCommand :" + speed);
 		if(speed>DEFAULT_SPEED){
 			speed =DEFAULT_SPEED;
+		}
+		else if(speed<MINIMUM_SPEED){
+			speed = MINIMUM_SPEED;
 		}
 	}
 

@@ -16,10 +16,10 @@ public class AutoRotateCameraCommand extends Command {
 
 	// values are from 0 to 1 (0 is left of camera, 1 is right)
 	private static final double DESTINATION_DUTY = 0.5;
-	private static final double DEFAULT_SPEED = 0.2;
-	private static final double MINIMUM_SPEED = 0.065;
+	private static final double DEFAULT_SPEED = 0.4;
+	private static final double MINIMUM_SPEED = 0.2;
 	private static final int SLOWDOWN_POWER = 16;
-	private static final double TOLERANCE = 0.025;
+	private static final double TOLERANCE = 0.02;
 	private static final double KP = 0.05;
 	private static final double KI = 0.00;
 	private static final double KD = 0.01;
