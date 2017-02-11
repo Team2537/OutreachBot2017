@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -25,85 +27,49 @@ import javax.swing.SwingUtilities;
  * Panel
  *
  * @author Arden Zhang
- *
  */
-public class SuperPanel extends JPanel implements KeyListener,
-		MouseMotionListener, MouseListener, MouseWheelListener {
+public class SuperPanel extends JPanel implements KeyListener, MouseMotionListener, MouseListener, MouseWheelListener, ActionListener {
 
 	private static final int mouseSize = 8; // pixels
-	private static final int animationGap = 3; // ms
-	private static final int snapKey = KeyEvent.VK_SPACE;
-	private SuperEnum mode = SuperEnum.GEAR;
+	private static final int toggleFollowCursorKey = KeyEvent.VK_SPACE;
+	private static final int printCourseKey = KeyEvent.VK_ENTER;
+	private static final int exitKey = KeyEvent.VK_ESCAPE;
+
 	private Image field;
-	private boolean snap;
+	private boolean followCursor;
 	private Point mousePos;
-	private int frame;
-	private SuperBot bot;
+	private SuperPoint startingPoint;
 	private int botTransparency;
 	private JFrame jframe;
+	private SuperMenu menu;
 
 	public SuperPanel() {
-		field = new ImageIcon("SuperGUI/FIELD.jpg").getImage();
-		SuperEnum[] enumVals = SuperEnum.values();
+		field = new ImageIcon("SuperGUI\\FIELD.jpg").getImage();
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		addMouseWheelListener(this);
-		setPreferredSize(new Dimension(
-				(int) (SuperGUI.FIELD_LENGTH * SuperGUI.SCALE),
+		setPreferredSize(new Dimension((int) (SuperGUI.FIELD_LENGTH * SuperGUI.SCALE),
 				(int) (SuperGUI.FIELD_WIDTH * SuperGUI.SCALE)));
-		snap = false;
+		followCursor = true;
 		mousePos = new Point(0, 0);
-		frame = 0;
 		botTransparency = 255;
 		jframe = new JFrame();
+		menu = new SuperMenu(this);
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(field, 0, 0, null);
-		g.drawImage(mode.image, 0, 0, 50, 50, null);
 
-		if (bot != null)
-			bot.draw(g, botTransparency);
-
-		Color line = new Color(0, 255, 255);
-		Color xFill = new Color(255, 255, 255, 40);
-		Color yFill = new Color(255, 255, 255, 40);
-
-		for (int i = 0; i < frame; i++) {
-			g.setColor(line);
-			g.drawLine(i * SuperGUI.SCALE, 0, i * SuperGUI.SCALE, getHeight());
-			g.setColor(xFill);
-			g.fillRect(i * SuperGUI.SCALE, 0, SuperGUI.SCALE, getHeight());
+		if (startingPoint != null) {
+			if (followCursor && !menu.isVisible()) startingPoint.point(mousePos);
+			startingPoint.draw(g, botTransparency);
 		}
-
-		for (int j = 0; j < frame / 2; j++) {
-			g.setColor(line);
-			g.drawLine(0, j * SuperGUI.SCALE, getWidth(), j * SuperGUI.SCALE);
-			g.setColor(yFill);
-			g.fillRect(0, j * SuperGUI.SCALE, getWidth(), SuperGUI.SCALE);
-		}
-
-		if (snap) {
-			if (frame <= SuperGUI.FIELD_LENGTH)
-				frame++;
-		} else if (frame >= 0)
-			frame--;
 
 		g.setColor(new Color(255, 255, 0));
-		g.drawOval(mousePos.x - mouseSize, mousePos.y - mouseSize,
-				mouseSize * 2, mouseSize * 2);
-
-		if (frame >= 0 && frame <= SuperGUI.FIELD_LENGTH + 1) {
-			try {
-				Thread.sleep(animationGap);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			repaint();
-		}
+		g.drawOval(mousePos.x - mouseSize, mousePos.y - mouseSize, mouseSize * 2, mouseSize * 2);
 	}
 
 	private void quit() {
@@ -112,32 +78,28 @@ public class SuperPanel extends JPanel implements KeyListener,
 
 	@Override
 	public void keyPressed(KeyEvent k) {
-		if (k.getKeyCode() == snapKey)
-			snap = !snap;
-		if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-			System.out.println("Course================" + bot.getNumBots());
-			String s = (String) JOptionPane.showInputDialog(jframe,
-					"Enter map name:\n", "File Name",
+		if (k.getKeyCode() == toggleFollowCursorKey) followCursor = !followCursor;
+		if (k.getKeyCode() == printCourseKey) {
+			System.out.println("Course================" + startingPoint.getNumBots());
+			String mapName = (String) JOptionPane.showInputDialog(jframe, "Enter map name:\n", "File Name",
 					JOptionPane.PLAIN_MESSAGE, null, null, "");
-			if (s != null) {
-				File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\"
-						+ s + ".java");
+			if (mapName != null) {
+				File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + mapName + ".java");
 				try {
-					BufferedWriter writer = new BufferedWriter(new FileWriter(
-							fl));
+					BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
 					writer.flush();
 					writer.write("package org.usfirst.frc.team2537.maps;\n\n");
-					writer.write("import edu.wpi.first.wpilibj.command.CommandGroup;\n");
 					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n");
-					writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n");
-					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCameraCommand;\n");
-					writer.write("import org.usfirst.frc.team2537.robot.auto.UltraSonicCourseCorrect;\n");
-					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n\n");
-					writer.write("public class " + s
-							+ " extends CommandGroup {\n");
-					writer.write("\tpublic " + s + "(){\n");
-					SuperPoint.printCourse(bot, SuperGUI.ROBOT_START_ANGLE,
-							writer);
+					writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n\n");
+					writer.write("import edu.wpi.first.wpilibj.command.CommandGroup;\n\n");
+					writer.write("public class " + mapName + " extends CommandGroup {\n");
+					writer.write("\tpublic " + mapName + "() {\n");
+					
+					if(startingPoint.getPoint().x < SuperGUI.FIELD_LENGTH*SuperGUI.SCALE/2)
+						SuperPrinter.printCourse(startingPoint, 0, writer);
+					else
+						SuperPrinter.printCourse(startingPoint, 180, writer);
+					
 					writer.write("\t}\n");
 					writer.write("}\n");
 					writer.close();
@@ -147,18 +109,7 @@ public class SuperPanel extends JPanel implements KeyListener,
 			}
 
 		}
-		if (k.getKeyCode() == KeyEvent.VK_M) {
-			SuperEnum[] enumVals = SuperEnum.values();
-
-			for (int i = 0; i < enumVals.length; i++) {
-				if (enumVals[i] == mode) {
-					mode = enumVals[(i + 1) % (enumVals.length)];
-					break;
-				}
-			}
-		}
-		if (k.getKeyCode() == KeyEvent.VK_ESCAPE)
-			quit();
+		if (k.getKeyCode() == exitKey) quit();
 		repaint();
 	}
 
@@ -171,68 +122,61 @@ public class SuperPanel extends JPanel implements KeyListener,
 	public void mouseMoved(MouseEvent m) {
 		mousePos.x = m.getX();
 		mousePos.y = m.getY();
-		if (snap)
-			mousePos = snap(mousePos);
+		if (startingPoint != null && !followCursor) mousePos = snap(mousePos);
 		repaint();
 	}
 
+	/**
+	 * Snaps a point to the line that the SuperPoint is currently pointing to
+	 *
+	 * @param p
+	 *            - point to snap to the angle of SuperPoint
+	 * @return the point on the SuperPoint direction line closest to the inputted point
+	 */
 	private Point snap(Point p) {
-		int x = p.x;
-		int y = p.y;
+		double slope = Math.tan(startingPoint.getFinalAngle()); // slope of
+		// final point
+		double invslope = -1 / slope; // slope of line perpendicular
 
-		if (x % SuperGUI.SCALE > SuperGUI.SCALE / 2)
-			x += SuperGUI.SCALE - x % SuperGUI.SCALE;
-		else
-			x -= x % SuperGUI.SCALE;
+		// y-intercept of perpendicular line
+		double b_perp = startingPoint.getFinalPoint().y - p.y - invslope * (p.x - startingPoint.getFinalPoint().x); // of
 
-		if (y % SuperGUI.SCALE > SuperGUI.SCALE / 2)
-			y += SuperGUI.SCALE - y % SuperGUI.SCALE;
-		else
-			y -= y % SuperGUI.SCALE;
-
-		return new Point(x, y);
+		double x = (b_perp - 0) / (slope - invslope);
+		double y = -slope * x + 0;
+		return new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent m) {
 		if (SwingUtilities.isRightMouseButton(m)) {
-			if (bot != null) {
-				if (bot.contains(mousePos) == -1) {
-					bot.point(mousePos); // point
-				} else {
-					System.out.println(mode + " " + bot.contains(mousePos));
-					bot.setMode(mode, bot.contains(mousePos));
-				}
+			menu.show(m.getComponent(), m.getX(), m.getY());
+		} else {
+			if (startingPoint == null)
+				startingPoint = new SuperPoint(mousePos);
+			else {
+				startingPoint.add(mousePos);
+				followCursor = true;
 			}
-
-		} else if (bot == null)
-			bot = new SuperBot(mousePos);
-		else
-			bot.add(mousePos);
+		}
 		repaint();
 	}
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent m) {
 		botTransparency -= 10 * m.getPreciseWheelRotation();
-		if (botTransparency > 255)
-			botTransparency = 255;
-		if (botTransparency < 0)
-			botTransparency = 0;
+		if (botTransparency > 255) botTransparency = 255;
+		if (botTransparency < 0) botTransparency = 0;
 		repaint();
 	}
 
 	@Override
-	public void keyTyped(KeyEvent k) {
-	}
+	public void keyTyped(KeyEvent k) {}
 
 	@Override
-	public void mousePressed(MouseEvent m) {
-	}
+	public void mousePressed(MouseEvent m) {}
 
 	@Override
-	public void mouseReleased(MouseEvent m) {
-	}
+	public void mouseReleased(MouseEvent m) {}
 
 	@Override
 	public void mouseDragged(MouseEvent m) {
@@ -240,11 +184,18 @@ public class SuperPanel extends JPanel implements KeyListener,
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent m) {
-	}
+	public void mouseEntered(MouseEvent m) {}
 
 	@Override
-	public void mouseExited(MouseEvent m) {
-	}
+	public void mouseExited(MouseEvent m) {}
 
+	@Override
+	public void actionPerformed(ActionEvent e){
+		double angle = Math.atan2(startingPoint.getFinalPoint().y - mousePos.y, mousePos.x - startingPoint.getFinalPoint().x);
+		switch(e.getActionCommand()){
+		case "GEAR": startingPoint.addAction(new SuperAction(SuperEnum.GEAR, angle)); break;
+		case "SHOOT": startingPoint.addAction(new SuperAction(SuperEnum.SHOOT, angle)); break;
+		default: System.out.println("Right click command not found");
+		}
+	}
 }
