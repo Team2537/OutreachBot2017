@@ -17,7 +17,6 @@ public class SuperPrinter {
 	 */
 	public static void printCourse(SuperPoint point, double startAngle, BufferedWriter writer) {
 		if (point == null) throw new IllegalArgumentException("Null point");
-		
 
 		double destinationAngle = Math.toDegrees(point.getAngle());
 		try {

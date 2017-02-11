@@ -16,7 +16,7 @@ public class UltraSonicCourseCorrect extends CourseCorrect {
 		double ultraDistance = Robot.driveSys.ultraSanic.getRangeInches();
 		System.out.println(ultraDistance);
 		if(ultraDistance <= TOLERANCE){
-			return false;
+			return true;
 		}
 		else{
 			return false;
