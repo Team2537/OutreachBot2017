@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.maps.Square;
+import org.usfirst.frc.team2537.robot.auto.AutoRotateCameraCommand;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
 
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new Square());
+		Scheduler.getInstance().add(new AutoRotateCameraCommand());
 		System.out.println("Autonomous start");
 	}
 

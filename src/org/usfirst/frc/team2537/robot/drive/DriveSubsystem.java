@@ -30,9 +30,9 @@ public class DriveSubsystem extends Subsystem {
 												// resetEncoders)
 
 	// Atlas encoder code
-	public Encoder lencoder = new Encoder(4 ,5);
-	public Encoder rencoder = new Encoder(6, 7);
-	public Ultrasonic ultraSanic = new Ultrasonic(2,3); 
+	public Encoder lencoder = new Encoder(Ports.ENCODER_LEFT_A, Ports.ENCODER_LEFT_B);
+	public Encoder rencoder = new Encoder(Ports.ENCODER_RIGHT_A, Ports.ENCODER_RIGHT_B);
+	public Ultrasonic ultraSanic = new Ultrasonic(Ports.DRIVE_ULTRASONIC_INPUT, Ports.DRIVE_ULTRASONIC_ECHO); 
 
 	private AHRS ahrs;
 
@@ -84,8 +84,8 @@ public class DriveSubsystem extends Subsystem {
 	 *            Voltage to set left motors
 	 */
 	public void setLeftDriveMotors(double value) {
-		set(-value, talonFrontLeft);
-		set(-value, talonBackLeft);
+		set(value, talonFrontLeft);
+		set(value, talonBackLeft);
 	}
 
 	/**
@@ -95,8 +95,8 @@ public class DriveSubsystem extends Subsystem {
 	 *            Voltage to set right motors
 	 */
 	public void setRightDriveMotors(double value) {
-		set(value, talonFrontRight);
-		set(value, talonBackRight);
+		set(-value, talonFrontRight);
+		set(-value, talonBackRight);
 	}
 
 	/**
