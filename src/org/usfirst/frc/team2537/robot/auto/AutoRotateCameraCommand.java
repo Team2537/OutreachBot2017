@@ -7,8 +7,6 @@ import org.usfirst.frc.team2537.robot.vision.DutyCycleSource;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotateCameraCommand extends Command {
@@ -16,13 +14,13 @@ public class AutoRotateCameraCommand extends Command {
 
 	// values are from 0 to 1 (0 is left of camera, 1 is right)
 	private static final double DESTINATION_DUTY = 0.5;
-	private static final double DEFAULT_SPEED = 0.4;
-	private static final double MINIMUM_SPEED = 0.2;
+	private static final double DEFAULT_SPEED = 0.6;
+	private static final double MINIMUM_SPEED = 0.15;
 	private static final int SLOWDOWN_POWER = 16;
-	private static final double TOLERANCE = 0.02;
-	private static final double KP = 0.05;
-	private static final double KI = 0.00;
-	private static final double KD = 0.01;
+	private static final double TOLERANCE = 0.05;
+	private static final double KP = 0.1;
+	private static final double KI = 0.1;
+	private static final double KD = 0.00;
 
 	private static final double NO_TARGET_DUTY = 0.01; // duty output by the Pi
 														// when no target is
@@ -70,13 +68,15 @@ public class AutoRotateCameraCommand extends Command {
 			if (currentDuty >= DESTINATION_DUTY + TOLERANCE) {
 				if(speed < MINIMUM_SPEED)
 					speed = MINIMUM_SPEED;
-				Robot.driveSys.setDriveMotors(-speed, speed);
-				lastSideTurned = Side.LEFT;
+				Robot.driveSys.setDriveMotors(speed, -speed);
+				lastSideTurned = Side.RIGHT;
 			} else if (currentDuty <= DESTINATION_DUTY - TOLERANCE) {
 				if(speed < MINIMUM_SPEED)
 					speed = MINIMUM_SPEED;
-				Robot.driveSys.setDriveMotors(speed, -speed);
-				lastSideTurned = Side.RIGHT;
+				Robot.driveSys.setDriveMotors(-speed, speed);
+				lastSideTurned = Side.LEFT;
+			} else {
+				Robot.driveSys.setDriveMotors(0);
 			}
 			
 		} else {
@@ -89,8 +89,7 @@ public class AutoRotateCameraCommand extends Command {
 				Robot.driveSys.setDriveMotors(speed, -speed);
 			
 		}
-
-		System.out.println("SPEED :" + speed);
+		System.out.println("SPEED: " + speed);
 	}
 
 	@Override
