@@ -5,7 +5,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 
 public class UltraSonicCourseCorrect extends CourseCorrect {
-	public static final double TOLERANCE = 10;
+	public static final double TOLERANCE = 4;
 	public UltraSonicCourseCorrect(double distance) {
 		super(distance);
 		// TODO Auto-generated constructor stub
@@ -14,8 +14,9 @@ public class UltraSonicCourseCorrect extends CourseCorrect {
 	public boolean isFinished(){
 		Robot.driveSys.ultraSanic.setDistanceUnits(Unit.kInches);
 		double ultraDistance = Robot.driveSys.ultraSanic.getRangeInches();
+		System.out.println(ultraDistance);
 		if(ultraDistance <= TOLERANCE){
-			return true;
+			return false;
 		}
 		else{
 			return false;

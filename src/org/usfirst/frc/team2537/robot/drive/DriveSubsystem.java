@@ -20,10 +20,10 @@ public class DriveSubsystem extends Subsystem {
 	private boolean drivingStraight;
 	private boolean driveLowerSpeed;
 	private boolean reversed;
-	public static final double WHEEL_DIAMETER = 8.25; // Inches TODO: Magic
+	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 20; // for encoders
+	public static final double PulsesPerRevolution = 80; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -138,7 +138,7 @@ public class DriveSubsystem extends Subsystem {
 		// Knightfall
 		//System.out.println("Encoder Average:"
 		//		+ (getLeftEncoders() + getRightEncoders()) / 2);
-		return (getLeftEncoders() + getRightEncoders()) / 2;
+		return getRightEncoders();//(getLeftEncoders() + getRightEncoders()) / 2;
 	}
 
 	/**
@@ -160,6 +160,8 @@ public class DriveSubsystem extends Subsystem {
 		// * Math.PI - initialLeftEncoders;
 
 		// ATLAS
+		//System.out.println("lencoders:"+(-lencoder.get()));
+		System.out.println(lencoder.get());
 		return -lencoder.get() / PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
 				- initialLeftEncoders;
 	}
@@ -181,6 +183,7 @@ public class DriveSubsystem extends Subsystem {
 //				* Math.PI - initialRightEncoders;
 		
 		//ATLAS
+		//System.out.println("rencoders:"+rencoder.get());
 		return rencoder.get()
 				/ PulsesPerRevolution
 				* WHEEL_DIAMETER

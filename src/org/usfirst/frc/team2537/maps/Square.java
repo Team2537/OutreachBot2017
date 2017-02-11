@@ -9,8 +9,11 @@ import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;
 
 public class Square extends CommandGroup {
 	public Square(){
-		addSequential(new AutoRotateCommand(92.24473869766018));
-		addSequential(new AutoRotateCommand(80.1970578988456));
-
+		addSequential(new AutoRotateCommand(-0.9710219310791666));
+		addSequential(new CourseCorrect(35.40508438063663));
+		addSequential(new AutoRotateCommand(90.97102193107916));
+		addSequential(new CourseCorrect(37.8));
+		addSequential(new AutoRotateCommand(82.98349825527711));
+		addSequential(new CourseCorrect(39.29427439207906));
 	}
 }

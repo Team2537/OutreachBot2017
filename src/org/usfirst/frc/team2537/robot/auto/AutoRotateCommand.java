@@ -12,7 +12,7 @@ public class AutoRotateCommand extends Command {
 
 	
 	private static final double DEFAULT_SPEED = 0.7;
-	private static final double MINIMUM_SPEED = 0.3;
+	private static final double MINIMUM_SPEED = 0.4;
 	private static final double SLOWDOWN_ANGLE = 60;
 	private static final double TOLERANCE = 1; // degrees
 
@@ -42,11 +42,8 @@ public class AutoRotateCommand extends Command {
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
 		
-		System.out.println("Current Angle: "+(currentAngle-startAngle));
-		System.out.println("Roll:"+ahrs.getRoll());
-		System.out.println("Pitch:"+ahrs.getPitch());
-		System.out.println("Yaw:"+ahrs.getYaw());
-		System.out.println("is gay?:"+ ahrs.getBoardYawAxis());
+		//System.out.println("Current Angle: "+(currentAngle-startAngle));
+	
 		if (currentAngle-startAngle <= destinationAngle - TOLERANCE)
 			Robot.driveSys.setDriveMotors(speed, -speed);
 		if (currentAngle-startAngle >= destinationAngle + TOLERANCE)
