@@ -134,16 +134,21 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	 * @return the point on the SuperPoint direction line closest to the inputted point
 	 */
 	private Point snap(Point p) {
-		double slope = Math.tan(startingPoint.getFinalAngle()); // slope of
-		// final point
-		double invslope = -1 / slope; // slope of line perpendicular
+		double slope = Math.tan(startingPoint.getFinalAngle()); // slope of final point
+		double x;
+		double y;
+		if(slope == 0){
+			return new Point(p.x, startingPoint.getFinalPoint().y);
+		} else {
+			double invslope = -1 / slope; // slope of line perpendicular
 
-		// y-intercept of perpendicular line
-		double b_perp = startingPoint.getFinalPoint().y - p.y - invslope * (p.x - startingPoint.getFinalPoint().x); // of
+			// y-intercept of perpendicular line
+			double b_perp = startingPoint.getFinalPoint().y - p.y - invslope * (p.x - startingPoint.getFinalPoint().x); // of
 
-		double x = (b_perp - 0) / (slope - invslope);
-		double y = -slope * x + 0;
-		return new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
+			x = (b_perp - 0) / (slope - invslope);
+			y = -slope * x + 0;
+			return new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
+		}
 	}
 
 	@Override

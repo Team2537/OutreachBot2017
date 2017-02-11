@@ -291,7 +291,7 @@ public class SuperPoint {
 		else {
 			g2.setColor(new Color(255, 0, 0, 200));
 			g2.setStroke(new BasicStroke(2));
-			if (angle == Math.PI / 2) {
+			if (angle == Math.PI / 2 || angle == -Math.PI / 2) {
 				g2.draw(new Line2D.Float(p.x, 0, p.x,
 						(int) (SuperGUI.FIELD_WIDTH * SuperGUI.SCALE)));
 			} else {
