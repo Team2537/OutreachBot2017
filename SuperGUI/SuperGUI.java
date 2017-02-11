@@ -2,16 +2,18 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 
 /**
  * Creates an interactive gui to plan robot actions
  *
  * Keybindings:
- * space - snap to grid
- * esc - quit
  * lclick - create robot
- * enter -print
+ * rclick - gear/shoot
+ * space - stop turning to follow cursor, snap cursor to line
+ * enter - print course
+ * esc - quit
  * 
  *
  * @author Arden Zhang
@@ -26,8 +28,7 @@ public class SuperGUI {
 	public static final double ROBOT_LENGTH = 33.0 / 12; // feet
 	public static final double ROBOT_WIDTH = 29.0 / 12; // feet
 	public static final double ROBOT_DIAMETER = Math.sqrt(Math.pow(ROBOT_LENGTH, 2) + Math.pow(ROBOT_WIDTH, 2));
-	public static final double ROBOT_START_ANGLE = 0;
-
+	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("SuperGUI");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
