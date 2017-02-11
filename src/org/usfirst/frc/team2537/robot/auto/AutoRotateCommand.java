@@ -11,7 +11,7 @@ public class AutoRotateCommand extends Command {
 	private double destinationAngle, startAngle;
 
 	
-	private static final double DEFAULT_SPEED = 0.5;
+	private static final double DEFAULT_SPEED = 0.7;
 	private static final double MINIMUM_SPEED = 0.3;
 	private static final double SLOWDOWN_ANGLE = 60;
 	private static final double TOLERANCE = 1; // degrees
@@ -43,10 +43,14 @@ public class AutoRotateCommand extends Command {
 		double currentAngle = ahrs.getAngle();
 		
 		System.out.println("Current Angle: "+(currentAngle-startAngle));
+		System.out.println("Roll:"+ahrs.getRoll());
+		System.out.println("Pitch:"+ahrs.getPitch());
+		System.out.println("Yaw:"+ahrs.getYaw());
+		System.out.println("is gay?:"+ ahrs.getBoardYawAxis());
 		if (currentAngle-startAngle <= destinationAngle - TOLERANCE)
-			Robot.driveSys.setDriveMotors(-speed, speed);
-		if (currentAngle-startAngle >= destinationAngle + TOLERANCE)
 			Robot.driveSys.setDriveMotors(speed, -speed);
+		if (currentAngle-startAngle >= destinationAngle + TOLERANCE)
+			Robot.driveSys.setDriveMotors(-speed, speed);
 		//distance between relative destination angle and relative angle from start over the relative destination angle
 		//e.g. (dest 90, curr 45) ratio = (90-45)/90 = 0.5
 		//      resulatant speed = 0.5*DEFAULT_SPEED + MINIMUM_SPEED

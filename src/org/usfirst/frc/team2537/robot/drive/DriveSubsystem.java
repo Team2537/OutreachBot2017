@@ -45,7 +45,7 @@ public class DriveSubsystem extends Subsystem {
 		try {
 			ahrs = new AHRS(Port.kMXP);
 		} catch (Exception ex) {
-			System.out.println(ex);
+			//System.out.println(ex);
 		}
 		// SPEED MODE CODE
 		// setDriveControlMode(TalonControlMode.Speed);
