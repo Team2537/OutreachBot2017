@@ -44,7 +44,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private SuperMenu menu;
 
 	public SuperPanel() {
-		field = new ImageIcon("SuperGUI\\FIELD.jpg").getImage();
+		field = new ImageIcon("SuperGUI/FIELD.jpg").getImage();
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		addMouseListener(this);
@@ -84,7 +84,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 			String mapName = (String) JOptionPane.showInputDialog(jframe, "Enter map name:\n", "File Name",
 					JOptionPane.PLAIN_MESSAGE, null, null, "");
 			if (mapName != null) {
-				File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + mapName + ".java");
+				File fl = new File("src/org/usfirst/frc/team2537/maps/" + mapName + ".java");
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
 					writer.flush();
@@ -137,8 +137,9 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		double slope = Math.tan(startingPoint.getFinalAngle()); // slope of final point
 		double x;
 		double y;
+		Point result;
 		if(slope == 0){
-			return new Point(p.x, startingPoint.getFinalPoint().y);
+			result = new Point(p.x, startingPoint.getFinalPoint().y);
 		} else {
 			double invslope = -1 / slope; // slope of line perpendicular
 
@@ -147,7 +148,13 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 			x = (b_perp - 0) / (slope - invslope);
 			y = -slope * x + 0;
-			return new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
+			result = new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
+		}
+		
+		if(result.distance(startingPoint.getFinalPoint()) <= SuperGUI.ROBOT_DIAMETER*SuperGUI.SCALE/5){
+			return (Point) startingPoint.getFinalPoint().clone();
+		}else{
+			return result;
 		}
 	}
 
