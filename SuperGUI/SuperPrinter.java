@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
 public class SuperPrinter {
 
 	public static void printCourse(SuperPoint p, BufferedWriter writer) {
@@ -119,7 +121,10 @@ public class SuperPrinter {
 				for(File map : mapsList){
 					String mapName = map.getName();
 					mapName = mapName.substring(0, mapName.length() - 5);
-					autoWriter.write("\t\taddObject(\"" + mapName + "\", new " + mapName + "());\n");
+					if(mapName.equals("DefaultAuto") || mapName.equals("DriveForward"))
+						autoWriter.write("\t\taddDefault(\"" + mapName + "\", new " + mapName + "());\n");
+					else
+						autoWriter.write("\t\taddObject(\"" + mapName + "\", new " + mapName + "());\n");
 				}
 			}
 			

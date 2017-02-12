@@ -29,15 +29,15 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		// Dashboard
-		autoChooser = new AutoChooser();
-		SmartDashboard.putData("Auto Choices", autoChooser);
-
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		
 		pwm = new PWMSubsystem();
 		pwm.initDefaultCommand();
+
+		// Dashboard
+		autoChooser = new AutoChooser();
+		SmartDashboard.putData("Auto Choices", autoChooser);
 	}
 
 	/**
