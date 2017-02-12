@@ -15,7 +15,7 @@ public class AutoRotateCameraCommand extends Command {
 	// values are from 0 to 1 (0 is left of camera, 1 is right)
 	private static final double DESTINATION_DUTY = 0.5;
 	private static final double DEFAULT_SPEED = 0.6;
-	private static final double MINIMUM_SPEED = 0.15;
+	private static final double MINIMUM_SPEED = 0.3;
 	private static final int SLOWDOWN_POWER = 16;
 	private static final double TOLERANCE = 0.05;
 	private static final double KP = 0.1;
@@ -57,7 +57,7 @@ public class AutoRotateCameraCommand extends Command {
 		} else {
 			currentDuty = 1;
 		}
-		//System.out.println("this robot is bad"+Robot.pwm.getDutyCycle());
+		System.out.println("this robot is bad"+Robot.pwm.getDutyCycle());
 		if (currentDuty > NO_TARGET_DUTY) {
 			
 			//speed = Math.pow(2*Math.abs(DESTINATION_DUTY - currentDuty), SLOWDOWN_POWER)
