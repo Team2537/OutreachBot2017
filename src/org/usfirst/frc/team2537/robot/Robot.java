@@ -1,11 +1,15 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.maps.UltrasonicTest;
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,7 +21,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	public static PWMSubsystem pwm;
-
+	private SendableChooser<Command> autoChooser;
+	
 	@Override
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -25,11 +30,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		// Dashboard
-		/*
-		 * chooser = new SendableChooser(); chooser.addDefault("Default Auto",
-		 * defaultAuto); chooser.addObject("My Auto", customAuto);
-		 * SmartDashboard.putData("Auto choices", chooser);
-		 */
+		autoChooser = new AutoChooser();
+		SmartDashboard.putData("Auto Choices", autoChooser);
 
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();

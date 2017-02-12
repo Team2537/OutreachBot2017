@@ -87,7 +87,6 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 				File fl = new File("src/org/usfirst/frc/team2537/maps/" + mapName + ".java");
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
-					writer.flush();
 					writer.write("package org.usfirst.frc.team2537.maps;\n\n");
 					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n");
 					writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n\n");
