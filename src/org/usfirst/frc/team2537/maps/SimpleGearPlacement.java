@@ -12,6 +12,6 @@ public class SimpleGearPlacement extends CommandGroup {
 		addSequential(new AutoRotateCommand(1.9251837083231547));
 		addSequential(new CourseCorrect(71.44032474730221));
 		addSequential(new AutoRotateCameraCommand());
-		addSequential(new UltraSonicCourseCorrect(0));
+		addSequential(new UltraSonicCourseCorrect());
 	}
 }

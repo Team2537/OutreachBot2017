@@ -9,17 +9,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
 
-	private static final double DEFAULT_SPEED = 0.4;
+	protected static final double DEFAULT_SPEED = 0.4;
 	private static final double SLOWDOWN_START = 60;
-	private static final double MINIMUM_SPEED = 0.05;
-	private static final double CORRECTION_PROPORTION = 90; // it just worked, y'no?
+	protected static final double MINIMUM_SPEED = 0.05;
+	protected static final double CORRECTION_PROPORTION = 90; // it just worked, y'no?
 	private static final double TOLERANCE = 1;
 	private static final boolean debug = false;
 	private double speed;
 	private double startAngle;
 	private double distance;
 	private final double startSpeed;
-	private AHRS ahrs = Robot.driveSys.getAhrs();
+	protected AHRS ahrs = Robot.driveSys.getAhrs();
 	public static final double DEFAULT_TIMEOUT = 3;
 
 	/**
@@ -54,8 +54,8 @@ public class CourseCorrect extends Command {
 
 	@Override
 	protected void initialize() {
-		startAngle = ahrs.getAngle();
-		if (debug) System.out.println("CourseCorrect init: startAngle: " + startAngle);
+		setStartAngle(ahrs.getAngle());
+		if (debug) System.out.println("CourseCorrect init: startAngle: " + getStartAngle());
 		Robot.driveSys.resetEncoders();
 		Robot.driveSys.setDriveMotors(speed);
 	}
@@ -63,16 +63,16 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
-		if (Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage())) < SLOWDOWN_START) {
-			speed = Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage()))/SLOWDOWN_START*startSpeed + MINIMUM_SPEED ;
+		if (Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage())) < getSlowdownStart()) {
+			speed = Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage()))/getSlowdownStart()*startSpeed + MINIMUM_SPEED ;
 		}
 
 		double left = speed;
 		double right = speed;
 		double correction = 0;
 
-		double angleDiff = (currentAngle - startAngle)%360;
-		if (debug) System.out.println("CourseCorrect exec: start: " + startAngle + "\tdiff: " + angleDiff);
+		double angleDiff = (currentAngle - getStartAngle())%360;
+		if (debug) System.out.println("CourseCorrect exec: start: " + getStartAngle() + "\tdiff: " + angleDiff);
 
 		if (Math.abs(angleDiff) > TOLERANCE) correction = angleDiff / CORRECTION_PROPORTION;
 
@@ -99,5 +99,17 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void interrupted() {
 		Robot.driveSys.setDriveMotors(0);
+	}
+
+	public static double getSlowdownStart() {
+		return SLOWDOWN_START;
+	}
+
+	public double getStartAngle() {
+		return startAngle;
+	}
+
+	public void setStartAngle(double startAngle) {
+		this.startAngle = startAngle;
 	}
 }

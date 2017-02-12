@@ -23,7 +23,7 @@ public class DriveSubsystem extends Subsystem {
 	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 80; // for encoders
+	public static final double PulsesPerRevolution = 254; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -41,6 +41,8 @@ public class DriveSubsystem extends Subsystem {
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
+		
+		ultraSanic.setAutomaticMode(true);
 
 		try {
 			ahrs = new AHRS(Port.kMXP);
@@ -183,12 +185,8 @@ public class DriveSubsystem extends Subsystem {
 //				* Math.PI - initialRightEncoders;
 		
 		//ATLAS
-		//System.out.println("rencoders:"+rencoder.get());
-		return rencoder.get()
-				/ PulsesPerRevolution
-				* WHEEL_DIAMETER
-				* Math.PI
-				- initialRightEncoders;
+		System.out.println("rencoders:"+rencoder.get());
+		return rencoder.getRaw()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
 	}
 
 	/**

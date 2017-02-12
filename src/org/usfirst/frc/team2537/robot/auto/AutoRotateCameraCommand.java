@@ -57,7 +57,7 @@ public class AutoRotateCameraCommand extends Command {
 		} else {
 			currentDuty = 1;
 		}
-
+		//System.out.println("this robot is bad"+Robot.pwm.getDutyCycle());
 		if (currentDuty > NO_TARGET_DUTY) {
 			
 			//speed = Math.pow(2*Math.abs(DESTINATION_DUTY - currentDuty), SLOWDOWN_POWER)
@@ -94,9 +94,8 @@ public class AutoRotateCameraCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
-		//double currentDuty = Robot.pwm.getDutyCycle();
-		//return (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE);
+		double currentDuty = Robot.pwm.getDutyCycle();
+		return (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE);
 	}
 
 	@Override

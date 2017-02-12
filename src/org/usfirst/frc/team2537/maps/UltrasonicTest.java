@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class UltrasonicTest extends CommandGroup{
 	public UltrasonicTest(){
-		addSequential(new UltraSonicCourseCorrect(0));
+		addSequential(new UltraSonicCourseCorrect());
 	}
 
 }
