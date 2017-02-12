@@ -20,18 +20,24 @@ public class SuperPrinter {
 
 		double destinationAngle = Math.toDegrees(point.getAngle());
 		try {
-			double midAngle = startAngle;
-			double midAngleDiff;
+			double currAngle = startAngle;
+			double angleDiff;
 			for (SuperAction a : point.getActions()) {
-				midAngleDiff = midAngle - Math.toDegrees(a.getAngle()); // -(destAngle - starAngle) angle -> bearing
-				midAngle = Math.toDegrees(a.getAngle());
-				while(midAngleDiff > 180) midAngleDiff -= 360;
-				while(midAngleDiff < -180) midAngleDiff += 360;
+				angleDiff = currAngle - Math.toDegrees(a.getAngle()); // -(destAngle - starAngle) angle -> bearing
+				currAngle = Math.toDegrees(a.getAngle());
+				if(a.getAction() == SuperEnum.SHOOT) {
+					angleDiff += 180;
+					currAngle += 180;
+					while(currAngle > 180) currAngle -= 360;
+					while(currAngle < -180) currAngle += 360;
+				}
+				while(angleDiff > 180) angleDiff -= 360;
+				while(angleDiff < -180) angleDiff += 360;
 				
 				// turn to command
-				if(midAngleDiff != 0){
-					writer.write("\t\taddSequential(new AutoRotateCommand(" + midAngleDiff + "));\n");
-					System.out.println("Turn " + midAngleDiff);					
+				if(angleDiff != 0){
+					writer.write("\t\taddSequential(new AutoRotateCommand(" + angleDiff + "));\n");
+					System.out.println("Turn " + angleDiff);					
 				}
 				
 				// place gear/shoot
@@ -49,13 +55,13 @@ public class SuperPrinter {
 			
 			if(point.getNext() == null) return;
 			
-			midAngleDiff = midAngle - destinationAngle;
-			while(midAngleDiff > 180) midAngleDiff -= 360;
-			while(midAngleDiff < -180) midAngleDiff += 360;
+			angleDiff = currAngle - destinationAngle;
+			while(angleDiff > 180) angleDiff -= 360;
+			while(angleDiff < -180) angleDiff += 360;
 
-			if (midAngleDiff != 0) {
-				writer.write("\t\taddSequential(new AutoRotateCommand(" + midAngleDiff + "));\n");
-				System.out.println("Turn " + midAngleDiff);
+			if (angleDiff != 0) {
+				writer.write("\t\taddSequential(new AutoRotateCommand(" + angleDiff + "));\n");
+				System.out.println("Turn " + angleDiff);
 			}
 			
 			// drive distance to next point
