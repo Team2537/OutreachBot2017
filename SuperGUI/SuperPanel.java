@@ -44,7 +44,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private SuperMenu menu;
 
 	public SuperPanel() {
-		field = new ImageIcon("SuperGUI\\FIELD.jpg").getImage();
+		field = new ImageIcon("SuperGUI/FIELD.jpg").getImage();
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		addMouseListener(this);
@@ -84,13 +84,13 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 			String mapName = (String) JOptionPane.showInputDialog(jframe, "Enter map name:\n", "File Name",
 					JOptionPane.PLAIN_MESSAGE, null, null, "");
 			if (mapName != null) {
-				File fl = new File("src\\org\\usfirst\\frc\\team2537\\maps\\" + mapName + ".java");
+				File fl = new File("src/org/usfirst/frc/team2537/maps/" + mapName + ".java");
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(fl));
-					writer.flush();
 					writer.write("package org.usfirst.frc.team2537.maps;\n\n");
 					writer.write("import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;\n");
-					writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.CourseCorrect;\n");
+					writer.write("import org.usfirst.frc.team2537.robot.auto.GearCommand;\n\n");
 					writer.write("import edu.wpi.first.wpilibj.command.CommandGroup;\n\n");
 					writer.write("public class " + mapName + " extends CommandGroup {\n");
 					writer.write("\tpublic " + mapName + "() {\n");
@@ -134,16 +134,28 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	 * @return the point on the SuperPoint direction line closest to the inputted point
 	 */
 	private Point snap(Point p) {
-		double slope = Math.tan(startingPoint.getFinalAngle()); // slope of
-		// final point
-		double invslope = -1 / slope; // slope of line perpendicular
+		double slope = Math.tan(startingPoint.getFinalAngle()); // slope of final point
+		double x;
+		double y;
+		Point result;
+		if(slope == 0){
+			result = new Point(p.x, startingPoint.getFinalPoint().y);
+		} else {
+			double invslope = -1 / slope; // slope of line perpendicular
 
-		// y-intercept of perpendicular line
-		double b_perp = startingPoint.getFinalPoint().y - p.y - invslope * (p.x - startingPoint.getFinalPoint().x); // of
+			// y-intercept of perpendicular line
+			double b_perp = startingPoint.getFinalPoint().y - p.y - invslope * (p.x - startingPoint.getFinalPoint().x); // of
 
-		double x = (b_perp - 0) / (slope - invslope);
-		double y = -slope * x + 0;
-		return new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
+			x = (b_perp - 0) / (slope - invslope);
+			y = -slope * x + 0;
+			result = new Point((int) (x + startingPoint.getFinalPoint().x), (int) (y + startingPoint.getFinalPoint().y));
+		}
+		
+		if(result.distance(startingPoint.getFinalPoint()) <= SuperGUI.ROBOT_DIAMETER*SuperGUI.SCALE/5){
+			return (Point) startingPoint.getFinalPoint().clone();
+		}else{
+			return result;
+		}
 	}
 
 	@Override

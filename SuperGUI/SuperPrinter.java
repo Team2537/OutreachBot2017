@@ -1,5 +1,9 @@
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 public class SuperPrinter {
 
@@ -20,18 +24,24 @@ public class SuperPrinter {
 
 		double destinationAngle = Math.toDegrees(point.getAngle());
 		try {
-			double midAngle = startAngle;
-			double midAngleDiff;
+			double currAngle = startAngle;
+			double angleDiff;
 			for (SuperAction a : point.getActions()) {
-				midAngleDiff = midAngle - Math.toDegrees(a.getAngle()); // -(destAngle - starAngle) angle -> bearing
-				midAngle = Math.toDegrees(a.getAngle());
-				while(midAngleDiff > 180) midAngleDiff -= 360;
-				while(midAngleDiff < -180) midAngleDiff += 360;
+				angleDiff = currAngle - Math.toDegrees(a.getAngle()); // -(destAngle - starAngle) angle -> bearing
+				currAngle = Math.toDegrees(a.getAngle());
+				if(a.getAction() == SuperEnum.SHOOT) {
+					angleDiff += 180;
+					currAngle += 180;
+					while(currAngle > 180) currAngle -= 360;
+					while(currAngle < -180) currAngle += 360;
+				}
+				while(angleDiff > 180) angleDiff -= 360;
+				while(angleDiff < -180) angleDiff += 360;
 				
 				// turn to command
-				if(midAngleDiff != 0){
-					writer.write("\t\taddSequential(new AutoRotateCommand(" + midAngleDiff + "));\n");
-					System.out.println("Turn " + midAngleDiff);					
+				if(angleDiff != 0){
+					writer.write("\t\taddSequential(new AutoRotateCommand(" + angleDiff + "));\n");
+					System.out.println("Turn " + angleDiff);					
 				}
 				
 				// place gear/shoot
@@ -47,15 +57,18 @@ public class SuperPrinter {
 				}
 			}
 			
-			if(point.getNext() == null) return;
+			if(point.getNext() == null) {
+				printAutoChooser();
+				return;
+			}
 			
-			midAngleDiff = midAngle - destinationAngle;
-			while(midAngleDiff > 180) midAngleDiff -= 360;
-			while(midAngleDiff < -180) midAngleDiff += 360;
+			angleDiff = currAngle - destinationAngle;
+			while(angleDiff > 180) angleDiff -= 360;
+			while(angleDiff < -180) angleDiff += 360;
 
-			if (midAngleDiff != 0) {
-				writer.write("\t\taddSequential(new AutoRotateCommand(" + midAngleDiff + "));\n");
-				System.out.println("Turn " + midAngleDiff);
+			if (angleDiff != 0) {
+				writer.write("\t\taddSequential(new AutoRotateCommand(" + angleDiff + "));\n");
+				System.out.println("Turn " + angleDiff);
 			}
 			
 			// drive distance to next point
@@ -77,5 +90,45 @@ public class SuperPrinter {
 		System.out.println();
 
 		printCourse(point.getNext(), destinationAngle, writer);
+	}
+	
+	public static void printAutoChooser(){
+		PrintWriter autoWriter;
+		try {
+			autoWriter = new PrintWriter("src/org/usfirst/frc/team2537/robot/auto/AutoChooser.java", "UTF-8");
+			File dir = new File("src/org/usfirst/frc/team2537/maps/");
+			File[] mapsList =  dir.listFiles();
+			
+			autoWriter.write("package org.usfirst.frc.team2537.robot.auto;\n\n");
+			
+			if(mapsList != null){
+				for(File map : mapsList){
+					String mapName = map.getName();
+					autoWriter.write("import org.usfirst.frc.team2537.maps." + mapName.substring(0, mapName.length() - 5) + ";\n");
+				}
+				autoWriter.write("\n");
+			}
+			
+			autoWriter.write("import edu.wpi.first.wpilibj.command.Command;\n");
+			autoWriter.write("import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;\n\n");
+						
+			autoWriter.write("public class AutoChooser extends SendableChooser<Command> {\n");
+			autoWriter.write("\tpublic AutoChooser() {\n");
+			
+			if(mapsList != null){
+				for(File map : mapsList){
+					String mapName = map.getName();
+					mapName = mapName.substring(0, mapName.length() - 5);
+					autoWriter.write("\t\taddObject(\"" + mapName + "\", new " + mapName + "());\n");
+				}
+			}
+			
+			autoWriter.write("\t}\n");
+			autoWriter.write("}");
+			
+			autoWriter.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }
