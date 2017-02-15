@@ -19,6 +19,8 @@ public class HumanInput {
 
 	public static Button shooterOnButton = new JoystickButton(xboxController, Ports.SHOOTER_ON_BUTTON);
 	public static Button shooterOffButton = new JoystickButton(xboxController, Ports.SHOOTER_OFF_BUTTON);
+	
+	public static Button cameraSwitchButton = new JoystickButton(xboxController, Ports.CAMERA_SWITCH_BUTTON);
 
 	public static void registerWhenPressedCommand(Button b, Command c) {
 		b.whenPressed(c);
