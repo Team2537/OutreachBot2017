@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
-	private final static int WAIT_TIME = 1;
+	private final static int TARGET_SPEED = 6;
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -17,7 +17,6 @@ public class ShooterCommand extends Command {
 	 *            are on
 	 */
 	public ShooterCommand(boolean shooterOff) {
-		super(WAIT_TIME);
 		requires(Robot.shooterSys);
 		this.shooterOff = shooterOff;
 	}
@@ -31,10 +30,13 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void initialize() {
 		if (shooterOff) {
-			Robot.shooterSys.flyOff(); // TODO: Repeatability test
+			Robot.shooterSys.setSpeed(0);
 		} else {
-			Robot.shooterSys.fastOn();
+			//Robot.shooterSys.fastOn();
+			Robot.shooterSys.setSpeed(1330);
 		}
+		
+		
 	}
 
 	@Override
@@ -51,19 +53,18 @@ public class ShooterCommand extends Command {
 		 * ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
 		 * Robot.shooterSys.FlyOn(); } }
 		 */
+		System.out.println(Robot.shooterSys.interiorMotor.getSpeed());
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return this.isTimedOut();
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		if (!shooterOff) {
-			Robot.shooterSys.slowOn();
-		}
 	}
+	
 
 	/**
 	 * turns flywheels off if interrupted
