@@ -1,13 +1,11 @@
 package org.usfirst.frc.team2537.robot.climber;
 
 import org.usfirst.frc.team2537.robot.Ports;
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -27,29 +25,10 @@ public class ClimberSubsystem extends Subsystem {
 		climberMotor2.set(Ports.CLIMBER_MOTOR_ONE);
 	}
 
-//	public int getEncoderVelocity() {
-//		return climberMotor.getEncVelocity();
-//	}
-
-	private DigitalInput climberPressureSensor = new DigitalInput(Ports.CLIMBER_PRESSURE_SENSOR);
-
-	public boolean getClimberPressureSensor() {
-		return climberPressureSensor.get();
-	}
-
-
 	@Override
 	public void initDefaultCommand() {
 	}
 	
-	/*public double getClimber1Velocity(){
-		return Robot.climberSys.climberMotor1.getAnalogInVelocity();
-	}*/
-	
-	public double getClimber2Velocity(){
-		return Robot.climberSys.climberMotor2.getAnalogInVelocity();
-	}
-
 	public void registerButtons() { // registers buttons
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());

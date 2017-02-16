@@ -22,8 +22,6 @@ public class Ports {
 	// Sensor ports
 	public static final int ULTRASONIC_TRIGGER = 2, ULTRASONIC_ECHO = 3;
 
-	public static final int CLIMBER_PRESSURE_SENSOR = 0;
-	
 	// PDP ports
 	public static final int CLIMBER_MOTOR_PDP_CHANNEL = 6;
 
