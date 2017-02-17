@@ -39,13 +39,13 @@ public class Cameras {
 				output = source;
 				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(255, 35, 0), 1);
 				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(255, 35, 0), 1);
-				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
-					if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
-						Core.add(source, new Scalar(0, 100, 0), output);
-					} else {
-						Core.add(source, new Scalar(0, 0, 100), output);
-					}
-				}
+//				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
+//					if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
+//						Core.add(source, new Scalar(0, 100, 0), output);
+//					} else {
+//						Core.add(source, new Scalar(0, 0, 100), output);
+//					}
+//				}
 				outputStream.putFrame(output);
 			}
 		}).start();
@@ -59,12 +59,15 @@ public class Cameras {
 		if (camNum == 0) {
 			System.out.println("Camera Toggled to Camera 1");
 			cvSink.free();
-			CameraServer.getInstance().removeCamera("cam0");
 			cam0.free();
+			CameraServer.getInstance().removeCamera("cam0");
 			
-			cam1 = new UsbCamera("cam1", 1);
+			cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+			
+//			cam1 = new UsbCamera("cam1", 1);
 			cam1.setResolution(640, 480);
-			CameraServer.getInstance().addCamera(cam1);
+//			CameraServer.getInstance().addCamera(cam1);
+			System.out.println(cam1.getHandle());
 			cvSink = CameraServer.getInstance().getVideo(cam1);
 			camNum = 1;
 		} else {
@@ -72,10 +75,14 @@ public class Cameras {
 			cvSink.free();
 			CameraServer.getInstance().removeCamera("cam1");
 			cam1.free();
+			
+			
+			cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 
-			cam0 = new UsbCamera("cam0", 0);
+//			cam0 = new UsbCamera("cam0", 0);
 			cam0.setResolution(640, 480);
-			CameraServer.getInstance().addCamera(cam0);
+//			CameraServer.getInstance().addCamera(cam0);
+			System.out.println(cam0.getHandle());
 			cvSink = CameraServer.getInstance().getVideo(cam0);
 			camNum = 0;
 		}
