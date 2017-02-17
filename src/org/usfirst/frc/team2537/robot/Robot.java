@@ -36,6 +36,7 @@ public class Robot extends IterativeRobot {
 		climberSys.registerButtons();
 		
 		cams = new Cameras();
+		cams.registerButtons();
 	}
 
 /*		new Thread(() -> {

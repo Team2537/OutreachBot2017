@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.cameras;
 
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,10 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CameraSelctionCommand extends Command{
 	@Override
 	protected void initialize() {
-	if(HumanInput.cams.camNum = 0); {
-	Deploy 
-	}	
+		Robot.cams.toggleCams();
 	}
+	
 	@Override
 	protected void execute() {
 	}
