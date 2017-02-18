@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.cameras.CameraGetCommand;
 import org.usfirst.frc.team2537.robot.cameras.CameraSubsystem;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
@@ -36,9 +37,14 @@ public class Robot extends IterativeRobot {
 		climberSys.registerButtons();
 		
 		camSys = new CameraSubsystem();
+		camSys.initDefaultCommand();
 		camSys.registerButtons();
 	}
- 
+	
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
+	 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select  
 	 * between different autonomous modes using the dashboard. The sendable 
@@ -51,14 +57,14 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-
+		Scheduler.getInstance().add(new CameraGetCommand());
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-
+		Scheduler.getInstance().run();
 	}
 
 	/**

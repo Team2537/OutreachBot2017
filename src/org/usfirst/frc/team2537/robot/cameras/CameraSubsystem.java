@@ -28,7 +28,9 @@ public class CameraSubsystem extends Subsystem {
 	
 	@Override
 	public void initDefaultCommand() {
-		this.setDefaultCommand(new CameraGetCommand());
+		CameraGetCommand cgc = new CameraGetCommand();
+		cgc.setRunWhenDisabled(true);
+		this.setDefaultCommand(cgc);
 	}
 	
 	public void registerButtons() {
