@@ -17,9 +17,9 @@ public class ShooterSubsystem extends PIDSubsystem {
 	public static final int LEEWAY = 1;
 	public static final int DISTANCE_TO_BOILER = 10;
 	private static final int TICKS_PER_REVOLUTION = 80;
-	/* change to private when done testing */ public CANTalon interiorMotor = new CANTalon(Ports.INTERIOR_SHOOTER);
-	private CANTalon exteriorMotor = new CANTalon(Ports.EXTERIOR_SHOOTER);
-	private static double p = 1.2, i = 0, d = 0.1;
+	private CANTalon exteriorFlywheel = new CANTalon(Ports.INTERIOR_SHOOTER);
+	private CANTalon interiorFlywheel = new CANTalon(Ports.EXTERIOR_SHOOTER);
+	private static double p = 4.2, i = 0, d = 0.3;
 	private boolean DEBUG = true;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double ERROR_TOLERANCE = 5;
@@ -30,9 +30,9 @@ public class ShooterSubsystem extends PIDSubsystem {
 		setAbsoluteTolerance(50);
 		getPIDController().setContinuous();
 		enable();
-		interiorMotor.changeControlMode(TalonControlMode.PercentVbus);
-		interiorMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		interiorMotor.configEncoderCodesPerRev(TICKS_PER_REVOLUTION);
+		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
+		exteriorFlywheel.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		exteriorFlywheel.configEncoderCodesPerRev(TICKS_PER_REVOLUTION);
 //		interiorMotor.changeControlMode(TalonControlMode.Speed);
 		
 	}
@@ -69,34 +69,34 @@ public class ShooterSubsystem extends PIDSubsystem {
 	 */
 
 	public void setExteriorMotor(double speed) {
-		exteriorMotor.set(speed * SPEED_MULTIPLIER);
+		interiorFlywheel.set(speed * SPEED_MULTIPLIER);
 	}
 	
 
 	public void setInteriorMotor(double speed) {
-		interiorMotor.set(speed * SPEED_MULTIPLIER);
+		exteriorFlywheel.set(speed * SPEED_MULTIPLIER);
 	}
 
 	public void setSpeed(double speed) {
-		interiorMotor.set(speed);
+		exteriorFlywheel.set(speed);
 		if (DEBUG) {
-			System.out.println(interiorMotor.getControlMode());
-			System.out.println("Left Flywheel Speed: " + interiorMotor.getSpeed());
+			System.out.println(exteriorFlywheel.getControlMode());
+			System.out.println("Left Flywheel Speed: " + exteriorFlywheel.getSpeed());
 		}
 	}
 
 	public void turnInteriorMotorOff() {
-		interiorMotor.changeControlMode(TalonControlMode.PercentVbus);
+		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
 		this.setSetpoint(0);
-		interiorMotor.set(0);
+		exteriorFlywheel.set(0);
 	}
 
 	public void setInteriorMotorMode() {
-		interiorMotor.changeControlMode(TalonControlMode.PercentVbus);
+		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
 	public double getInteriorSpeed() {
-		return interiorMotor.getSpeed();
+		return exteriorFlywheel.getSpeed();
 	}
 
 	// LEFT
@@ -107,9 +107,9 @@ public class ShooterSubsystem extends PIDSubsystem {
 	 */
 	public double getLeftSpeed() {
 		if (DEBUG) {
-			System.out.println("Interior Flywheel Speed: " + interiorMotor.getSpeed());
+			System.out.println("Interior Flywheel Speed: " + exteriorFlywheel.getSpeed());
 		}
-		return interiorMotor.getSpeed();
+		return exteriorFlywheel.getSpeed();
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 		 * 
 		 */
 		// Simplified for speed.
-		return interiorMotor.getError() * UNITS_PER_100MS_TO_RPM;
+		return exteriorFlywheel.getError() * UNITS_PER_100MS_TO_RPM;
 	}
 
 	// RIGHT
@@ -166,36 +166,36 @@ public class ShooterSubsystem extends PIDSubsystem {
 	// put debug code.
 
 	public void slowOn() {
-		interiorMotor.set(INTERIOR_SPEED);
+		exteriorFlywheel.set(INTERIOR_SPEED);
 	}
 
 	/**
 	 * sets the outer flywheel to its speed
 	 */
 	public void fastOn() {
-		exteriorMotor.set(EXTERIOR_SPEED);
+		interiorFlywheel.set(EXTERIOR_SPEED);
 	}
 
 	public void activateSlowMotor() {
-		interiorMotor.set(INTERIOR_SPEED);
+		exteriorFlywheel.set(INTERIOR_SPEED);
 	}
 
 	/**
 	 * turns both flywheels off
 	 */
 	public void flyOff() {
-		interiorMotor.set(0);
-		exteriorMotor.set(0);
+		exteriorFlywheel.set(0);
+		interiorFlywheel.set(0);
 	}
 
 	@Override
 	protected double returnPIDInput() {
-		return interiorMotor.getSpeed();
+		return exteriorFlywheel.getSpeed();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		interiorMotor.set(output);
+		exteriorFlywheel.set(output);
 
 	}
 

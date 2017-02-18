@@ -47,11 +47,11 @@ public class ShooterCommand extends Command {
 	protected void execute() {
 		
 		
-		if (Robot.shooterSys.getInteriorSpeed() >= 900){
+		if (Robot.shooterSys.getInteriorSpeed() >= TARGET_SPEED){
 			Robot.shooterSys.setExteriorMotor(1);
 		} else {
 			Robot.shooterSys.setExteriorMotor(0);
-		}
+	}
 		/*
 		 * else if (Robot.shooterSys.getFastVelocity > whateverSpeed) {
 		 * Robot.shooterSys.acivateSlowMotor(); } //Above code also to be used
@@ -66,7 +66,7 @@ public class ShooterCommand extends Command {
 		 */
 //		System.out.println("The Pid Input is " + Robot.shooterSys.returnPIDInput());
 		System.out.println(Robot.shooterSys.getInteriorSpeed());
-		Robot.shooterSys.setSetpoint(1280);
+		Robot.shooterSys.setSetpoint(TARGET_SPEED);
 		
 	}
 
