@@ -8,6 +8,7 @@ import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static ClimberSubsystem climberSys;
 	public static ShooterSubsystem shooterSys;
 	public static CameraSubsystem cameraSys;
+	public static PowerDistributionPanel pdp;
 
 	/**
 	 * This function is run when the robot is first started up and should be

@@ -15,7 +15,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 	private static final int TICKS_PER_REVOLUTION = 80;
 	private CANTalon exteriorFlywheel = new CANTalon(Ports.EXTERIOR_SHOOTER); // creates motors
 	private CANTalon interiorFlywheel = new CANTalon(Ports.INTERIOR_SHOOTER);
-	private static double p = 4.2, i = 2.1, d = 3; // sets pid values
+	private static double p = 4.2, i = 2.1, d = 3.0; // sets pid values
 	public static final int SPEED_MULTIPLIER = 1;
 
 	public ShooterSubsystem() {
@@ -65,7 +65,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 	 */
 	public void turnExteriorMotorOff() {
 		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
-//		this.setSetpoint(0);
+		this.setSetpoint(0);
 		exteriorFlywheel.set(0);
 	}
 
