@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
-	private final static int TARGET_SPEED = 6;
+	private final static int TARGET_SPEED = 1280;
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -29,18 +29,29 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void initialize() {
+		Robot.shooterSys.setInteriorMotorMode();
 		if (shooterOff) {
-			Robot.shooterSys.setSpeed(0);
+			Robot.shooterSys.turnInteriorMotorOff();
 		} else {
 			//Robot.shooterSys.fastOn();
-			Robot.shooterSys.setSpeed(1330);
+			Robot.shooterSys.setSpeed(TARGET_SPEED);
+		}
+		Robot.shooterSys.enable();
+		
 		}
 		
 		
-	}
+	
 
 	@Override
 	protected void execute() {
+		
+		
+		if (Robot.shooterSys.getInteriorSpeed() >= 900){
+			Robot.shooterSys.setExteriorMotor(1);
+		} else {
+			Robot.shooterSys.setExteriorMotor(0);
+		}
 		/*
 		 * else if (Robot.shooterSys.getFastVelocity > whateverSpeed) {
 		 * Robot.shooterSys.acivateSlowMotor(); } //Above code also to be used
@@ -53,7 +64,10 @@ public class ShooterCommand extends Command {
 		 * ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
 		 * Robot.shooterSys.FlyOn(); } }
 		 */
-		System.out.println(Robot.shooterSys.interiorMotor.getSpeed());
+//		System.out.println("The Pid Input is " + Robot.shooterSys.returnPIDInput());
+		System.out.println(Robot.shooterSys.getInteriorSpeed());
+		Robot.shooterSys.setSetpoint(1280);
+		
 	}
 
 	@Override
@@ -63,6 +77,7 @@ public class ShooterCommand extends Command {
 
 	@Override
 	protected void end() {
+		Robot.shooterSys.turnInteriorMotorOff();
 	}
 	
 
