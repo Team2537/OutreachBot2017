@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberCommand extends Command {
 	// executes climber function
 
-	private int limitCurrent = 18; // TODO this number almost definetly isn't
+	private int limitCurrent = 10000; // TODO this number almost definetly isn't
 									// right. Measure # on actual robot
 
 	private String filename; // name of file to write current/time to (ex.
@@ -30,6 +30,10 @@ public class ClimberCommand extends Command {
 		requires(Robot.climberSys);
 	}
 
+	/**
+	 * creates the file 
+	 * sets start time
+	 */
 	@Override
 	protected void initialize() {
 		// System.out.println("Climber is running");
@@ -52,6 +56,10 @@ public class ClimberCommand extends Command {
 				System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
 	}
 
+	/**
+	 * Sets climber motor to the return from the trigger
+	 * Sens time x amperage to the file
+	 */
 	@Override
 	protected void execute() {
 		// System.out.println("Climber Running");
@@ -67,11 +75,17 @@ public class ClimberCommand extends Command {
 
 	}
 
+	/**
+	 * finishes the command if amperage goes over the amperage limit
+	 */
 	@Override
 	protected boolean isFinished() {
 		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > limitCurrent;
 	}
 
+	/**
+	 * turns off motor and closes the file when the command is ended or interrupted
+	 */
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);

@@ -5,7 +5,9 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberKillCommand extends Command {
-	//cancels climber
+	/**
+	 * Cancels climber completely
+	 */
 	
 	public ClimberKillCommand() {
 		requires(Robot.climberSys);
