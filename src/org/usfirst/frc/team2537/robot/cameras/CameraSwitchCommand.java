@@ -6,15 +6,19 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CameraSwitchCommand extends Command {
 
+	public CameraSwitchCommand() {
+		requires(Robot.camSys);
+	}
+	
 	@Override
 	protected void initialize() {
 		System.out.println("Camera Switch Command Initialized");
-		Robot.cams.toggleCams();
+		Robot.camSys.switchCameras();
 	}
 	
 	@Override
 	protected void execute() {
-		
+
 	}
 	
 	@Override

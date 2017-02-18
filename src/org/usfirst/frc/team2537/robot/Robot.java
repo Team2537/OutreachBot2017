@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.cameras.Cameras;
+import org.usfirst.frc.team2537.robot.cameras.CameraSubsystem;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
-	public static Cameras cams;
+	public static CameraSubsystem camSys;
 	public static ClimberSubsystem climberSys;
 	public static ShooterSubsystem shooterSys;
 
@@ -35,30 +35,10 @@ public class Robot extends IterativeRobot {
 		climberSys = new ClimberSubsystem();
 		climberSys.registerButtons();
 		
-		cams = new Cameras();
-		cams.registerButtons();
+		camSys = new CameraSubsystem();
+		camSys.registerButtons();
 	}
-
-/*		new Thread(() -> {
-			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
-			camera1.setResolution(640, 480);
-
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("cam1", 640, 480);
-
-			Mat source = new Mat();
-			Mat output = new Mat();
-
-			while (!Thread.interrupted()) {
-				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-				Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(255, 35, 0), 1);
-				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(255, 35, 0), 1);
-				outputStream.putFrame(source);  
-			}
-			
-		}).start();*/
-	 
+ 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select  
 	 * between different autonomous modes using the dashboard. The sendable 
