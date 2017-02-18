@@ -20,6 +20,7 @@ public class ShooterKillCommand extends Command {
 
 	protected void end() {
 		Robot.shooterSys.disable();
+
 	}
 
 }

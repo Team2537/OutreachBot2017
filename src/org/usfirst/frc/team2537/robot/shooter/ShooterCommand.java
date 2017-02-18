@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
-	private final static int TARGET_SPEED = 1280;
-	private final static int INNER_TARGET = 1200;
+	private final static int TARGET_SPEED = 1000;
+	private final static int INNER_TARGET = 980;
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -24,8 +24,7 @@ public class ShooterCommand extends Command {
 
 	/**
 	 * Sets the talon mode of the exterior motor and turns the exterior motor
-	 * on, with the PID set to TARGET_SPEED 
-	 * Enables the entire command
+	 * on, with the PID set to TARGET_SPEED Enables the entire command
 	 */
 	@Override
 	protected void initialize() {
@@ -39,20 +38,19 @@ public class ShooterCommand extends Command {
 
 	}
 
-		/**
-		 * Turns interior motor on if exterior motor is going fast enough
-		 * Prints out the speed of the motor
-		 */
+	/**
+	 * Turns interior motor on if exterior motor is going fast enough Prints out
+	 * the speed of the motor
+	 */
 	@Override
 	protected void execute() {
 
-		if (Robot.shooterSys.getExteriorSpeed() >= INNER_TARGET) {
+		System.out.println(Robot.shooterSys.getExteriorSpeed());
+		if (Robot.shooterSys.getExteriorSpeed() > 900) {
 			Robot.shooterSys.setInteriorMotor(1);
 		} else {
 			Robot.shooterSys.setInteriorMotor(0);
 		}
-		System.out.println(Robot.shooterSys.getExteriorSpeed());
-		
 
 	}
 

@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
@@ -14,7 +15,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 	private static final int TICKS_PER_REVOLUTION = 80;
 	private CANTalon exteriorFlywheel = new CANTalon(Ports.EXTERIOR_SHOOTER); // creates motors
 	private CANTalon interiorFlywheel = new CANTalon(Ports.INTERIOR_SHOOTER);
-	private static double p = 4.2, i = 0, d = 0.3; // sets pid values
+	private static double p = 4.2, i = 2.1, d = 3; // sets pid values
 	public static final int SPEED_MULTIPLIER = 1;
 
 	public ShooterSubsystem() {
@@ -28,7 +29,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
 		exteriorFlywheel.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		exteriorFlywheel.configEncoderCodesPerRev(TICKS_PER_REVOLUTION);
-		// exteriorFlywheel.changeControlMode(TalonControlMode.Speed);
+//		exteriorFlywheel.changeControlMode(TalonControlMode.Speed);
 
 	}
 
@@ -64,7 +65,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 	 */
 	public void turnExteriorMotorOff() {
 		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
-		this.setSetpoint(0);
+//		this.setSetpoint(0);
 		exteriorFlywheel.set(0);
 	}
 
@@ -109,5 +110,6 @@ public class ShooterSubsystem extends PIDSubsystem {
 		exteriorFlywheel.set(output);
 
 	}
-
 }
+
+
