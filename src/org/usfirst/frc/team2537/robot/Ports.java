@@ -20,7 +20,7 @@ public class Ports {
 	public static final int SHOOTER_ON_BUTTON = 1, SHOOTER_OFF_BUTTON = 4;
 
 	// Sensor ports
-	public static final int ULTRASONIC_TRIGGER = 2, ULTRASONIC_ECHO = 3;
+	public static final int ULTRASONIC_TRIGGER = 1, ULTRASONIC_ECHO = 2;
 
 	public static final int CLIMBER_PRESSURE_SENSOR = 0;
 }
