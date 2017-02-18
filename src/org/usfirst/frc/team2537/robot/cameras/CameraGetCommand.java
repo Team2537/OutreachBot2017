@@ -21,15 +21,16 @@ public class CameraGetCommand extends Command {
 	 */
 	public CameraGetCommand() {
 		requires(Robot.camSys);
+		outputStream = CameraServer.getInstance().putVideo("cams", 640, 480);
+		source = new Mat();
+		output = new Mat();
 	}
 	
 	/**
 	 * Creates the outputStream
 	 */
 	protected void initialize() {
-		outputStream = CameraServer.getInstance().putVideo("cams", 640, 480);
-		source = new Mat();
-		output = new Mat();
+
 	}
 	
 	/**
@@ -59,5 +60,14 @@ public class CameraGetCommand extends Command {
 		return false;
 	}
 
+	@Override
+	protected void end(){
+		
+	}
+	
+	@Override
+	protected void interrupted(){
+		
+	}
 	
 }
