@@ -1,5 +1,9 @@
 package org.usfirst.frc.team2537.robot.cameras;
 
+import java.awt.Color;
+
+import javax.swing.text.StyleConstants.FontConstants;
+
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -44,6 +48,14 @@ public class CameraGetCommand extends Command {
 		Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()), new Scalar(255, 35, 0), 1);
 		Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2), new Scalar(255, 35, 0), 1);
 		
+		if(Robot.camSys.getCamNum() == 0){
+			Imgproc.putText(source, "GEAR", new Point(output.cols() - 90, output.rows() - 10), 1, 2, new Scalar(0, 0, 0), 5);
+			Imgproc.putText(source, "GEAR", new Point(output.cols() - 90, output.rows() - 10), 1, 2, new Scalar(55, 250, 37), 2);
+		}else{
+			Imgproc.putText(source, "CLIMBER", new Point(output.cols() - 140, output.rows() - 10), 1, 2, new Scalar(0, 0, 0), 5);
+			Imgproc.putText(source, "CLIMBER", new Point(output.cols() - 140, output.rows() - 10), 1, 2, new Scalar(0, 223, 255), 2);			
+		}
+		
 		// Makes the image greener if within the drive range, and red if too close
 //		if (Robot.driveSys.getUltrasonic() < driveFarRange) {
 //			if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
@@ -52,6 +64,9 @@ public class CameraGetCommand extends Command {
 //				Core.add(source, new Scalar(0, 0, 100), output);
 //			}
 //		}
+		
+		
+		
 		outputStream.putFrame(output);
 	}
 	

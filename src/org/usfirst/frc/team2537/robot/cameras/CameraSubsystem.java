@@ -61,5 +61,8 @@ public class CameraSubsystem extends Subsystem {
 		}
 	}
 	
+	public int getCamNum() {
+		return camNum;
+	}
 
 }
