@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 
 public class UltraSonicCourseCorrect extends CourseCorrect {
 	public static final double TOLERANCE = 6;
-	private static final int SLOWDOWN_DIST = 60;
+	private static final double SLOWDOWN_START = 20;
 	private static final double CORRECTION_PROPORTION = 0.25;
 	private double startDuty;
 	private double speed;
@@ -23,9 +23,9 @@ public class UltraSonicCourseCorrect extends CourseCorrect {
 	@Override
 	protected void execute() {
 		double currentAngle = Robot.pwm.getDutyCycle();
-		System.out.println(Robot.driveSys.ultraSanic.getRangeInches()<SLOWDOWN_DIST);
-		if (Robot.driveSys.ultraSanic.getRangeInches() < SLOWDOWN_DIST) {
-			speed = Robot.driveSys.ultraSanic.getRangeInches()/SLOWDOWN_DIST*DEFAULT_SPEED + MINIMUM_SPEED ;
+		System.out.println(Robot.driveSys.ultraSanic.getRangeInches()<SLOWDOWN_START);
+		if (Robot.driveSys.ultraSanic.getRangeInches() < SLOWDOWN_START) {
+			speed = Robot.driveSys.ultraSanic.getRangeInches()/SLOWDOWN_START*DEFAULT_SPEED + MINIMUM_SPEED ;
 		}
 		System.out.println(speed);
 		double left = speed;

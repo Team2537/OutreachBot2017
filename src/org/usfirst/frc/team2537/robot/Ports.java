@@ -22,8 +22,8 @@ public final class Ports {
 		DRIVE_ULTRASONIC_ECHO = 7,
 		ENCODER_LEFT_A = 4,
 		ENCODER_LEFT_B = 5,
-		ENCODER_RIGHT_A = 1,
-		ENCODER_RIGHT_B = 2,
+		ENCODER_RIGHT_A = 2,
+		ENCODER_RIGHT_B = 3,
 		RASP_PI = 9;
 	
 }

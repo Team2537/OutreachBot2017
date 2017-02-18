@@ -23,7 +23,7 @@ public class DriveSubsystem extends Subsystem {
 	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 254; // for encoders
+	public static final double PulsesPerRevolution = 990; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -185,7 +185,7 @@ public class DriveSubsystem extends Subsystem {
 //				* Math.PI - initialRightEncoders;
 		
 		//ATLAS
-		System.out.println("rencoders:"+rencoder.get());
+		System.out.println("rencoders: "+rencoder.getRaw());
 		return rencoder.getRaw()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
 	}
 

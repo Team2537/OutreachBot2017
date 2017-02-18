@@ -5,6 +5,6 @@ import org.usfirst.frc.team2537.robot.auto.CourseCorrect;
 
 public class Straight extends CommandGroup {
 	public Straight(){
-		addSequential(new CourseCorrect(12.00));
+		addSequential(new CourseCorrect(72.00));
 	}
 }

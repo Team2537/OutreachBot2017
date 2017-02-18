@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CourseCorrect extends Command {
 
 	protected static final double DEFAULT_SPEED = 0.4;
-	private static final double SLOWDOWN_START = 60;
-	protected static final double MINIMUM_SPEED = 0.05;
+	private static final double SLOWDOWN_START = 0.7; //% distance from target to start slowing down at (0 to 1)
+	protected static final double MINIMUM_SPEED = 0.1;
 	protected static final double CORRECTION_PROPORTION = 90; // it just worked, y'no?
 	private static final double TOLERANCE = 1;
 	private static final boolean debug = false;
@@ -63,8 +63,9 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
-		if (Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage())) < getSlowdownStart()) {
-			speed = Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage()))/getSlowdownStart()*startSpeed + MINIMUM_SPEED ;
+		if (Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage())) < getSlowdownStart() * Math.abs(distance)) {
+			speed = Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage()))/(getSlowdownStart() * Math.abs(distance))*startSpeed;
+			if(speed < MINIMUM_SPEED) speed = MINIMUM_SPEED;
 		}
 
 		double left = speed;

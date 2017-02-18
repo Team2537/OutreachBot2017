@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.maps.UltrasonicTest;
+import org.usfirst.frc.team2537.maps.GearPlacementCommand;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new UltrasonicTest());
+		Scheduler.getInstance().add(new GearPlacementCommand());
 		System.out.println("Autonomous start");
 	}
 
@@ -60,6 +60,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+		//System.out.println(Robot.driveSys.rencoder.getRaw());
 		Scheduler.getInstance().run();
 	}
 
