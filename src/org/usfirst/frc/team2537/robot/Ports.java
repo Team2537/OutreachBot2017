@@ -4,12 +4,12 @@ public class Ports {
 	// TODO: Change ports to line up with actual ports
 
 	// Drive Talon Ports
-	public static final int FRONT_LEFT_MOTOR = 60, FRONT_RIGHT_MOTOR = 59, BACK_LEFT_MOTOR = 3, BACK_RIGHT_MOTOR = 61;
+	public static final int FRONT_LEFT_MOTOR = 3, FRONT_RIGHT_MOTOR = 4, BACK_LEFT_MOTOR = 5, BACK_RIGHT_MOTOR = 6;
 
 	// Mechanism Talon Ports
-	public static final int CLIMBER_MOTOR_ONE = 0, CLIMBER_MOTOR_TWO = 62;
+	public static final int CLIMBER_MOTOR_ONE = 7;
 
-	public static final int INTERIOR_SHOOTER = 1, EXTERIOR_SHOOTER = 2; // originally 3 and 2
+	public static final int EXTERIOR_SHOOTER = 1, INTERIOR_SHOOTER = 2; // originally 3 and 2
 
 	// Joystick and XBox Ports
 	public static final int LEFT_JOYSTICK = 0, RIGHT_JOYSTICK = 1, XBOX = 2;
@@ -19,7 +19,7 @@ public class Ports {
 
 	public static final int SHOOTER_ON_BUTTON = 1, SHOOTER_OFF_BUTTON = 4;
 
-	public static final int CAMERA_SWITCH_BUTTON = 5; // temp
+	public static final int CAMERA_SWITCH_BUTTON = 5, FEED_BALL_BUTTON = 8;
 
 	// Sensor ports
 	public static final int ULTRASONIC_TRIGGER = 3, ULTRASONIC_ECHO = 4;

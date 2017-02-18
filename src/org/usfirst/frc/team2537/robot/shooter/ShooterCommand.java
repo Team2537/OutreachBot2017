@@ -8,6 +8,7 @@ public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
 	private final static int TARGET_SPEED = 1280;
+	private final static int INNER_TARGET = 1200;
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -22,52 +23,37 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * turns both flywheels on, the inner one WAIT_TIME seconds after the outer
-	 * one, in order to allow the outer one to spin up, if the shooter on button
-	 * is pressed, or turns both flywheels off if the shooter off buttons is
-	 * pressed
+	 * Sets the talon mode of the exterior motor and turns the exterior motor
+	 * on, with the PID set to TARGET_SPEED 
+	 * Enables the entire command
 	 */
 	@Override
 	protected void initialize() {
-		Robot.shooterSys.setInteriorMotorMode();
-		if (shooterOff) {
-			Robot.shooterSys.turnInteriorMotorOff();
-		} else {
-			//Robot.shooterSys.fastOn();
-			Robot.shooterSys.setSpeed(TARGET_SPEED);
-		}
 		Robot.shooterSys.enable();
-		
+		Robot.shooterSys.setExteriorMotorMode();
+		if (shooterOff) {
+			Robot.shooterSys.turnExteriorMotorOff();
+		} else {
+			Robot.shooterSys.setSetpoint(TARGET_SPEED);
 		}
-		
-		
-	
 
+	}
+
+		/**
+		 * Turns interior motor on if exterior motor is going fast enough
+		 * Prints out the speed of the motor
+		 */
 	@Override
 	protected void execute() {
-		
-		
-		if (Robot.shooterSys.getInteriorSpeed() >= TARGET_SPEED){
-			Robot.shooterSys.setExteriorMotor(1);
+
+		if (Robot.shooterSys.getExteriorSpeed() >= INNER_TARGET) {
+			Robot.shooterSys.setInteriorMotor(1);
 		} else {
-			Robot.shooterSys.setExteriorMotor(0);
-	}
-		/*
-		 * else if (Robot.shooterSys.getFastVelocity > whateverSpeed) {
-		 * Robot.shooterSys.acivateSlowMotor(); } //Above code also to be used
-		 * if using an encoder
-		 * 
-		 * 
-		 * /* if (shooterOn && Robot.shooterSys.getLimitSwitch()) { if
-		 * (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER
-		 * - ShooterSubsystem.LEEWAY && Robot.shooterSys.UltronRange() <
-		 * ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY) {
-		 * Robot.shooterSys.FlyOn(); } }
-		 */
-//		System.out.println("The Pid Input is " + Robot.shooterSys.returnPIDInput());
-		System.out.println(Robot.shooterSys.getInteriorSpeed());
-		Robot.shooterSys.setSetpoint(TARGET_SPEED);
+			Robot.shooterSys.setInteriorMotor(0);
+		}
+		System.out.println(Robot.shooterSys.getExteriorSpeed());
 		
+
 	}
 
 	@Override
@@ -75,18 +61,22 @@ public class ShooterCommand extends Command {
 		return false;
 	}
 
+	/**
+	 * will never be engaged
+	 */
 	@Override
 	protected void end() {
-		Robot.shooterSys.turnInteriorMotorOff();
+		Robot.shooterSys.setInteriorMotor(0);
+		Robot.shooterSys.setExteriorMotor(0);
 	}
-	
 
 	/**
 	 * turns flywheels off if interrupted
 	 */
 	@Override
 	protected void interrupted() {
-		Robot.shooterSys.flyOff();
+		Robot.shooterSys.setInteriorMotor(0);
+		Robot.shooterSys.setExteriorMotor(0);
 	}
 
 }

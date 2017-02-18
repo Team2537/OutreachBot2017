@@ -4,6 +4,11 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * turns interior motor on long enough to feed one ball into the exterior flywheel
+ * @author email
+ *
+ */
 public class FeedOneBallCommand extends Command {
 	
 	private long startTime;

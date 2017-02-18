@@ -14,7 +14,6 @@ public class ClimberKillCommand extends Command {
 	protected void initialize() {
 
 		Robot.climberSys.setClimberMotor(0);
-//		System.out.println("Climber is dead");
 	}
 		
 
@@ -26,11 +25,13 @@ public class ClimberKillCommand extends Command {
 	
 		
 		
-	
+
+	/**
+	 * isFinished is always true so that the command immediately goes to end
+	 */
 	@Override
 	protected boolean isFinished(){
 		return true;
-		
 	}
 	
 	@Override

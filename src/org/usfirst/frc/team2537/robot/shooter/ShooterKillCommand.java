@@ -5,7 +5,10 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterKillCommand extends Command {
-
+	
+	/**
+	 * shuts down the entire command
+	 */
 	public ShooterKillCommand() {
 		requires(Robot.shooterSys);
 	}
@@ -17,7 +20,6 @@ public class ShooterKillCommand extends Command {
 
 	protected void end() {
 		Robot.shooterSys.disable();
-		Robot.shooterSys.setSpeed(0);
 	}
 
 }
