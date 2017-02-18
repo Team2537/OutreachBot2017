@@ -15,14 +15,14 @@ public class AutoRotateCameraCommand extends Command {
 	// values are from 0 to 1 (0 is left of camera, 1 is right)
 	private static final double DESTINATION_DUTY = 0.5;
 	private static final double DEFAULT_SPEED = 0.6;
-	private static final double MINIMUM_SPEED = 0.3;
 	private static final int SLOWDOWN_POWER = 16;
 	private static final double TOLERANCE = 0.05;
-	private static final double KP = 0.1;
-	private static final double KI = 0.1;
-	private static final double KD = 0.00;
-
-	private static final double NO_TARGET_DUTY = 0.01; // duty output by the Pi
+	/* P, I, D, MIN SPEED */
+	private static final double[] CARPET_PID = new double[]{0.1, 0.2, 0.1, 0.15};
+	private static final double[] SMOOTH_CONCRETE_PID = new double[]{0.2, 0, 0, 0.3};
+	private static final double[] CURRENT_SURFACE = CARPET_PID;
+	
+	private static final double NO_TARGET_DUTY = 0.99; // duty output by the Pi
 														// when no target is
 														// visible
 	private double speed;
@@ -42,7 +42,7 @@ public class AutoRotateCameraCommand extends Command {
 		speed = DEFAULT_SPEED;
 		lastSideTurned = Side.LEFT;
 		pidOut = new DutyCycleOutput();
-		pidControl = new PIDController(KP, KI, KD, new DutyCycleSource(), pidOut);
+		pidControl = new PIDController(CURRENT_SURFACE[0], CURRENT_SURFACE[1], CURRENT_SURFACE[2], new DutyCycleSource(), pidOut);
 	}
 
 	@Override
@@ -58,21 +58,19 @@ public class AutoRotateCameraCommand extends Command {
 			currentDuty = 1;
 		}
 		System.out.println("this robot is bad"+Robot.pwm.getDutyCycle());
-		if (currentDuty > NO_TARGET_DUTY) {
+		if (currentDuty < NO_TARGET_DUTY) {
 			
 			//speed = Math.pow(2*Math.abs(DESTINATION_DUTY - currentDuty), SLOWDOWN_POWER)
 			//		* DEFAULT_SPEED;
 			
 			speed = pidOut.get();
-			
+			if(speed < CURRENT_SURFACE[3])
+				speed = CURRENT_SURFACE[3];
 			if (currentDuty >= DESTINATION_DUTY + TOLERANCE) {
-				if(speed < MINIMUM_SPEED)
-					speed = MINIMUM_SPEED;
+
 				Robot.driveSys.setDriveMotors(speed, -speed);
 				lastSideTurned = Side.RIGHT;
 			} else if (currentDuty <= DESTINATION_DUTY - TOLERANCE) {
-				if(speed < MINIMUM_SPEED)
-					speed = MINIMUM_SPEED;
 				Robot.driveSys.setDriveMotors(-speed, speed);
 				lastSideTurned = Side.LEFT;
 			} else {
@@ -82,7 +80,8 @@ public class AutoRotateCameraCommand extends Command {
 		} else {
 			
 			speed = DEFAULT_SPEED;
-			
+			if(speed < CURRENT_SURFACE[3])
+				speed = CURRENT_SURFACE[3];
 			if (lastSideTurned == Side.LEFT)
 				Robot.driveSys.setDriveMotors(-speed, speed);
 			else if (lastSideTurned == Side.RIGHT)
@@ -95,7 +94,8 @@ public class AutoRotateCameraCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		double currentDuty = Robot.pwm.getDutyCycle();
-		return (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE);
+		return false;
+		//return (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE);
 	}
 
 	@Override

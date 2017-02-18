@@ -18,7 +18,7 @@ public class PWMSubsystem extends Subsystem {
         double dutyCycle = count.getPeriod()*frequency;
         //System.out.println("DUTY CYCLE: " + dutyCycle + "		PERIOD: " + count.getPeriod());
         if(dutyCycle > 1) dutyCycle = 1;
-        return dutyCycle;
+        return 1-dutyCycle;
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
