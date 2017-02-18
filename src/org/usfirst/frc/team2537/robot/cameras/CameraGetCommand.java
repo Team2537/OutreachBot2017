@@ -43,12 +43,6 @@ public class CameraGetCommand extends Command {
 		Robot.camSys.cvSink.grabFrame(source);
 		output = source;
 
-		// draws a vertical and horizontal line through the center of the image
-		Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()),
-				new Scalar(255, 35, 0), 1);
-		Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2),
-				new Scalar(255, 35, 0), 1);
-
 		if (Robot.camSys.getCamNum() == 0) {
 			// Makes the image greener if within the drive range, and red if too
 			// close
@@ -60,16 +54,31 @@ public class CameraGetCommand extends Command {
 				}
 			}
 			
-			Imgproc.putText(source, "GEAR", new Point(output.cols() - 90, output.rows() - 10), 1, 2,
-					new Scalar(0, 0, 0), 5);
-			Imgproc.putText(source, "GEAR", new Point(output.cols() - 90, output.rows() - 10), 1, 2,
-					new Scalar(55, 250, 37), 2);
+			// draws "GEAR" in the top right corner
+			Imgproc.putText(source, "GEAR", new Point(output.cols() - 75, 25), 4, 0.8,
+					new Scalar(0, 0, 0), 3);
+			Imgproc.putText(source, "GEAR", new Point(output.cols() - 75, 25), 4, 0.8,
+					new Scalar(55, 250, 37), 1);
+
+			// draws a vertical and horizontal line through the center of the image
+			Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()),
+					new Scalar(55, 250, 37), 1);
+			Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2),
+					new Scalar(55, 250, 37), 1);
 
 		} else {
-			Imgproc.putText(source, "CLIMBER", new Point(output.cols() - 140, output.rows() - 10), 1, 2,
-					new Scalar(0, 0, 0), 5);
-			Imgproc.putText(source, "CLIMBER", new Point(output.cols() - 140, output.rows() - 10), 1, 2,
-					new Scalar(0, 223, 255), 2);
+			//draws "CLIMB" in the top right corner
+			Imgproc.putText(source, "CLIMB", new Point(output.cols() - 85, 25), 4, 0.8,
+					new Scalar(0, 0, 0), 3);
+			Imgproc.putText(source, "CLIMB", new Point(output.cols() - 85, 25), 4, 0.8,
+					new Scalar(0, 223, 255), 1);
+			
+			// draws a vertical and horizontal line through the center of the image
+			Imgproc.line(source, new Point(output.cols() / 2, 0), new Point(output.cols() / 2, output.rows()),
+					new Scalar(0, 223, 255), 1);
+			Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2),
+					new Scalar(0, 223, 255), 1);
+
 		}
 
 		outputStream.putFrame(output);
