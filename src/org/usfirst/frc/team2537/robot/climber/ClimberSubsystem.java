@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ClimberSubsystem extends Subsystem {
 
 	private Talon climberMotor1 = new Talon(Ports.CLIMBER_MOTOR_ONE); // creates
-	private CANTalon climberMotor2 = new CANTalon(Ports.CLIMBER_MOTOR_TWO);																	// Talon
 																		// motor
 																		// for
 																		// climber
@@ -21,8 +20,7 @@ public class ClimberSubsystem extends Subsystem {
 	
 	public ClimberSubsystem() {
 
-		climberMotor2.changeControlMode(TalonControlMode.Follower);
-		climberMotor2.set(Ports.CLIMBER_MOTOR_ONE);
+
 	}
 
 	@Override

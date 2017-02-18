@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberCommand extends Command {
 	// executes climber function
 
-	private int limitCurrent = 11; // TODO this number almost definetly isn't
+	private int limitCurrent = 18; // TODO this number almost definetly isn't
 									// right. Measure # on actual robot
 
 	private String filename; // name of file to write current/time to (ex.
