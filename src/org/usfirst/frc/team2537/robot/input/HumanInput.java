@@ -4,7 +4,7 @@ import org.usfirst.frc.team2537.robot.Ports;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton; 
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class HumanInput {
@@ -16,7 +16,6 @@ public class HumanInput {
 
 	public static Button climberActivateButton = new JoystickButton(xboxController, Ports.CLIMBER_ACTIVATOR_BUTTON);
 	public static Button climberKillSwitch = new JoystickButton(xboxController, Ports.CLIMBER_KILL_SWITCH);
-    public static final Button cameraSelection = new JoystickButton(xboxController, Ports.CAMERA_SELECTION_BUTTON);  
 	public static Button shooterOnButton = new JoystickButton(xboxController, Ports.SHOOTER_ON_BUTTON);
 	public static Button shooterOffButton = new JoystickButton(xboxController, Ports.SHOOTER_OFF_BUTTON);
 	
