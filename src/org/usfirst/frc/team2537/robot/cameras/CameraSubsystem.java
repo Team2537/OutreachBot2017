@@ -14,6 +14,9 @@ public class CameraSubsystem extends Subsystem {
 	private UsbCamera cam1;
 	private int camNum;
 	
+	/**
+	 * Creates the default camera (cam0) and the cvSink
+	 */
 	public CameraSubsystem() {
 		camNum = 0;
 		cam0 = new UsbCamera("cam0", 0);
@@ -32,6 +35,10 @@ public class CameraSubsystem extends Subsystem {
 		HumanInput.registerWhenPressedCommand(HumanInput.cameraSwitchButton, new CameraSwitchCommand());
 	}
 	
+	/**
+	 * Toggles the cameras between cam0 and cam1
+	 * Frees and removes the current camera, then creates and adds the new camera
+	 */
 	public void switchCameras() {
 		if (camNum == 0) {
 			CameraServer.getInstance().removeCamera("cam0");

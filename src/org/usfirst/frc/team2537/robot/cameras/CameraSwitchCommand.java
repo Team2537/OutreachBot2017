@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CameraSwitchCommand extends Command {
 
+	/**
+	 * Switches between cam0 and cam1
+	 */
 	public CameraSwitchCommand() {
 		requires(Robot.camSys);
 	}
