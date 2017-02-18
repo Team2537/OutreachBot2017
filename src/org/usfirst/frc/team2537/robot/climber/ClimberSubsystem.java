@@ -20,7 +20,7 @@ public class ClimberSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 	}
 
-	public void registerButtons() { // registers buttons
+	public void registerButtons() { 
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
 
