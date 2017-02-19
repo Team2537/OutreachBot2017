@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 /**
@@ -35,6 +36,8 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private static final int printCourseKey = KeyEvent.VK_ENTER;
 	private static final int exitKey = KeyEvent.VK_ESCAPE;
 	private static final int relativeAngleToggle = KeyEvent.VK_R;
+	private static final int openSnapMenu = KeyEvent.VK_S;
+	
 
 	private Image field;
 	private boolean followCursor;
@@ -43,6 +46,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private int botTransparency;
 	private JFrame jframe;
 	private SuperMenu menu;
+	private JPopupMenu snapMenu;
 	public static boolean relativeAngles =false;
 
 	public SuperPanel() {
@@ -58,6 +62,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		botTransparency = 255;
 		jframe = new JFrame();
 		menu = new SuperMenu(this);
+		snapMenu = new SuperSnapeMenu(this);
 	}
 
 	@Override
@@ -80,6 +85,11 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void keyPressed(KeyEvent k) {
+		if(k.getKeyCode() == openSnapMenu){
+
+			snapMenu.show(k.getComponent(),mousePos.x,mousePos.y);
+			
+		}
 		if (k.getKeyCode() == toggleFollowCursorKey) followCursor = !followCursor;
 		if (k.getKeyCode() == relativeAngleToggle) relativeAngles = !relativeAngles;
 		if (k.getKeyCode() == printCourseKey) {
@@ -125,10 +135,27 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	public void mouseMoved(MouseEvent m) {
 		mousePos.x = m.getX();
 		mousePos.y = m.getY();
+
 		if (startingPoint != null && !followCursor){
 			mousePos = snap(mousePos);
+		}
+		if(startingPoint == null){
+			if(mousePos.x < SuperGUI.ROBOT_LENGTH*SuperGUI.SCALE/2)
+				mousePos.x = (int) (SuperGUI.ROBOT_LENGTH*SuperGUI.SCALE/2);
+			if(mousePos.x > (SuperGUI.FIELD_LENGTH-SuperGUI.ROBOT_LENGTH/2)*SuperGUI.SCALE)
+				mousePos.x = (int) ((SuperGUI.FIELD_LENGTH-SuperGUI.ROBOT_LENGTH/2)*SuperGUI.SCALE);
+			if(mousePos.y < SuperGUI.ROBOT_WIDTH*SuperGUI.SCALE/2)
+				mousePos.y = (int) (SuperGUI.ROBOT_WIDTH*SuperGUI.SCALE/2);
+			if(mousePos.y > (SuperGUI.FIELD_WIDTH-SuperGUI.ROBOT_WIDTH/2)*SuperGUI.SCALE)
+				mousePos.y = (int) ((SuperGUI.FIELD_WIDTH-SuperGUI.ROBOT_WIDTH/2)*SuperGUI.SCALE);	
+			
+		}
+
+		
+		if(startingPoint != null && !menu.isVisible()){
 			startingPoint.updateFinalDistance(mousePos);
 		}
+
 		repaint();
 	}
 
@@ -209,12 +236,26 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		double angle = Math.atan2(startingPoint.getFinalPoint().y - mousePos.y, mousePos.x - startingPoint.getFinalPoint().x);
-		switch(e.getActionCommand()){
-		case "GEAR": startingPoint.addAction(new SuperAction(SuperEnum.GEAR, angle)); break;
-		case "SHOOT": startingPoint.addAction(new SuperAction(SuperEnum.SHOOT, angle)); break;
-		default: System.out.println("Right click command not found");
+		if(startingPoint != null){
+			double angle = Math.atan2(startingPoint.getFinalPoint().y - mousePos.y, mousePos.x - startingPoint.getFinalPoint().x);
+			for(int i = 0 ; i<SuperEnum.values().length;i++){
+				if(e.getActionCommand().equals(SuperEnum.values()[i].name)){
+					startingPoint.addAction(new SuperAction(SuperEnum.values()[i], angle));
+				}
+			}
 		}
+		for(int i = 0 ; i<SuperSnapEnum.values().length;i++){
+			if(e.getActionCommand().equals(SuperSnapEnum.values()[i].name)){
+				if (startingPoint == null)
+					startingPoint = new SuperPoint(SuperSnapEnum.values()[i].p);
+				else {
+					startingPoint.point(SuperSnapEnum.values()[i].p);
+					startingPoint.add(SuperSnapEnum.values()[i].p);
+					followCursor = true;
+				}
+			}
+		}
+		repaint();
 	}
 
 	public boolean isRelativeAngles() {

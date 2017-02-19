@@ -1,3 +1,8 @@
 public enum SuperEnum {
-	GEAR, SHOOT
+	GEAR("GEAR"), SHOOT("SHOOT");
+	
+	String name;
+	private SuperEnum(String name){
+		this.name = name;
+	}
 }

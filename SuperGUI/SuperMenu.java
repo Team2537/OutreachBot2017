@@ -4,15 +4,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 public class SuperMenu extends JPopupMenu {
-	private JMenuItem gearSelect;
-	private JMenuItem shootSelect;
+	private JMenuItem[] enumSelections;
 	
 	public SuperMenu(ActionListener l){
-		gearSelect = new JMenuItem("GEAR");
-		gearSelect.addActionListener(l);
-		shootSelect = new JMenuItem("SHOOT");
-		shootSelect.addActionListener(l);
-		add(gearSelect);
-		add(shootSelect);
+		enumSelections = new JMenuItem[SuperEnum.values().length];
+		for(int i = 0 ;i<enumSelections.length; i++){
+			enumSelections[i] = new JMenuItem(SuperEnum.values()[i].name);
+			enumSelections[i].addActionListener(l);
+			add(enumSelections[i]);
+		}
 	}
 }

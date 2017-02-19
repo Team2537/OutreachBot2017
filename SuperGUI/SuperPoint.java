@@ -172,6 +172,9 @@ public class SuperPoint {
 			g2.setColor(Color.CYAN);
 			AffineTransform defaultTransform = g2.getTransform();
 			AffineTransform at = new AffineTransform();
+			if(angle > Math.PI/2 || angle < -Math.PI/2){
+				at.rotate(Math.PI, (p.x+next.p.x)/2, (p.y +next.p.y)/2);
+			}
 			at.rotate(2*Math.PI-angle, (p.x+next.p.x)/2, (p.y +next.p.y)/2);
 			g2.setFont(new Font(null,Font.PLAIN,20));
 			g2.setTransform(at);
@@ -291,14 +294,19 @@ public class SuperPoint {
 			//drawing user info
 			AffineTransform defaultTransform = g2.getTransform();
 			AffineTransform at = new AffineTransform();
-			
+			if(angle > Math.PI/2 || angle < -Math.PI/2){
+				at.rotate(Math.PI, midpoint.x, midpoint.y);
+			}
 			at.rotate(2*Math.PI-angle, midpoint.x, midpoint.y);
 			g2.setTransform(at);
-			g2.setColor(Color.PINK);
+			g2.setColor(Color.CYAN);
 			g2.setFont(new Font(null,Font.PLAIN,14));
 			g2.drawString(df.format(Point.distance(p.x,p.y, midpoint.x,midpoint.y)/ SuperGUI.SCALE * 12*2),midpoint.x,midpoint.y);
 			
 			at = new AffineTransform();
+			if(angle > Math.PI/2 || angle < -Math.PI/2){
+				at.rotate(Math.PI,(midpoint.x+p.x)/2, (midpoint.y+p.y)/2);
+			}
 			at.rotate(2*Math.PI-angle, (midpoint.x+p.x)/2, (midpoint.y+p.y)/2);
 			g2.setTransform(at);
 			g2.setColor(Color.MAGENTA);
@@ -354,7 +362,7 @@ public class SuperPoint {
 			next.updateFinalDistance(p);
 			return;
 		}
-		midpoint = new Point((p.x+this.p.x)/2,(p.y+this.p.y)/2);
+		midpoint = new Point((int) ((p.x+this.p.x)*(0.5)),(int) ((p.y+this.p.y)*(0.5)));
 	}
 
 }

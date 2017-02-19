@@ -167,7 +167,7 @@ public class DriveSubsystem extends Subsystem {
 		// ATLAS
 		//System.out.println("lencoders:"+(-lencoder.get()));
 /* 		For use when the encoders are not in the DIO ports
- * 		return talonFrontLeft.getEncPosition()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
+ * 		return (talonBackLeft.getEncPosition()+talonFrontLeft.getEncPosition())/ PulsesPerRevolution/2 * WHEEL_DIAMETER * Math.PI
 				- initialLeftEncoders;*/
 		return -lencoder.get() / PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
 				- initialLeftEncoders;
@@ -192,7 +192,7 @@ public class DriveSubsystem extends Subsystem {
 		//ATLAS
 		//System.out.println("rencoders: "+rencoder.getRaw());
 		/* 		For use when the encoders are not in the DIO ports
-		 * 		return talonFrontRight.getEncPosition()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
+		 * 		return (talonBackRight.getEncPosition()+talonFrontRight.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
 						- initialRightEncoders;*/
 		return rencoder.getRaw()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
 	}
