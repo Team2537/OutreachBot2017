@@ -34,6 +34,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private static final int toggleFollowCursorKey = KeyEvent.VK_SPACE;
 	private static final int printCourseKey = KeyEvent.VK_ENTER;
 	private static final int exitKey = KeyEvent.VK_ESCAPE;
+	private static final int relativeAngleToggle = KeyEvent.VK_R;
 
 	private Image field;
 	private boolean followCursor;
@@ -42,6 +43,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private int botTransparency;
 	private JFrame jframe;
 	private SuperMenu menu;
+	public static boolean relativeAngles =false;
 
 	public SuperPanel() {
 		field = new ImageIcon("SuperGUI/FIELD.jpg").getImage();
@@ -79,6 +81,7 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	@Override
 	public void keyPressed(KeyEvent k) {
 		if (k.getKeyCode() == toggleFollowCursorKey) followCursor = !followCursor;
+		if (k.getKeyCode() == relativeAngleToggle) relativeAngles = !relativeAngles;
 		if (k.getKeyCode() == printCourseKey) {
 			System.out.println("Course================" + startingPoint.getNumBots());
 			String mapName = (String) JOptionPane.showInputDialog(jframe, "Enter map name:\n", "File Name",
@@ -122,7 +125,10 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	public void mouseMoved(MouseEvent m) {
 		mousePos.x = m.getX();
 		mousePos.y = m.getY();
-		if (startingPoint != null && !followCursor) mousePos = snap(mousePos);
+		if (startingPoint != null && !followCursor){
+			mousePos = snap(mousePos);
+			startingPoint.updateFinalDistance(mousePos);
+		}
 		repaint();
 	}
 
@@ -209,5 +215,13 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 		case "SHOOT": startingPoint.addAction(new SuperAction(SuperEnum.SHOOT, angle)); break;
 		default: System.out.println("Right click command not found");
 		}
+	}
+
+	public boolean isRelativeAngles() {
+		return relativeAngles;
+	}
+
+	public void setRelativeAngles(boolean relativeAngles) {
+		this.relativeAngles = relativeAngles;
 	}
 }

@@ -5,6 +5,8 @@ import org.usfirst.frc.team2537.robot.Ports;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -23,17 +25,18 @@ public class DriveSubsystem extends Subsystem {
 	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 254; // for encoders
+	public static final double PulsesPerRevolution = 990; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
 												// resetEncoders)
 
 	// Atlas encoder code
-	public Encoder lencoder = new Encoder(Ports.ENCODER_LEFT_A, Ports.ENCODER_LEFT_B);
-	public Encoder rencoder = new Encoder(Ports.ENCODER_RIGHT_A, Ports.ENCODER_RIGHT_B);
-	public Ultrasonic ultraSanic = new Ultrasonic(Ports.DRIVE_ULTRASONIC_INPUT, Ports.DRIVE_ULTRASONIC_ECHO); 
-
+	public Encoder lencoder = new Encoder(Ports.LEFT_ENCODER_A, Ports.LEFT_ENCODER_B);
+	public Encoder rencoder = new Encoder(Ports.RIGHT_ENCODER_A, Ports.RIGHT_ENCODER_B);
+	public Ultrasonic ultraSanic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO); 
+	public DigitalInput diosaur = new DigitalInput(Ports.INRAFRED_TRIGGER);
+	public DigitalOutput infrared = new DigitalOutput(Ports.INRARED_ECHO);
 	private AHRS ahrs;
 
 	public DriveSubsystem() {
@@ -41,7 +44,6 @@ public class DriveSubsystem extends Subsystem {
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
-		
 		ultraSanic.setAutomaticMode(true);
 
 		try {
@@ -140,6 +142,7 @@ public class DriveSubsystem extends Subsystem {
 		// Knightfall
 		//System.out.println("Encoder Average:"
 		//		+ (getLeftEncoders() + getRightEncoders()) / 2);
+		
 		return getRightEncoders();//(getLeftEncoders() + getRightEncoders()) / 2;
 	}
 
@@ -163,7 +166,9 @@ public class DriveSubsystem extends Subsystem {
 
 		// ATLAS
 		//System.out.println("lencoders:"+(-lencoder.get()));
-		System.out.println(lencoder.get());
+/* 		For use when the encoders are not in the DIO ports
+ * 		return talonFrontLeft.getEncPosition()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
+				- initialLeftEncoders;*/
 		return -lencoder.get() / PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
 				- initialLeftEncoders;
 	}
@@ -185,7 +190,10 @@ public class DriveSubsystem extends Subsystem {
 //				* Math.PI - initialRightEncoders;
 		
 		//ATLAS
-		System.out.println("rencoders:"+rencoder.get());
+		//System.out.println("rencoders: "+rencoder.getRaw());
+		/* 		For use when the encoders are not in the DIO ports
+		 * 		return talonFrontRight.getEncPosition()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
+						- initialRightEncoders;*/
 		return rencoder.getRaw()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
 	}
 
@@ -196,7 +204,12 @@ public class DriveSubsystem extends Subsystem {
 //		initialLeftEncoders += getLeftEncoders();
 //		initialRightEncoders += getRightEncoders();
 
-		// ATLAS
+		// For use when there are not enough DIO Ports
+		 //talonFrontRight.setEncPosition(0);
+		 //talonFrontLeft.setEncPosition(0);
+		 //talonBackRight.setEncPosition(0);
+		 //talonBackLeft.setEncPosition(0);
+		 
 		 lencoder.reset();
 		 rencoder.reset();
 	}
@@ -248,5 +261,9 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void registerButtons() {
+	}
+	
+	public boolean getBeamBreak(){
+		return diosaur.get();
 	}
 }

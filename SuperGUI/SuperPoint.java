@@ -1,10 +1,13 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 public class SuperPoint {
@@ -15,6 +18,9 @@ public class SuperPoint {
 	private LinkedList<SuperAction> actions;
 	private int alpha;
 	private boolean backwards;
+	private Double startAngle = null;
+	private static Point midpoint = null;
+	private static DecimalFormat df = new DecimalFormat("#.##");
 
 	/**
 	 * Adds a SuperBot to the end of the bot list
@@ -60,10 +66,20 @@ public class SuperPoint {
 	 */
 	public void point(Point p) {
 		if (next != null) {
+			
+			if(next.next == null){
+				next.startAngle = angle ;
+			}
 			next.point(p);
 			return;
 		}
+
+		if(startAngle == null){
+			startAngle = (double) 0; 
+		}
 		angle = Math.atan2(this.p.y - p.y, p.x - this.p.x);
+
+		midpoint = new Point((p.x+this.p.x)/2,(p.y+this.p.y)/2);
 	}
 
 	public double getAngle() {
@@ -153,7 +169,14 @@ public class SuperPoint {
 			g2.setStroke(new BasicStroke((float) (SuperGUI.ROBOT_WIDTH * SuperGUI.SCALE)));
 			g2.draw(new Line2D.Float(p, next.p));
 			g2.setStroke(new BasicStroke());
-
+			g2.setColor(Color.CYAN);
+			AffineTransform defaultTransform = g2.getTransform();
+			AffineTransform at = new AffineTransform();
+			at.rotate(2*Math.PI-angle, (p.x+next.p.x)/2, (p.y +next.p.y)/2);
+			g2.setFont(new Font(null,Font.PLAIN,20));
+			g2.setTransform(at);
+			g2.drawString(df.format(Point.distance(p.x,p.y,next.p.x,next.p.y)/ SuperGUI.SCALE * 12),(p.x+next.p.x)/2, (p.y+next.p.y)/2);
+			g2.setTransform(defaultTransform);
 			// draw arrow within path
 			// g2.setColor(new Color(255, 255, 255, alpha));
 			// double distance = Math.sqrt(Math.pow(next.getPoint().x - p.x, 2)
@@ -265,6 +288,28 @@ public class SuperPoint {
 
 		if (next != null) next.draw(g, alpha);
 		else {
+			//drawing user info
+			AffineTransform defaultTransform = g2.getTransform();
+			AffineTransform at = new AffineTransform();
+			
+			at.rotate(2*Math.PI-angle, midpoint.x, midpoint.y);
+			g2.setTransform(at);
+			g2.setColor(Color.PINK);
+			g2.setFont(new Font(null,Font.PLAIN,14));
+			g2.drawString(df.format(Point.distance(p.x,p.y, midpoint.x,midpoint.y)/ SuperGUI.SCALE * 12*2),midpoint.x,midpoint.y);
+			
+			at = new AffineTransform();
+			at.rotate(2*Math.PI-angle, (midpoint.x+p.x)/2, (midpoint.y+p.y)/2);
+			g2.setTransform(at);
+			g2.setColor(Color.MAGENTA);
+			if(SuperPanel.relativeAngles){
+				g2.drawString(df.format((angle-startAngle)*180/Math.PI)+Character.toString((char) 176), (midpoint.x+p.x)/2, (midpoint.y+p.y)/2);
+			}
+			else{
+				g2.drawString(df.format((angle)*180/Math.PI)+Character.toString((char) 176), (midpoint.x+p.x)/2, (midpoint.y+p.y)/2);
+			}
+			g2.setTransform(defaultTransform);
+			
 			g2.setColor(new Color(255, 0, 0, 200));
 			g2.setStroke(new BasicStroke(2));
 			if (angle == Math.PI / 2 || angle == -Math.PI / 2) {
@@ -303,6 +348,13 @@ public class SuperPoint {
 
 	public SuperPoint getNext() {
 		return next;
+	}
+	public void updateFinalDistance(Point p){
+		if (next != null) {
+			next.updateFinalDistance(p);
+			return;
+		}
+		midpoint = new Point((p.x+this.p.x)/2,(p.y+this.p.y)/2);
 	}
 
 }
