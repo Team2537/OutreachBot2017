@@ -36,6 +36,7 @@ public class ClimberCommand extends Command {
 	 */
 	@Override
 	protected void initialize() {
+		Robot.climberSys.setClimberMotor(-1);
 		// System.out.println("Climber is running");
 		filename = "/home/lvuser/climberstats"
 				+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".csv";
@@ -63,7 +64,7 @@ public class ClimberCommand extends Command {
 	@Override
 	protected void execute() {
 		// System.out.println("Climber Running");
-			Robot.climberSys.setClimberMotor(1);
+//			Robot.climberSys.setClimberMotor(Robot.climberSys.getZAxisJoystick(2));
 		
 		writer.println(
 				System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
