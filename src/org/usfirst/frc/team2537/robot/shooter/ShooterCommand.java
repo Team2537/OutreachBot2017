@@ -6,32 +6,35 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCommand extends Command {
 
+	private boolean shooterOff;
+
 	/**
-	 * Constructor for Command Requiring Shooter
+	 * constructor that requires Robot.shooterSys
 	 * 
-	 * @param shooterOn
-	 *            - if Fly Wheels are off or on
+	 * @param shooterOff
+	 *            boolean: true = shooter motors are off, false = shooter motors
+	 *            are on
 	 */
-	public ShooterCommand() {
+	public ShooterCommand(boolean shooterOff) {
 		requires(Robot.shooterSys);
+		this.shooterOff = shooterOff;
 	}
 
+	/**
+	 * turns shooter motors on if shooter on button is pressed, or turning them
+	 * off if shooter off button is pressed
+	 */
 	@Override
-	/**
-	 * Ends by Turing FlyWheels Off
-	 */
-	protected void end() {
-		// TODO Auto-generated method stub
-		Robot.shooterSys.FlyOff();
+	protected void initialize() {
+		if (shooterOff) {
+			Robot.shooterSys.flyOff(); //TODO: Repeatability test
+		} else {
+			Robot.shooterSys.flyOn();
+		}
 	}
 
-	/**
-	 * if the robot is in range And shooterOn = true AND Limitswitch is pressed-
-	 * Flywheels to speed 1
-	 */
 	@Override
 	protected void execute() {
-		// TODO make sure this shit works
 		/*
 		 * if (shooterOn && Robot.shooterSys.getLimitSwitch()) { if
 		 * (Robot.shooterSys.UltronRange() > ShooterSubsystem.DISTANCE_TO_BOILER
@@ -41,25 +44,25 @@ public class ShooterCommand extends Command {
 		 */
 	}
 
-	@Override
-	protected void initialize() {
-		Robot.shooterSys.FlyOn();
-	}
-
-	@Override
 	/**
-	 * Turns flywheels off when interrupted
+	 * finishes immediately because it only has function in initialize()
+	 * @return
 	 */
-	protected void interrupted() {
-		Robot.shooterSys.FlyOff();
-	}
-
 	@Override
-	/**
-	 * if Robot is out of range or shooterOn is not true - Stop Running
-	 */
 	protected boolean isFinished() {
-		return Robot.driveSys.getUltrasonic() < ShooterSubsystem.DISTANCE_TO_BOILER - ShooterSubsystem.LEEWAY ||
-			   Robot.driveSys.getUltrasonic() > ShooterSubsystem.DISTANCE_TO_BOILER + ShooterSubsystem.LEEWAY;
+		return true;
 	}
+
+	@Override
+	protected void end() {
+	}
+
+	/**
+	 * turns flywheels off if interrupted
+	 */
+	@Override
+	protected void interrupted() {
+		Robot.shooterSys.flyOff();
+	}
+
 }

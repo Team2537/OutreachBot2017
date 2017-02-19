@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.cameras.Cameras;
+import org.usfirst.frc.team2537.robot.cameras.CameraGetCommand;
+import org.usfirst.frc.team2537.robot.cameras.CameraSubsystem;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
@@ -9,7 +10,6 @@ import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
-	public static Cameras cams;
+	public static CameraSubsystem camSys;
 	public static ClimberSubsystem climberSys;
 	public static ShooterSubsystem shooterSys;
 	public static PowerDistributionPanel pdp;
@@ -42,11 +42,19 @@ public class Robot extends IterativeRobot {
 		shooterSys.registerButtons();
 		
 		pdp = new PowerDistributionPanel();
+		
+		camSys = new CameraSubsystem();
+		camSys.initDefaultCommand();
+		camSys.registerButtons();
 	}
-
+	
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
+	 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
+	 * This autonomous (along with the chooser code above) shows how to select  
+	 * between different autonomous modes using the dashboard. The sendable 
 	 * chooser code works with the Java SmartDashboard. If you prefer the
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
 	 * getString line to get the auto name from the text box below the Gyro
@@ -57,7 +65,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
+		Scheduler.getInstance().add(new CameraGetCommand());
 	}
 
 	/**
@@ -65,7 +73,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-
+		Scheduler.getInstance().run();
 	}
 
 	/**
@@ -83,4 +91,4 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 
 	}
-}
+}                           
