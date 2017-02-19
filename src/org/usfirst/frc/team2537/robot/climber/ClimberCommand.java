@@ -63,11 +63,7 @@ public class ClimberCommand extends Command {
 	@Override
 	protected void execute() {
 		// System.out.println("Climber Running");
-		if (Robot.climberSys.getXboxTrigger(3) > 0.2) {
-			Robot.climberSys.setClimberMotor(-Robot.climberSys.getXboxTrigger(3));
-		} else {
-			Robot.climberSys.setClimberMotor(0);
-		}
+			Robot.climberSys.setClimberMotor(1);
 		
 		writer.println(
 				System.currentTimeMillis() - startTime + "," + Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL));
