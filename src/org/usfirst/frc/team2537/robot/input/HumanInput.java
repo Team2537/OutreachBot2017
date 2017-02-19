@@ -16,9 +16,9 @@ public class HumanInput {
 	public static Button climberActivateButton = new JoystickButton(xboxController, Ports.CLIMBER_ACTIVATOR_BUTTON);
 	public static Button climberKillSwitch = new JoystickButton(xboxController, Ports.CLIMBER_KILL_SWITCH);
 
-	public static Button shooterOnButton = new JoystickButton(xboxController, Ports.SHOOTER_ON_BUTTON);
-	public static Button shooterOffButton = new JoystickButton(xboxController, Ports.SHOOTER_OFF_BUTTON);
-	public static Button feedBallButton = new JoystickButton(xboxController, Ports.FEED_BALL_BUTTON);
+	public static Button shooterOnButton = new JoystickButton(rightJoystick, Ports.SHOOTER_ON_BUTTON);
+	public static Button shooterOffButton = new JoystickButton(rightJoystick, Ports.SHOOTER_OFF_BUTTON);
+	public static Button feedBallButton = new JoystickButton(rightJoystick, Ports.FEED_BALL_BUTTON);
 	
 	public static Button cameraSwitchButton = new JoystickButton(xboxController, Ports.CAMERA_SWITCH_BUTTON);
 

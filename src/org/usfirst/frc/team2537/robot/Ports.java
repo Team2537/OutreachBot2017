@@ -17,9 +17,9 @@ public class Ports {
 	// XBox Buttons
 	public static final int CLIMBER_ACTIVATOR_BUTTON = 2, CLIMBER_KILL_SWITCH = 3;
 
-	public static final int SHOOTER_ON_BUTTON = 1, SHOOTER_OFF_BUTTON = 4;
+	public static final int SHOOTER_ON_BUTTON = 10, SHOOTER_OFF_BUTTON = 11;
 
-	public static final int CAMERA_SWITCH_BUTTON = 5, FEED_BALL_BUTTON = 8;
+	public static final int CAMERA_SWITCH_BUTTON = 5, FEED_BALL_BUTTON = 7;
 
 	// Sensor ports
 	public static final int ULTRASONIC_TRIGGER = 3, ULTRASONIC_ECHO = 4;
