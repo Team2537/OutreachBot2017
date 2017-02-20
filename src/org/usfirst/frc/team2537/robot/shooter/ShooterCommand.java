@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
-	private final static int TARGET_SPEED = 1000;
-	private final static int INNER_TARGET = 980;
+	private final static int TARGET_SPEED = 550;
+	private final static int INNER_TARGET = 520;
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -46,7 +46,7 @@ public class ShooterCommand extends Command {
 	protected void execute() {
 
 		System.out.println(Robot.shooterSys.getExteriorSpeed());
-		if (Robot.shooterSys.getExteriorSpeed() > 900) {
+		if (Robot.shooterSys.getExteriorSpeed() > INNER_TARGET) {
 			Robot.shooterSys.setInteriorMotor(1);
 		} else {
 			Robot.shooterSys.setInteriorMotor(0);
