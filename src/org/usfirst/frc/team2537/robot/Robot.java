@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.auto.AutoCommandGroup;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
@@ -63,6 +64,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Scheduler.getInstance().add(new AutoCommandGroup());
 	}
 
 	/**
@@ -79,6 +81,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		if (cameras.lastRan + 3000 < System.currentTimeMillis() && !cameras.switchTried) {
+			System.out.println("ded");
+			cameras.switchTried = true;
+			cameras.switchCameras();
+		}
 	}
 
 	/**
