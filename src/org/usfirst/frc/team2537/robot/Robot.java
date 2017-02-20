@@ -1,8 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.cameras.CameraGetCommand;
-import org.usfirst.frc.team2537.robot.cameras.CameraSubsystem;
+import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
@@ -19,10 +18,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
-	public static CameraSubsystem camSys;
 	public static ClimberSubsystem climberSys;
 	public static ShooterSubsystem shooterSys;
 	public static PowerDistributionPanel pdp;
+	public static Cameras cameras;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -43,9 +42,8 @@ public class Robot extends IterativeRobot {
 		
 		pdp = new PowerDistributionPanel();
 		
-		camSys = new CameraSubsystem();
-		camSys.initDefaultCommand();
-		camSys.registerButtons();
+		cameras = new Cameras();
+		cameras.start();
 	}
 	
 	public void disabledPeriodic() {
@@ -65,7 +63,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new CameraGetCommand());
 	}
 
 	/**
