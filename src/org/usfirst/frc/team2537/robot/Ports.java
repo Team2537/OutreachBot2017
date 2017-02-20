@@ -9,7 +9,7 @@ public class Ports {
 	// Mechanism Talon Ports
 	public static final int CLIMBER_MOTOR_ONE = 5;
 
-	public static final int SLOW_SHOOTER = 3, FAST_SHOOTER = 2;
+	public static final int SLOW_SHOOTER = 8, FAST_SHOOTER = 7;
 
 	// Joystick and XBox Ports
 	public static final int LEFT_JOYSTICK = 0, RIGHT_JOYSTICK = 1, XBOX = 2;
@@ -17,7 +17,7 @@ public class Ports {
 	// Joystick Buttons
 	public static final int CLIMBER_ACTIVATOR_BUTTON = 3, CLIMBER_KILL_SWITCH = 2;
 
-	public static final int CAMERA_SWITCH_BUTTON = 5;
+	public static final int CAMERA_SWITCH_BUTTON = 3;
 
 	public static final int SHOOTER_ON_BUTTON = 1, SHOOTER_OFF_BUTTON = 4;
 

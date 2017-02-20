@@ -46,13 +46,13 @@ public class CameraGetCommand extends Command {
 		if (Robot.camSys.getCamNum() == 0) {
 			// Makes the image greener if within the drive range, and red if too
 			// close
-			if (Robot.driveSys.getUltrasonic() < driveFarRange) {
-				if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
-					Core.add(source, new Scalar(0, 100, 0), output);
-				} else {
-					Core.add(source, new Scalar(0, 0, 100), output);
-				}
-			}
+//			if (Robot.driveSys.getUltrasonic() < driveFarRange) {
+//				if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
+//					Core.add(source, new Scalar(0, 100, 0), output);
+//				} else {
+//					Core.add(source, new Scalar(0, 0, 100), output);
+//				}
+//			}
 			
 			// draws "GEAR" in the top right corner
 			Imgproc.putText(source, "GEAR", new Point(output.cols() - 75, 25), 4, 0.8,

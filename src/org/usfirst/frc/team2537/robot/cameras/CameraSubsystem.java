@@ -18,12 +18,12 @@ public class CameraSubsystem extends Subsystem {
 	 * Creates the default camera (cam0) and the cvSink
 	 */
 	public CameraSubsystem() {
-		camNum = 0;
-		cam0 = new UsbCamera("cam0", 0);
-		cam0.setResolution(320, 240);
-		CameraServer.getInstance().addCamera(cam0);
+		camNum = 1;
+		cam1 = new UsbCamera("cam1", 1);
+		cam1.setResolution(320, 240);
+		CameraServer.getInstance().addCamera(cam1);
 		
-		cvSink = CameraServer.getInstance().getVideo(cam0);
+		cvSink = CameraServer.getInstance().getVideo(cam1);
 	}
 	
 	@Override
