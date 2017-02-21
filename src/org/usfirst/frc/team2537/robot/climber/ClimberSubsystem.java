@@ -35,21 +35,6 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	/**
-	 * gets the right Xbox Trigger if using xbox
-	 * @param axis
-	 * @return
-	 */
-	public double getXboxTrigger(int axis) {
-		double rightXboxTrigger = HumanInput.xboxController.getRawAxis(axis);
-		if (Math.abs(rightXboxTrigger) > DEADZONE_THRESHOLD) {
-			return rightXboxTrigger;
-		} else {
-			return 0;
-		}
-
-	}
-
-	/**
 	 * gets the z axis on the joystick if using only joysticks
 	 * @param axis
 	 * @return

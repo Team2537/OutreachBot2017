@@ -22,8 +22,8 @@ public class Cameras extends Thread {
 	private Mat output;
 	private int driveCloseRange = 6;
 	private int driveFarRange = 9;
-	public long lastRan;
-	public boolean switchTried;
+	private boolean switched;
+	private long lastSwitched;
 	
 	/**
 	 * Creates the default camera (cam0) and the cvSink
@@ -36,6 +36,7 @@ public class Cameras extends Thread {
 		cvSink = CameraServer.getInstance().getVideo(cam0);
 		source = new Mat();
 		output = new Mat();
+		lastSwitched = 0;
 		outputStream = CameraServer.getInstance().putVideo("cams", 320, 240);
 	}
 	
@@ -61,7 +62,6 @@ public class Cameras extends Thread {
 			cvSink.setSource(cam0);
 			camNum = 0;
 		}
-		switchTried = false;
 	}
 	
 	@Override
@@ -69,12 +69,15 @@ public class Cameras extends Thread {
 		while(true) {
 			if (HumanInput.cameraSwitchButton.get()) {
 				switchCameras();
+			} else if (HumanInput.cameraSwitcherooButton.get() && System.currentTimeMillis() > lastSwitched + 500) {
+				switched = !switched;
+				lastSwitched = System.currentTimeMillis();
 			}
 			
 			cvSink.grabFrame(source);
 			output = source;
 
-			if (camNum == 0) {
+			if ((camNum == 0 && !switched) || (camNum == 1 && switched)) {
 				// Makes the image greener if within the drive range, and red if too
 				// close
 //				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
@@ -113,8 +116,6 @@ public class Cameras extends Thread {
 			}
 
 			outputStream.putFrame(output);
-			
-			lastRan = System.currentTimeMillis();
 		}
 	}
 

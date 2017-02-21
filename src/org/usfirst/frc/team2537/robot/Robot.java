@@ -79,11 +79,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		if (cameras.lastRan + 3000 < System.currentTimeMillis() && !cameras.switchTried) {
-			System.out.println("ded");
-			cameras.switchTried = true;
-			cameras.switchCameras();
-		}
 	}
 
 	/**

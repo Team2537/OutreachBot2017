@@ -17,9 +17,9 @@ public class Ports {
 	// Joystick Buttons
 	public static final int CLIMBER_ACTIVATOR_BUTTON = 3, CLIMBER_KILL_SWITCH = 2;
 
-	public static final int CAMERA_SWITCH_BUTTON = 3;
+	public static final int CAMERA_SWITCH_BUTTON = 3, CAMERA_SWITCHEROO_BUTTON = 7;
 
-	public static final int SHOOTER_ON_BUTTON = 1, SHOOTER_OFF_BUTTON = 4;
+	public static final int SHOOTER_ON_BUTTON = 1, SHOOTER_OFF_BUTTON = 5;
 
 	// Sensor ports
 	public static final int ULTRASONIC_TRIGGER = 1, ULTRASONIC_ECHO = 2;
