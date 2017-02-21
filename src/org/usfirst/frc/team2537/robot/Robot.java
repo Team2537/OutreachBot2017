@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.auto.AutoCommandGroup;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
@@ -64,7 +63,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Scheduler.getInstance().add(new AutoCommandGroup());
 	}
 
 	/**
