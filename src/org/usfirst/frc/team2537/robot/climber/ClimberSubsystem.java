@@ -10,7 +10,6 @@ public class ClimberSubsystem extends Subsystem {
 
 	private Talon climberMotor1 = new Talon(Ports.CLIMBER_MOTOR_ONE); // creates motor for climber
 	protected static final double SPEED_MULTIPLIER = 1;
-	private static final double DEADZONE_THRESHOLD = 0;
 
 	public ClimberSubsystem() {
 
@@ -20,7 +19,7 @@ public class ClimberSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 	}
 
-	public void registerButtons() { // registers buttons
+	public void registerButtons() { 
 		HumanInput.registerWhenPressedCommand(HumanInput.climberActivateButton, new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
 
@@ -32,19 +31,6 @@ public class ClimberSubsystem extends Subsystem {
 		 */
 	public void setClimberMotor(double speed) {
 		climberMotor1.set(speed * SPEED_MULTIPLIER);
-	}
 
-	/**
-	 * gets the z axis on the joystick if using only joysticks
-	 * @param axis
-	 * @return
-	 */
-	public double getZAxisJoystick(int axis) {
-		double joystickZAxis = HumanInput.leftJoystick.getRawAxis(axis);
-		if (Math.abs(joystickZAxis) > DEADZONE_THRESHOLD) {
-			return joystickZAxis;
-		} else {
-			return 0;
-		}
 	}
 }

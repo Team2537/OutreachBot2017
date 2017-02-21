@@ -17,6 +17,7 @@ public class HumanInput {
 
 	public static Button shooterOnButton = new JoystickButton(leftJoystick, Ports.SHOOTER_ON_BUTTON);
 	public static Button shooterOffButton = new JoystickButton(leftJoystick, Ports.SHOOTER_OFF_BUTTON);
+	public static Button feedBallButton = new JoystickButton(leftJoystick, Ports.FEED_BALL_BUTTON);
 	
 	public static Button cameraSwitchButton = new JoystickButton(rightJoystick, Ports.CAMERA_SWITCH_BUTTON);
 	public static Button cameraSwitcherooButton = new JoystickButton(rightJoystick, Ports.CAMERA_SWITCHEROO_BUTTON);
