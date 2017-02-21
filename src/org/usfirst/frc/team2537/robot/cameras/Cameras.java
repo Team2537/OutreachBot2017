@@ -1,9 +1,11 @@
 package org.usfirst.frc.team2537.robot.cameras;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.cscore.CvSink;
@@ -80,13 +82,13 @@ public class Cameras extends Thread {
 			if ((camNum == 0 && !switched) || (camNum == 1 && switched)) {
 				// Makes the image greener if within the drive range, and red if too
 				// close
-//				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
-//					if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
-//						Core.add(source, new Scalar(0, 100, 0), output);
-//					} else {
-//						Core.add(source, new Scalar(0, 0, 100), output);
-//					}
-//				}
+				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
+					if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
+						Core.add(source, new Scalar(0, 100, 0), output);
+					} else {
+						Core.add(source, new Scalar(0, 0, 100), output);
+					}
+				}
 				
 				// draws "GEAR" in the top right corner
 				Imgproc.putText(source, "GEAR", new Point(output.cols() - 75, 25), 4, 0.8,
