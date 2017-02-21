@@ -6,20 +6,21 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
-	private CANTalon backLeftMotor = new CANTalon(Ports.BACK_LEFT_MOTOR);
-	private CANTalon backRightMotor = new CANTalon(Ports.BACK_RIGHT_MOTOR);
+	private Talon backLeftMotor = new Talon(Ports.BACK_LEFT_MOTOR);
+	private Talon backRightMotor = new Talon(Ports.BACK_RIGHT_MOTOR);
 	private CANTalon frontLeftMotor = new CANTalon(Ports.FRONT_LEFT_MOTOR);
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
 
 	private static final double DEADZONE_THRESHOLD = 0.1;
 	protected static final double SPEED_MULTIPLIER = 1;
-	
+
 	private Ultrasonic driveUltrasonic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
-	
+
 	public DriveSubsystem() {
 		driveUltrasonic.setAutomaticMode(true);
 	}
@@ -48,9 +49,9 @@ public class DriveSubsystem extends Subsystem {
 	 */
 	public void setRightMotors(double speed) {
 		backRightMotor.set(-speed * SPEED_MULTIPLIER);
-		frontRightMotor.set(speed * SPEED_MULTIPLIER);
+		frontRightMotor.set(-speed * SPEED_MULTIPLIER);
 	}
-	
+
 	/**
 	 * Set both motors to speed
 	 * 
@@ -83,19 +84,13 @@ public class DriveSubsystem extends Subsystem {
 	 */
 	public double getRightJoystick() {
 		double rightJoystickValue = HumanInput.rightJoystick.getAxis(AxisType.kY);
-		
-		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD) return rightJoystickValue;
-		
+
+		if (Math.abs(rightJoystickValue) > DEADZONE_THRESHOLD)
+			return rightJoystickValue;
+
 		return 0;
 	}
 
-	public double getLeftEncoderCount() {
-		return backLeftMotor.getEncPosition();
-	}
-	
-	public double getLeftEncoderVelocity() {
-		return backLeftMotor.getEncVelocity();
-	}
 	
 	public double getUltrasonic() {
 		return driveUltrasonic.getRangeInches();

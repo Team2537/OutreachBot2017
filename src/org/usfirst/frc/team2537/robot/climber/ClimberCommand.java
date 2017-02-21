@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.climber;
 
+import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,82 +8,43 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberCommand extends Command {
 	// executes climber function
 
-	public int shortClimbTimems = 5000;
-	public int longClimbTimems = 30000;
-	private long climbStartTime;
-	private boolean startedLongClimb;
-	private int ropeRange = 2; // range away from ultrasonic that rope is
+	private int limitCurrent = 45; // TODO this number almost definetly isn't
+									// right. Measure # on actual robot
+
 
 	public ClimberCommand() {
 		requires(Robot.climberSys);
 	}
 
+	/**
+	 * creates the file 
+	 * sets start time
+	 */
 	@Override
 	protected void initialize() {
+		Robot.climberSys.setClimberMotor(-1);
 		// System.out.println("Climber is running");
-		/*
-		 * climbStartTime = System.currentTimeMillis();
-		 * System.out.println("The climber is running");
-		 * Robot.climberSys.setCLimberMotor(.25);
-		 * System.out.println("The climber is running slowly"); startedLongClimb
-		 * = false;
-		 */
-
 	}
 
+	/**
+	 * sets climber motor
+	 */
 	@Override
 	protected void execute() {
-
-		/*
-		 * if (System.currentTimeMillis() - climbStartTime > shortClimbTimems &&
-		 * !startedLongClimb) { Robot.climberSys.setCLimberMotor(.75);
-		 * System.out.println("The climber is running quiRobotckly");
-		 * Robot.climberSys.setCLimberMotor(longClimbTimems); startedLongClimb =
-		 * true; }
-		 */
-		/*
-		 * if (Robot.climberSys.getRopeCheck() <= ropeRange ) {
-		 * System.out.println("The rope is within range"); }
-		 */
-		if (Robot.climberSys.getClimberPressureSensor()) {
-			System.out.println("The Pressure Sensor is pressed");
-			Robot.climberSys.setClimberMotor(0);
-		} else if (Robot.climberSys.getXboxTrigger(3) > 0) {
-			Robot.climberSys.setClimberMotor(Robot.climberSys.getXboxTrigger(3));
-		} else if (Robot.climberSys.getXboxTrigger(2) > 0) {
-			Robot.climberSys.setClimberMotor(-1 * Robot.climberSys.getXboxTrigger(2));
-
-		} else {
-			Robot.climberSys.setClimberMotor(0);
-		}
-
-		/*
-		 * if (Robot.climberSys.getXboxTrigger(3) > 0.1) { if
-		 * (Robot.climberSys.getClimber1Velocity() == 0) {
-		 * System.out.println("Motor one is offline"); } if
-		 * (Robot.climberSys.getClimber2Velocity() == 0) {
-		 * System.out.println("Climber Motor Two is Offline"); }
-		 * 
-		 * } else if (Robot.climberSys.getXboxTrigger(2) > 0.1) { if
-		 * (Robot.climberSys.getClimber1Velocity() == 0) {
-		 * System.out.println("Climber Motor One is offline"); } if
-		 * (Robot.climberSys.getClimber2Velocity() == 0) {
-		 * System.out.println("Climber Motor One is offline"); }
-		 */
+		Robot.climberSys.setClimberMotor(-1);
 	}
-	// }
 
+	/**
+	 * finishes the command if amperage goes over the amperage limit
+	 */
 	@Override
 	protected boolean isFinished() {
-		return false;
-		/*
-		 * if (System.currentTimeMillis() - climbStartTime > longClimbTimems) {
-		 * return true; } else if (Robot.climberSys.getEncoderVelocity() == 0) {
-		 * return true; }
-		 */
-
+		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > limitCurrent;
 	}
 
+	/**
+	 * turns off motor and closes the file when the command is ended or interrupted
+	 */
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);

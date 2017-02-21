@@ -5,16 +5,16 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberKillCommand extends Command {
-	//cancels climber
+	/**
+	 * Cancels climber completely
+	 */
 	
 	public ClimberKillCommand() {
 		requires(Robot.climberSys);
 	}
 
 	protected void initialize() {
-
 		Robot.climberSys.setClimberMotor(0);
-//		System.out.println("Climber is dead");
 	}
 		
 
@@ -26,11 +26,13 @@ public class ClimberKillCommand extends Command {
 	
 		
 		
-	
+
+	/**
+	 * isFinished is always true so that the command immediately goes to end
+	 */
 	@Override
 	protected boolean isFinished(){
 		return true;
-		
 	}
 	
 	@Override
