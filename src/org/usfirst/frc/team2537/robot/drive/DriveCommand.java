@@ -18,8 +18,7 @@ public class DriveCommand extends Command {
 	}
 
 	protected void execute() {
-		Robot.driveSys.setLeftMotors(Robot.driveSys.getLeftJoystick());
-		Robot.driveSys.setRightMotors(-Robot.driveSys.getRightJoystick());
+		Robot.driveSys.setMotors(Robot.driveSys.getLeftJoystick(), Robot.driveSys.getRightJoystick());
 	}
 
 	@Override
@@ -29,13 +28,11 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.driveSys.setLeftMotors(0);
-		Robot.driveSys.setRightMotors(0);
+		Robot.driveSys.setMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.driveSys.setLeftMotors(0);
-		Robot.driveSys.setRightMotors(0);
+		Robot.driveSys.setMotors(0);
 	}
 }

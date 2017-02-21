@@ -16,13 +16,13 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon frontLeftMotor = new CANTalon(Ports.FRONT_LEFT_MOTOR);
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
 
-	private static final double DEADZONE_THRESHOLD = 0.1;
-	protected static final double SPEED_MULTIPLIER = 1;
+	private static final double DEADZONE_THRESHOLD = 0.1; // Unless joystick is beyond this threshhold, don't move
+	protected static final double SPEED_MULTIPLIER = 1; // Speed  * multiplier = output speed
 
 	private Ultrasonic driveUltrasonic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 
 	public DriveSubsystem() {
-		driveUltrasonic.setAutomaticMode(true);
+		driveUltrasonic.setAutomaticMode(true); // Automagically get ultrasonic readings
 	}
 
 	@Override
@@ -48,8 +48,18 @@ public class DriveSubsystem extends Subsystem {
 	 * @param speed
 	 */
 	public void setRightMotors(double speed) {
-		backRightMotor.set(-speed * SPEED_MULTIPLIER);
-		frontRightMotor.set(-speed * SPEED_MULTIPLIER);
+		backRightMotor.set(speed * SPEED_MULTIPLIER);
+		frontRightMotor.set(speed * SPEED_MULTIPLIER);
+	}
+
+	/**
+	 * Set both motors to two speeds
+	 * @param leftSpeed
+	 * @param rightSpeed
+	 */
+	public void setMotors(double leftSpeed, double rightSpeed) {
+		setLeftMotors(leftSpeed);
+		setRightMotors(rightSpeed);
 	}
 
 	/**
@@ -58,10 +68,9 @@ public class DriveSubsystem extends Subsystem {
 	 * @param speed
 	 */
 	public void setMotors(double speed) {
-		setLeftMotors(speed);
-		setRightMotors(speed);
+		setMotors(speed, speed);
 	}
-
+	
 	/**
 	 * Gets value based on direction left joy stick is pressed
 	 * 

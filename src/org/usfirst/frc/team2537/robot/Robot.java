@@ -34,22 +34,16 @@ public class Robot extends IterativeRobot {
 		
 		climberSys = new ClimberSubsystem();
 		climberSys.registerButtons();
-
-//		cams = new Cameras();
-
+		
 		shooterSys = new ShooterSubsystem();
 		shooterSys.registerButtons();
 		
-		pdp = new PowerDistributionPanel();
-		
 		cameras = new Cameras();
 		cameras.start();
+		
+		pdp = new PowerDistributionPanel();
 	}
 	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
-	 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select  
 	 * between different autonomous modes using the dashboard. The sendable 
@@ -70,7 +64,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
 	}
 
 	/**

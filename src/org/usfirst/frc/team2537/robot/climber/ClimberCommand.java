@@ -8,22 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberCommand extends Command {
 	// executes climber function
 
-	private int limitCurrent = 45; // TODO this number almost definetly isn't
-									// right. Measure # on actual robot
-
+	private int limitCurrent = 45; // Maximum current before climber kills itself
 
 	public ClimberCommand() {
-		requires(Robot.climberSys);
+		requires(Robot.climberSys); 
 	}
 
-	/**
-	 * creates the file 
-	 * sets start time
-	 */
 	@Override
 	protected void initialize() {
-		Robot.climberSys.setClimberMotor(-1);
-		// System.out.println("Climber is running");
 	}
 
 	/**
@@ -43,17 +35,16 @@ public class ClimberCommand extends Command {
 	}
 
 	/**
-	 * turns off motor and closes the file when the command is ended or interrupted
+	 * turns off motor and closes the file when the command is ended or
+	 * interrupted
 	 */
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
-		// System.out.println("The climber is done");
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);
-		// System.out.println("The climber has been interrupted");
 	}
 }

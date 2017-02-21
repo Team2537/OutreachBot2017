@@ -15,30 +15,33 @@ import edu.wpi.first.wpilibj.CameraServer;
 
 public class Cameras extends Thread {
 
-	protected CvSink cvSink;
+	private CvSink cvSink;
 	private UsbCamera cam0;
 	private UsbCamera cam1;
 	private int camNum;
 	private CvSource outputStream;
 	private Mat source;
 	private Mat output;
-	private int driveCloseRange = 6;
-	private int driveFarRange = 9;
 	private boolean switched;
 	private long lastSwitched;
+	private static final int DRIVE_CLOSE_RANGE = 6;
+	private static final int DRIVE_FAR_RANGE = 9;
 	
 	/**
 	 * Creates the default camera (cam0) and the cvSink
 	 */
 	public Cameras() {
+		// Define Variables
 		camNum = 0;
+		lastSwitched = 0;
+		source = new Mat();
+		output = new Mat();
+
+		// Setup default camera
 		cam0 = new UsbCamera("cam0", 0);
 		cam0.setResolution(320, 240);
 		CameraServer.getInstance().addCamera(cam0);
 		cvSink = CameraServer.getInstance().getVideo(cam0);
-		source = new Mat();
-		output = new Mat();
-		lastSwitched = 0;
 		outputStream = CameraServer.getInstance().putVideo("cams", 320, 240);
 	}
 	
@@ -48,18 +51,28 @@ public class Cameras extends Thread {
 	 */
 	public void switchCameras() {
 		if (camNum == 0) {
+			// Destroy old camera
 			CameraServer.getInstance().removeCamera("cam0");
-			cam0.free();
+			cam0.free(); 
+			
+			// Make new camera
 			cam1 = new UsbCamera("cam1", 1);
 			cam1.setResolution(320, 240);
+			
+			// Set new camera to CameraServer and cvSink
 			CameraServer.getInstance().addCamera(cam1);
 			cvSink.setSource(cam1);
 			camNum = 1;
 		} else {
+			// Destroy old camera
 			CameraServer.getInstance().removeCamera("cam1");
 			cam1.free();
+			
+			// Make new camera
 			cam0 = new UsbCamera("cam0", 0);
 			cam0.setResolution(320, 240);
+			
+			// Set new camera to CameraServer and cvSink
 			CameraServer.getInstance().addCamera(cam0);
 			cvSink.setSource(cam0);
 			camNum = 0;
@@ -69,6 +82,7 @@ public class Cameras extends Thread {
 	@Override
 	public void run() {
 		while(true) {
+			// Check if buttons are pressed and if so either switch or change which overlay
 			if (HumanInput.cameraSwitchButton.get()) {
 				switchCameras();
 			} else if (HumanInput.cameraSwitcherooButton.get() && System.currentTimeMillis() > lastSwitched + 500) {
@@ -76,14 +90,16 @@ public class Cameras extends Thread {
 				lastSwitched = System.currentTimeMillis();
 			}
 			
+			// Get frame from cvSink
 			cvSink.grabFrame(source);
 			output = source;
 
+			// If on gear cam...
 			if ((camNum == 0 && !switched) || (camNum == 1 && switched)) {
 				// Makes the image greener if within the drive range, and red if too
 				// close
-				if (Robot.driveSys.getUltrasonic() < driveFarRange) {
-					if (Robot.driveSys.getUltrasonic() > driveCloseRange) {
+				if (Robot.driveSys.getUltrasonic() < DRIVE_FAR_RANGE) {
+					if (Robot.driveSys.getUltrasonic() > DRIVE_CLOSE_RANGE) {
 						Core.add(source, new Scalar(0, 100, 0), output);
 					} else {
 						Core.add(source, new Scalar(0, 0, 100), output);
@@ -101,7 +117,8 @@ public class Cameras extends Thread {
 						new Scalar(55, 250, 37), 1);
 				Imgproc.line(source, new Point(0, output.rows() / 2), new Point(output.cols(), output.rows() / 2),
 						new Scalar(55, 250, 37), 1);
-
+			
+			// If on climber cam...
 			} else {
 				//draws "CLIMB" in the top right corner
 				Imgproc.putText(source, "CLIMB", new Point(output.cols() - 85, 25), 4, 0.8,
@@ -116,7 +133,8 @@ public class Cameras extends Thread {
 						new Scalar(0, 223, 255), 1);
 
 			}
-
+			
+			// Send frame to output stream
 			outputStream.putFrame(output);
 		}
 	}
