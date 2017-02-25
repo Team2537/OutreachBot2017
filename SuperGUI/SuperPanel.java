@@ -37,7 +37,8 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 	private static final int exitKey = KeyEvent.VK_ESCAPE;
 	private static final int relativeAngleToggle = KeyEvent.VK_R;
 	private static final int openSnapMenu = KeyEvent.VK_S;
-	
+	private static final int deleteAll = KeyEvent.VK_C;
+	private static final int deleteLast = KeyEvent.VK_BACK_SPACE;
 
 	private Image field;
 	private boolean followCursor;
@@ -85,6 +86,14 @@ public class SuperPanel extends JPanel implements KeyListener, MouseMotionListen
 
 	@Override
 	public void keyPressed(KeyEvent k) {
+		if(k.getKeyCode() == deleteAll){
+			startingPoint = null;
+		}
+		if(k.getKeyCode() == deleteLast){
+			if(startingPoint!= null){
+				startingPoint.removeFinalSuperPoint();
+			}
+		}
 		if(k.getKeyCode() == openSnapMenu){
 
 			snapMenu.show(k.getComponent(),mousePos.x,mousePos.y);

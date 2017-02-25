@@ -90,6 +90,13 @@ public class SuperPoint {
 		if (next == null) return angle;
 		else return next.getFinalAngle();
 	}
+	public boolean removeFinalSuperPoint() {
+		if (next != null && next.next== null){
+			next = null;
+			return true;
+		}
+		else return next.removeFinalSuperPoint();
+	}
 
 	public boolean isBackwards() {
 		return backwards;
