@@ -13,6 +13,9 @@ import javax.swing.JFrame;
  * rclick - gear/shoot
  * space - stop turning to follow cursor, snap cursor to line
  * enter - print course
+ * c - clear all points
+ * bakaspace - remove latest point
+ * s - snap to mode
  * esc - quit
  * 
  *
