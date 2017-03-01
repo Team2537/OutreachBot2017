@@ -6,14 +6,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCommand extends Command {
 
-	private boolean shooterOff;
 	private final static double TARGET_SPEED = 500;
 	private final static double INNER_TARGET_1 = 450;
 	private final static double INNER_TARGET_2 = 550;
-	private final static double MAKESHIFT_P = 2300;
-	private final static double TOLERANCE = 30;
+	private final static double P = 2300; // TODO: Rework P value
+	private final static double TOLERANCE = 10;
 	private double currentVoltage = 0;
-	private long startTime = System.currentTimeMillis();
 
 	/**
 	 * constructor that requires Robot.shooterSys
@@ -22,9 +20,8 @@ public class ShooterCommand extends Command {
 	 *            boolean: true = shooter motors are off, false = shooter motors
 	 *            are on
 	 */
-	public ShooterCommand(boolean shooterOff) {
+	public ShooterCommand() {
 		requires(Robot.shooterSys);
-		this.shooterOff = shooterOff;
 	}
 
 	/**
@@ -35,12 +32,7 @@ public class ShooterCommand extends Command {
 	protected void initialize() {
 		// Robot.shooterSys.enable();
 		Robot.shooterSys.setExteriorMotorMode();
-		if (shooterOff) {
-			Robot.shooterSys.turnExteriorMotorOff();
-		} else {
-			Robot.shooterSys.setExteriorMotor(0.75);
-		}
-
+		Robot.shooterSys.setExteriorMotor(0.75);
 	}
 
 	/**
@@ -50,27 +42,24 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void execute() {
 		System.out.println(Robot.shooterSys.getExteriorSpeed());
-		if (System.currentTimeMillis() - startTime >= 500) {
-			if ((System.currentTimeMillis() - startTime) >= 200 && (Robot.shooterSys.getExteriorSpeed() < TARGET_SPEED - TOLERANCE || Robot.shooterSys.getExteriorSpeed() > TARGET_SPEED + TOLERANCE)) {
-				currentVoltage += (TARGET_SPEED - Robot.shooterSys.getExteriorSpeed()) / (MAKESHIFT_P);
-				if (currentVoltage > 1) { // limits voltage for PID loop
-					currentVoltage = 1;
-				}
-				if (currentVoltage < 0) {
-					currentVoltage = 0;
-				}
-				// System.out.println(currentVoltage);
-				Robot.shooterSys.setExteriorMotor(currentVoltage);
-				startTime = System.currentTimeMillis();
+		if ((Robot.shooterSys.getExteriorSpeed() < TARGET_SPEED - TOLERANCE || Robot.shooterSys.getExteriorSpeed() > TARGET_SPEED + TOLERANCE)) {
+			currentVoltage = (TARGET_SPEED - Robot.shooterSys.getExteriorSpeed()) / (P);
+			if (currentVoltage > 1) { // limits voltage for PID loop
+				currentVoltage = 1;
 			}
+			if (currentVoltage < 0) {
+				currentVoltage = 0;
+			}
+			
+			// System.out.println(currentVoltage);
+			Robot.shooterSys.setExteriorMotor(currentVoltage);
 		}
-		if (System.currentTimeMillis() - startTime >= 1000) {
-			if (Robot.shooterSys.getExteriorSpeed() > INNER_TARGET_1 && Robot.shooterSys.getExteriorSpeed() < INNER_TARGET_2) {
-				Robot.shooterSys.setInteriorMotor(1);
-			} else {
-				Robot.shooterSys.setInteriorMotor(0);
-			}
-		} 
+		
+		if (Robot.shooterSys.getExteriorSpeed() > INNER_TARGET_1 && Robot.shooterSys.getExteriorSpeed() < INNER_TARGET_2) {
+			Robot.shooterSys.setInteriorMotor(1);
+		} else {
+			Robot.shooterSys.setInteriorMotor(0);
+		}
 	}
 
 	@Override
@@ -79,7 +68,7 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * will never be engaged
+	 * Will never be engaged
 	 */
 	@Override
 	protected void end() {
@@ -88,7 +77,7 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * turns flywheels off if interrupted
+	 * Turns motors off if interrupted
 	 */
 	@Override
 	protected void interrupted() {
