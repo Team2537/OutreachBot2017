@@ -5,36 +5,45 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberKillCommand extends Command {
+	
 	/**
-	 * Cancels climber completely
+	 * Turns climber motor off and interrupts climber command
 	 */
-
 	public ClimberKillCommand() {
-		requires(Robot.climberSys); // Interrupt climber command
+		requires(Robot.climberSys);
 	}
 
+	/**
+	 * Turns climber motor off
+	 */
+	@Override
 	protected void initialize() {
-		Robot.climberSys.setClimberMotor(0); // Only set speed to 0
+		Robot.climberSys.setClimberMotor(0);
 	}
 
 	@Override
 	protected void execute() {
-
 	}
 
 	/**
-	 * isFinished is always true so that the command immediately goes to end
+	 * Finishes immediately
 	 */
 	@Override
 	protected boolean isFinished() {
 		return true;
 	}
 
+	/**
+	 * Turns climber motor off
+	 */
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
 	}
 
+	/**
+	 * Turns climber motor off
+	 */
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);

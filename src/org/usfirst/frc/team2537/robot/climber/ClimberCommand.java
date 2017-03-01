@@ -19,7 +19,7 @@ public class ClimberCommand extends Command {
 	}
 
 	/**
-	 * sets climber motor
+	 * Turns climber motor on at full speed
 	 */
 	@Override
 	protected void execute() {
@@ -27,7 +27,7 @@ public class ClimberCommand extends Command {
 	}
 
 	/**
-	 * finishes the command if amperage goes over the amperage limit
+	 * Finishes command if amperage goes over the amperage limit
 	 */
 	@Override
 	protected boolean isFinished() {
@@ -35,14 +35,16 @@ public class ClimberCommand extends Command {
 	}
 
 	/**
-	 * turns off motor and closes the file when the command is ended or
-	 * interrupted
+	 * Turns motor off and closes the file when the command is ended
 	 */
 	@Override
 	protected void end() {
 		Robot.climberSys.setClimberMotor(0);
 	}
 
+	/**
+	 * Turns motor off and closes the file when the command is interrupted
+	 */
 	@Override
 	protected void interrupted() {
 		Robot.climberSys.setClimberMotor(0);

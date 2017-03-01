@@ -16,15 +16,18 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon frontLeftMotor = new CANTalon(Ports.FRONT_LEFT_MOTOR);
 	private CANTalon frontRightMotor = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
 
-	private static final double DEADZONE_THRESHOLD = 0.1; // Unless joystick is beyond this threshhold, don't move
+	private static final double DEADZONE_THRESHOLD = 0.1; // Unless joystick is beyond this threshold, don't move
 	protected static final double SPEED_MULTIPLIER = 1; // Speed  * multiplier = output speed
 
-	private Ultrasonic driveUltrasonic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
+	private Ultrasonic ultrasonic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO);
 
 	public DriveSubsystem() {
-		driveUltrasonic.setAutomaticMode(true); // Automagically get ultrasonic readings
+		ultrasonic.setAutomaticMode(true); // Automagically get ultrasonic readings
 	}
 
+	/**
+	 * Sets drive command as default command
+	 */
 	@Override
 	public void initDefaultCommand() {
 		DriveCommand dc = new DriveCommand();
@@ -35,7 +38,6 @@ public class DriveSubsystem extends Subsystem {
 	 * Set left motor to speed; inverted due to wiring
 	 * 
 	 * @param speed
-	 * 
 	 */
 	public void setLeftMotors(double speed) {
 		backLeftMotor.set(-speed * SPEED_MULTIPLIER);
@@ -72,7 +74,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	/**
-	 * Gets value based on direction left joy stick is pressed
+	 * Gets value based on direction left joystick is pressed
 	 * 
 	 * @param axis
 	 * @return
@@ -86,7 +88,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	/**
-	 * Gets value based on direction right joy stick is pressed
+	 * Gets value based on direction right joystick is pressed
 	 * 
 	 * @param axis
 	 * @return
@@ -100,8 +102,11 @@ public class DriveSubsystem extends Subsystem {
 		return 0;
 	}
 
-	
+	/**
+	 * Gets ultrasonic range
+	 * @return Ultrasonic range in inches
+	 */
 	public double getUltrasonic() {
-		return driveUltrasonic.getRangeInches();
+		return ultrasonic.getRangeInches();
 	}
 }

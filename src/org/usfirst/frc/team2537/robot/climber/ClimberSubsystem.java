@@ -24,7 +24,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	/**
-	 * sets climber motor
+	 * Sets climber motor
 	 * @param speed
 	 */
 	public void setClimberMotor(double speed) {

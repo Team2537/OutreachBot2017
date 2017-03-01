@@ -6,31 +6,40 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
 
-	long startTime = System.currentTimeMillis();
-
 	public DriveCommand() {
 		requires(Robot.driveSys);
 	}
 
 	@Override
 	protected void initialize() {
-
 	}
 
+	/**
+	 * Sets motors to joystick input
+	 */
 	protected void execute() {
 		Robot.driveSys.setMotors(Robot.driveSys.getLeftJoystick(), Robot.driveSys.getRightJoystick());
 	}
 
+	/**
+	 * Can't stop, won't stop
+	 */
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
+	/**
+	 * Turns motors off
+	 */
 	@Override
 	protected void end() {
 		Robot.driveSys.setMotors(0);
 	}
 
+	/**
+	 * Turns motors off
+	 */
 	@Override
 	protected void interrupted() {
 		Robot.driveSys.setMotors(0);
