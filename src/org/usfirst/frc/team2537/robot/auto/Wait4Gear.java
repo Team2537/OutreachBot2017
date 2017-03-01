@@ -8,13 +8,16 @@ public class Wait4Gear extends Command{
 	long startTime = System.nanoTime();
 	@Override
 	protected boolean isFinished() {
-		if(System.nanoTime()-startTime>3000){
-			return true;
-		}
+//		if(System.nanoTime()-startTime>3000){
+//			return true;
+//		}
+		System.out.println(Robot.driveSys.diosaur.get());
 		if(!Robot.driveSys.infrared.isPulsing()){
-			Robot.driveSys.infrared.pulse(100);
+			System.out.println("gays will be homo");
+			Robot.driveSys.infrared.pulse(1);
 		}
 		if(!Robot.driveSys.diosaur.get()){
+			System.out.println("done with infra");
 			return true;
 		}
 		return false;

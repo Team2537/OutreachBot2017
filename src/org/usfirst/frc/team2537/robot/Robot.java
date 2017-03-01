@@ -1,4 +1,7 @@
 package org.usfirst.frc.team2537.robot;
+//github.com/Team2537/Cogsworth.git
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.auto.AutoRotateCameraCommand;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
 
@@ -7,8 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//github.com/Team2537/Cogsworth.git
-import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -51,7 +52,9 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(autoChooser.getSelected());
+
+		Scheduler.getInstance().add(new AutoRotateCameraCommand());
+
 		System.out.println("Autonomous start");
 	}
 

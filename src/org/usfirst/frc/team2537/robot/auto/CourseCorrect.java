@@ -16,7 +16,7 @@ public class CourseCorrect extends Command {
 	protected static final double CORRECTION_PROPORTION = 90; // it just worked,
 																// y'no?
 	private static final double TOLERANCE = 1;
-	private static final boolean debug = false;
+	private static final boolean debug = true;
 	private double speed;
 	private double startAngle;
 	private double distance;
