@@ -3,6 +3,8 @@ package org.usfirst.frc.team2537.robot.drive;
 import org.usfirst.frc.team2537.robot.Ports;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -25,7 +27,7 @@ public class DriveSubsystem extends Subsystem {
 	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 480; // for encoders
+	public static final int PulsesPerRevolution = 480; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -45,6 +47,11 @@ public class DriveSubsystem extends Subsystem {
 		talonBackLeft = new Talon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new Talon(Ports.BACK_RIGHT_MOTOR_PORT);
 		ultraSanic.setAutomaticMode(true);
+		
+		talonFrontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talonFrontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talonFrontLeft.configEncoderCodesPerRev(PulsesPerRevolution);
+		talonFrontRight.configEncoderCodesPerRev(PulsesPerRevolution);
 
 		try {
 			ahrs = new AHRS(Port.kMXP);
@@ -261,4 +268,42 @@ public class DriveSubsystem extends Subsystem {
 	public boolean getBeamBreak(){
 		return diosaur.get();
 	}
+	
+	public void setMode(TalonControlMode tcm) {
+		talonFrontLeft.changeControlMode(tcm);
+		talonFrontRight.changeControlMode(tcm);
+	}
+
+	public void disableMotors() {
+		talonFrontLeft.disable();
+		talonFrontRight.disable();
+		talonFrontLeft.set(0);
+		talonFrontRight.set(0);
+	}
+	
+	public void enablePIDControl(double p, double i, double d) {
+		talonFrontLeft.setPID(p, i, d);
+		talonFrontRight.setPID(p, i, d);
+		talonFrontLeft.enable();
+		talonFrontRight.enable();
+	}
+	
+	public double getLeftTalonSpeed() {
+		return talonFrontLeft.get();
+	}
+	
+	public double getRightTalonSpeed() {
+		return talonFrontLeft.get();
+	}
+	
+	public void setBackMotors(double left, double right) {
+		talonBackLeft.set(left);
+		talonBackRight.set(right);
+	}
+	
+	public void setFrontMotors(double left, double right) {
+		talonFrontLeft.set(left);
+		talonFrontRight.set(right);
+	}
+	
 }
