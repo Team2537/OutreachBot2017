@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
 
-	protected static final double DEFAULT_SPEED = 0.4;
+	protected static final double DEFAULT_SPEED = 0.6;
 	private static final double SLOWDOWN_START = 0.7; // % distance from target
 														// to start slowing down
 														// at (0 to 1)

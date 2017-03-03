@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RotateCommand extends Command {
 	private double targetAngle;
-	private static final double DEFAULT_SPEED = 0.5;
-	private static final double REDUCED_SPEED = 0.3;
+	private static final double DEFAULT_SPEED = 1.0;
+	private static final double REDUCED_SPEED = 0.7;
 	private static final double TOLERANCE = 1; // degrees
 	private static final int SLOW_DOWN_ANGLE = 10;
 	private double currentAngle;
@@ -30,6 +31,7 @@ public class RotateCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSys.getAhrs().reset();
+    	Robot.driveSys.setMode(TalonControlMode.PercentVbus);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -47,7 +49,6 @@ public class RotateCommand extends Command {
 			Robot.driveSys.setDriveMotors(-speed, speed);
 		else if (deltaAngle < -TOLERANCE)
 			Robot.driveSys.setDriveMotors(speed, -speed);
-		System.out.println("[RotateCommand]Current angle:" +currentAngle+"\nTarget angle:"+targetAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()

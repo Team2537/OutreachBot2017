@@ -8,8 +8,8 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 
 public class UltraSonicCourseCorrect extends CourseCorrect {
-	public static final double TOLERANCE = 12;
-	private static final double SLOWDOWN_START = 60;
+	public static final double TOLERANCE = 6;
+	private static final double SLOWDOWN_START = 40;
 	private static final double CORRECTION_PROPORTION = 0.25;
 	private double startDuty;
 	private double speed;

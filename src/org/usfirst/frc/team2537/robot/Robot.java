@@ -52,6 +52,8 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
+		
+		Scheduler.getInstance().removeAll();
 
 		Scheduler.getInstance().add(new AutoRun());
 

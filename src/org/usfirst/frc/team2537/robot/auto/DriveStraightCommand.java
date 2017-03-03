@@ -10,11 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForwardCommand extends Command {
+public class DriveStraightCommand extends Command {
 	
 	private final double distance; // inches
 	private final double targetTicks;
-    public DriveForwardCommand(double distance) {
+	private static final double P = 0.01;
+	private static final double d = 2;
+    public DriveStraightCommand(double distance) {
     	requires(Robot.driveSys);
     	this.distance = distance;
     	targetTicks = distance * DriveSubsystem.ticksPerInch;
@@ -26,14 +28,13 @@ public class DriveForwardCommand extends Command {
     protected void initialize() {
     	Robot.driveSys.resetEncoders();
     	Robot.driveSys.setMode(TalonControlMode.Position);
-    	Robot.driveSys.enablePIDControl(.25, 0, 0);
-    	Robot.driveSys.setFrontMotors(targetTicks, targetTicks);
-    	Robot.driveSys.setBackMotors(Robot.driveSys.getLeftTalonSpeed(), Robot.driveSys.getRightTalonSpeed());
+    	Robot.driveSys.enablePIDControl(P, 0, d);
+    	Robot.driveSys.setFrontMotors(targetTicks, -targetTicks);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSys.setBackMotors(Robot.driveSys.getLeftTalonSpeed(), Robot.driveSys.getRightTalonSpeed());
+//    	Robot.driveSys.setBackMotors(Robot.driveSys.getLeftTalonSpeed(), -Robot.driveSys.getRightTalonSpeed());
     	System.out.println("[DriveForwardCommand] Encoder Position: " + Robot.driveSys.getEncoderAverage());
     }
 
@@ -50,11 +51,14 @@ public class DriveForwardCommand extends Command {
     protected void end() {
     	System.out.println("[DriveForwardCommand] finished");
     	Robot.driveSys.setMode(TalonControlMode.PercentVbus);
+		Robot.driveSys.setDriveMotors(0);
     	Robot.driveSys.disableMotors();
+    	Robot.driveSys.resetEncoders();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
