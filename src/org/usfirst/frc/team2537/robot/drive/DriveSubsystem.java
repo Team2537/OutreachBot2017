@@ -40,6 +40,8 @@ public class DriveSubsystem extends Subsystem {
 	public DigitalInput diosaur = new DigitalInput(Ports.INRAFRED_TRIGGER);
 	public DigitalOutput infrared = new DigitalOutput(Ports.INRARED_ECHO);
 	private AHRS ahrs;
+	
+	public static final double ticksPerInch = PulsesPerRevolution / (Math.PI * WHEEL_DIAMETER);
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -157,7 +159,7 @@ public class DriveSubsystem extends Subsystem {
 	 * Gets the average value of the left drive encoders compensates for
 	 * negative left values
 	 *
-	 * @return the average of the front left and back left encoders in inches
+	 * @return the average of the front left and back left encoders in ticks
 	 */
 	public double getLeftEncoders() {
 		// gets average encoder value, converts to revolutions,
@@ -174,8 +176,7 @@ public class DriveSubsystem extends Subsystem {
 		// ATLAS
 		//System.out.println("lencoders:"+(-lencoder.get()));
 // 		For use when the encoders are not in the DIO ports
-  		return (talonFrontLeft.getEncPosition())/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
-				- initialLeftEncoders;
+  		return talonFrontLeft.getEncPosition();
 		/*return -lencoder.get() / PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
 				- initialLeftEncoders;*/
 	}
@@ -183,7 +184,7 @@ public class DriveSubsystem extends Subsystem {
 	/**
 	 * Gets the average value of the right drive encoders
 	 *
-	 * @return the average of the front right and back right encoders in inches
+	 * @return the average of the front right and back right encoders in ticks
 	 */
 	public double getRightEncoders() {
 		// gets average encoder value, converts to revolutions,
@@ -199,8 +200,7 @@ public class DriveSubsystem extends Subsystem {
 		//ATLAS
 		//System.out.println("rencoders: "+rencoder.getRaw());
 		// 		For use when the encoders are not in the DIO ports
-		  		return (talonFrontRight.getEncPosition())/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
-						- initialRightEncoders;
+		  		return talonFrontRight.getEncPosition();
 		/*return rencoder.getRaw()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;*/
 	}
 
