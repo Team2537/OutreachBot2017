@@ -18,17 +18,22 @@ public class AutoRotateCameraCommand extends Command {
 	private static final int SLOWDOWN_POWER = 16;
 	private static final double TOLERANCE = 0.05;
 	/* P, I, D, MIN SPEED */
-	private static final double[] CARPET_PID = new double[]{0.1, 0.2, 0.1, 0.48};
+	private static final double[] CARPET_PID = new double[]{0.1, 0.2, 0.1, 0.55};
 	private static final double[] SMOOTH_CONCRETE_PID = new double[]{0.2, 0, 0, 0.3};
 	private static final double[] CURRENT_SURFACE = CARPET_PID;
 	
 	private static final double NO_TARGET_DUTY = 0.98; // duty output by the Pi
 														// when no target is
 														// visible
+	
+	private static final int TICKS_NEEDED = 10;	//number of execute cycles the robot
+												//must be in tolerance for to end the command
+	
 	private double speed;
 	private Side lastSideTurned;
 	private PIDController pidControl;
 	private DutyCycleOutput pidOut;
+	private int ticksInTolerance = 0;
 
 	/**
 	 * spins destinationAngle degrees
@@ -92,8 +97,15 @@ public class AutoRotateCameraCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		double currentDuty = Robot.pwm.getDutyCycle();
+		if (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE){
+			ticksInTolerance++;
+			if(ticksInTolerance >= TICKS_NEEDED){
+				return true;
+			}
+		} else {
+			ticksInTolerance = 0;
+		}
 		return false;
-		//return (currentDuty <= DESTINATION_DUTY + TOLERANCE && currentDuty >= DESTINATION_DUTY - TOLERANCE);
 	}
 
 	@Override

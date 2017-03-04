@@ -3,6 +3,8 @@ package org.usfirst.frc.team2537.robot.drive;
 import org.usfirst.frc.team2537.robot.Ports;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -25,7 +27,7 @@ public class DriveSubsystem extends Subsystem {
 	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final double PulsesPerRevolution = 480; // for encoders
+	public static final int PulsesPerRevolution = 480; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -38,6 +40,8 @@ public class DriveSubsystem extends Subsystem {
 	public DigitalInput diosaur = new DigitalInput(Ports.INRAFRED_TRIGGER);
 	public DigitalOutput infrared = new DigitalOutput(Ports.INRARED_ECHO);
 	private AHRS ahrs;
+	
+	public static final double ticksPerInch = PulsesPerRevolution / (Math.PI * WHEEL_DIAMETER);
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -45,6 +49,11 @@ public class DriveSubsystem extends Subsystem {
 		talonBackLeft = new Talon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new Talon(Ports.BACK_RIGHT_MOTOR_PORT);
 		ultraSanic.setAutomaticMode(true);
+		
+		talonFrontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talonFrontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talonFrontLeft.configEncoderCodesPerRev(PulsesPerRevolution);
+		talonFrontRight.configEncoderCodesPerRev(PulsesPerRevolution);
 
 		try {
 			ahrs = new AHRS(Port.kMXP);
@@ -145,12 +154,13 @@ public class DriveSubsystem extends Subsystem {
 		
 		return (getLeftEncoders() + getRightEncoders()) / 2;
 	}
+	
 
 	/**
 	 * Gets the average value of the left drive encoders compensates for
 	 * negative left values
 	 *
-	 * @return the average of the front left and back left encoders in inches
+	 * @return the average of the front left and back left encoders in ticks
 	 */
 	public double getLeftEncoders() {
 		// gets average encoder value, converts to revolutions,
@@ -167,8 +177,7 @@ public class DriveSubsystem extends Subsystem {
 		// ATLAS
 		//System.out.println("lencoders:"+(-lencoder.get()));
 // 		For use when the encoders are not in the DIO ports
-  		return (talonFrontLeft.getEncPosition())/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
-				- initialLeftEncoders;
+  		return talonFrontLeft.getEncPosition();
 		/*return -lencoder.get() / PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
 				- initialLeftEncoders;*/
 	}
@@ -176,7 +185,7 @@ public class DriveSubsystem extends Subsystem {
 	/**
 	 * Gets the average value of the right drive encoders
 	 *
-	 * @return the average of the front right and back right encoders in inches
+	 * @return the average of the front right and back right encoders in ticks
 	 */
 	public double getRightEncoders() {
 		// gets average encoder value, converts to revolutions,
@@ -192,8 +201,7 @@ public class DriveSubsystem extends Subsystem {
 		//ATLAS
 		//System.out.println("rencoders: "+rencoder.getRaw());
 		// 		For use when the encoders are not in the DIO ports
-		  		return (talonFrontRight.getEncPosition())/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI
-						- initialRightEncoders;
+		  		return talonFrontRight.getEncPosition();
 		/*return rencoder.getRaw()/ PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;*/
 	}
 
@@ -261,4 +269,34 @@ public class DriveSubsystem extends Subsystem {
 	public boolean getBeamBreak(){
 		return diosaur.get();
 	}
+	
+	public void setMode(TalonControlMode tcm) {
+		talonFrontLeft.changeControlMode(tcm);
+		talonFrontRight.changeControlMode(tcm);
+	}
+
+	public void disableMotors() {
+		talonFrontLeft.disable();
+		talonFrontRight.disable();
+		talonFrontLeft.set(0);
+		talonFrontRight.set(0);
+	}
+	
+	public void enablePIDControl(double p, double i, double d) {
+		talonFrontLeft.setPID(p, i, d);
+		talonFrontRight.setPID(p, i, d);
+		talonFrontLeft.enable();
+		talonFrontRight.enable();
+	}
+	
+	public void setBackMotors(double left, double right) {
+		talonBackLeft.set(left);
+		talonBackRight.set(right);
+	}
+	
+	public void setFrontMotors(double left, double right) {
+		talonFrontLeft.set(left);
+		talonFrontRight.set(right);
+	}
+	
 }

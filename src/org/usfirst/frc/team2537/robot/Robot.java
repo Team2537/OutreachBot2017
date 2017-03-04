@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 //github.com/Team2537/Cogsworth.git
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.auto.AutoRotateCameraCommand;
+import org.usfirst.frc.team2537.robot.auto.AutoRun;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
 
@@ -52,8 +52,10 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
+		
+		Scheduler.getInstance().removeAll();
 
-		Scheduler.getInstance().add(new AutoRotateCameraCommand());
+		Scheduler.getInstance().add(new AutoRun());
 
 		System.out.println("Autonomous start");
 	}

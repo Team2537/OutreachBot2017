@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
 
-	protected static final double DEFAULT_SPEED = 0.4;
+	protected static final double DEFAULT_SPEED = 0.6;
 	private static final double SLOWDOWN_START = 0.7; // % distance from target
 														// to start slowing down
 														// at (0 to 1)
@@ -80,6 +80,7 @@ public class CourseCorrect extends Command {
 		if (debug)
 			System.out.println("CourseCorrect init: startAngle: "
 					+ getStartAngle());
+		System.out.println("Encoders: " + Robot.driveSys.getEncoderAverage());
 		Robot.driveSys.resetEncoders();
 		Robot.driveSys.setDriveMotors(speed);
 	}
@@ -129,13 +130,14 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void end() {
 		System.out.println("CourseCorrect : end");
-
 		Robot.driveSys.setDriveMotors(0);
+		Robot.driveSys.resetEncoders();
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.driveSys.setDriveMotors(0);
+		Robot.driveSys.resetEncoders();
 	}
 
 	public static double getSlowdownStart() {

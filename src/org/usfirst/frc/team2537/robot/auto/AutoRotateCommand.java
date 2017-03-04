@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotateCommand extends Command {
 	private AHRS ahrs;
-	private double destinationAngle, startAngle;
+	private double destinationAngle,currentAngle;
 
 	
 	private static final double DEFAULT_SPEED = 0.7;
@@ -28,6 +28,7 @@ public class AutoRotateCommand extends Command {
 	public AutoRotateCommand(double destinationAngle) {
 		requires(Robot.driveSys);
 		ahrs = Robot.driveSys.getAhrs();
+		ahrs.reset();
 		this.destinationAngle = destinationAngle;
 		speed = DEFAULT_SPEED;
 	}
@@ -35,26 +36,29 @@ public class AutoRotateCommand extends Command {
 	@Override
 	protected void initialize() {
 		//System.out.println("AutoRotateInitialize");
-		startAngle = ahrs.getAngle();
+		ahrs.reset();
+	//	startAngle = ahrs.getAngle();
+	//	System.out.println("startAngle is"+startAngle);
 	}
 
 	@Override
 	protected void execute() {
-		double currentAngle = ahrs.getAngle();
+		currentAngle = ahrs.getAngle();
 		
 		//System.out.println("Current Angle: "+(currentAngle-startAngle));
 	
-		if (currentAngle-startAngle <= destinationAngle - TOLERANCE)
+		if (currentAngle <= destinationAngle - TOLERANCE)
 			Robot.driveSys.setDriveMotors(speed, -speed);
-		if (currentAngle-startAngle >= destinationAngle + TOLERANCE)
+		if (currentAngle >= destinationAngle + TOLERANCE)
 			Robot.driveSys.setDriveMotors(-speed, speed);
 		//distance between relative destination angle and relative angle from start over the relative destination angle
 		//e.g. (dest 90, curr 45) ratio = (90-45)/90 = 0.5
 		//      resulatant speed = 0.5*DEFAULT_SPEED + MINIMUM_SPEED
 		
 		//System.out.println("Ratio: "+Math.abs((destinationAngle-currentAngle-startAngle)/SLOWDOWN_ANGLE));
-		speed = Math.abs((destinationAngle-(currentAngle-startAngle))/SLOWDOWN_ANGLE)*DEFAULT_SPEED+MINIMUM_SPEED;
+		speed = Math.abs((destinationAngle-(currentAngle))/SLOWDOWN_ANGLE)*DEFAULT_SPEED+MINIMUM_SPEED;
 		System.out.println("AutoRotateCommand :" + speed);
+		System.out.println("angle: "+(currentAngle));
 		if(speed>DEFAULT_SPEED){
 			speed =DEFAULT_SPEED;
 		}
@@ -65,8 +69,8 @@ public class AutoRotateCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		double currentAngle = ahrs.getAngle();
-		return (currentAngle-startAngle <= destinationAngle + TOLERANCE && currentAngle-startAngle >= destinationAngle - TOLERANCE);
+		//double currentAngle = ahrs.getAngle();
+		return (((currentAngle) <= destinationAngle + TOLERANCE) && (currentAngle >= (destinationAngle - TOLERANCE)));
 	}
 
 	@Override
