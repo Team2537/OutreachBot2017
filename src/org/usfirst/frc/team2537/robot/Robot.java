@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 //github.com/Team2537/Cogsworth.git
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.auto.AutoRun;
+import org.usfirst.frc.team2537.robot.auto.Wait4GearGone;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PISubsystem;
 

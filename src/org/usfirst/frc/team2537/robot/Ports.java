@@ -25,6 +25,6 @@ public final class Ports {
 		
 		RASP_PI = 9,
 		
-		INRAFRED_TRIGGER = 1, INRARED_ECHO =2;
+		INFRARED_TRIGGER = 1, INFRARED_ECHO =2;
 		
 }

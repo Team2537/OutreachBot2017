@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class UltraSonicCourseCorrect extends Command {
 	private static final int TOLERANCE = 9;
-
 	public UltraSonicCourseCorrect() {
 		requires(Robot.driveSys);
 	}
 	
 	public void initialize() {
 		Robot.driveSys.setDriveMotors(0.5);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
