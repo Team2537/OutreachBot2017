@@ -3,7 +3,7 @@ package org.usfirst.frc.team2537.robot;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.auto.AutoRun;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
+import org.usfirst.frc.team2537.robot.vision.PISubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
-	public static PWMSubsystem pwm;
+	public static PISubsystem piSys;
 	private SendableChooser<Command> autoChooser;
 	
 	@Override
@@ -31,9 +31,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
+		driveSys.resetEncoders();
 		
-		pwm = new PWMSubsystem();
-		pwm.initDefaultCommand();
+		piSys = new PISubsystem();
+		piSys.initDefaultCommand();
 		
 		// Dashboard
 		autoChooser = new AutoChooser();
@@ -52,11 +53,8 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		
 		Scheduler.getInstance().removeAll();
-
-		Scheduler.getInstance().add(new AutoRun());
-
+		Scheduler.getInstance().add(autoChooser.getSelected());
 		System.out.println("Autonomous start");
 	}
 

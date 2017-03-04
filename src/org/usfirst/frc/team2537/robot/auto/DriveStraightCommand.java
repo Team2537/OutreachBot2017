@@ -29,10 +29,12 @@ public class DriveStraightCommand extends Command {
 	private static final double BACK_WHEEL_NAVX_CORRECTION_PROPORTION = 0.2;
 	/* the robot begins to turn when the angle is greater than this constant */
 	private static final double NAVX_CORRECTION_DEGREE_TOLERANCE = 1;
+	/* add @code{DISTANCE_STOP_CORRECTION} inches to distance because the robot consistently stops this many inches early */
+	private static final double DISTANCE_STOP_CORRECTION = 3;
 	
     public DriveStraightCommand(double distance) {
     	requires(Robot.driveSys);
-    	targetTicks = distance * DriveSubsystem.ticksPerInch;
+    	targetTicks = (distance + DISTANCE_STOP_CORRECTION) * DriveSubsystem.ticksPerInch;
     	System.out.println("[DriveStraightCommand] target ticks: " + targetTicks);
     }
 
