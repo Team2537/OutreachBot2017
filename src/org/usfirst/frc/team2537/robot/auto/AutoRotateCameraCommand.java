@@ -18,7 +18,7 @@ public class AutoRotateCameraCommand extends Command {
 	private static final int SLOWDOWN_POWER = 16;
 	private static final double TOLERANCE = 0.05;
 	/* P, I, D, MIN SPEED */
-	private static final double[] CARPET_PID = new double[]{0.1, 0.2, 0.1, 0.5};
+	private static final double[] CARPET_PID = new double[]{0.1, 0.2, 0.1, 0.55};
 	private static final double[] SMOOTH_CONCRETE_PID = new double[]{0.2, 0, 0, 0.3};
 	private static final double[] CURRENT_SURFACE = CARPET_PID;
 	

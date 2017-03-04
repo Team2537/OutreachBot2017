@@ -80,6 +80,7 @@ public class CourseCorrect extends Command {
 		if (debug)
 			System.out.println("CourseCorrect init: startAngle: "
 					+ getStartAngle());
+		System.out.println("Encoders: " + Robot.driveSys.getEncoderAverage());
 		Robot.driveSys.resetEncoders();
 		Robot.driveSys.setDriveMotors(speed);
 	}
@@ -129,13 +130,14 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void end() {
 		System.out.println("CourseCorrect : end");
-
 		Robot.driveSys.setDriveMotors(0);
+		Robot.driveSys.resetEncoders();
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.driveSys.setDriveMotors(0);
+		Robot.driveSys.resetEncoders();
 	}
 
 	public static double getSlowdownStart() {

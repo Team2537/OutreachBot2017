@@ -154,6 +154,7 @@ public class DriveSubsystem extends Subsystem {
 		
 		return (getLeftEncoders() + getRightEncoders()) / 2;
 	}
+	
 
 	/**
 	 * Gets the average value of the left drive encoders compensates for
@@ -286,14 +287,6 @@ public class DriveSubsystem extends Subsystem {
 		talonFrontRight.setPID(p, i, d);
 		talonFrontLeft.enable();
 		talonFrontRight.enable();
-	}
-	
-	public double getLeftTalonSpeed() {
-		return talonFrontLeft.get();
-	}
-	
-	public double getRightTalonSpeed() {
-		return talonFrontLeft.get();
 	}
 	
 	public void setBackMotors(double left, double right) {

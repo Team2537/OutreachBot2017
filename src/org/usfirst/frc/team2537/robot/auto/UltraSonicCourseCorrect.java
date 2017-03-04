@@ -1,22 +1,20 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import static org.usfirst.frc.team2537.robot.auto.CourseCorrect.MINIMUM_SPEED;
-import static org.usfirst.frc.team2537.robot.auto.CourseCorrect.getSlowdownStart;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
-import edu.wpi.first.wpilibj.Ultrasonic.Unit;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class UltraSonicCourseCorrect extends CourseCorrect {
-	public static final double TOLERANCE = 6;
+public class UltraSonicCourseCorrect extends Command {
+	public static final double TOLERANCE = 9;
 	private static final double SLOWDOWN_START = 40;
 	private static final double CORRECTION_PROPORTION = 0.25;
 	private double startDuty;
 	private double speed;
 	private boolean debug = false;
 	public UltraSonicCourseCorrect() {
-		super(0);
-		speed = DEFAULT_SPEED;
+		speed = 0.6;
 		startDuty = 0.5;
 		// TODO Auto-generated constructor stub
 	}
@@ -25,7 +23,7 @@ public class UltraSonicCourseCorrect extends CourseCorrect {
 		double currentAngle = Robot.pwm.getDutyCycle();
 		System.out.println(Robot.driveSys.ultraSanic.getRangeInches()<SLOWDOWN_START);
 		if (Robot.driveSys.ultraSanic.getRangeInches() < SLOWDOWN_START) {
-			speed = Robot.driveSys.ultraSanic.getRangeInches()/SLOWDOWN_START*DEFAULT_SPEED + MINIMUM_SPEED ;
+			speed = Robot.driveSys.ultraSanic.getRangeInches()/SLOWDOWN_START*speed + MINIMUM_SPEED ;
 		}
 		System.out.println(speed);
 		double left = speed;
