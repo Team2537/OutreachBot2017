@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 //github.com/Team2537/Cogsworth.git
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.auto.AutoRun;
+import org.usfirst.frc.team2537.robot.auto.Wait4GearGone;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PWMSubsystem;
 
@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 		
 		Scheduler.getInstance().removeAll();
 
-		Scheduler.getInstance().add(new AutoRun());
+		Scheduler.getInstance().add(new Wait4GearGone());
 
 		System.out.println("Autonomous start");
 	}

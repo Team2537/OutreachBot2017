@@ -37,8 +37,8 @@ public class DriveSubsystem extends Subsystem {
 	//public Encoder lencoder = new Encoder(Ports.LEFT_ENCODER_A, Ports.LEFT_ENCODER_B);
 	//public Encoder rencoder = new Encoder(Ports.RIGHT_ENCODER_A, Ports.RIGHT_ENCODER_B);
 	public Ultrasonic ultraSanic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO); 
-	public DigitalInput diosaur = new DigitalInput(Ports.INRAFRED_TRIGGER);
-	public DigitalOutput infrared = new DigitalOutput(Ports.INRARED_ECHO);
+	public DigitalInput diosaur = new DigitalInput(Ports.INFRARED_ECHO);
+	public DigitalOutput infrared = new DigitalOutput(Ports.INFRARED_TRIGGER);
 	private AHRS ahrs;
 	
 	public static final double ticksPerInch = PulsesPerRevolution / (Math.PI * WHEEL_DIAMETER);
