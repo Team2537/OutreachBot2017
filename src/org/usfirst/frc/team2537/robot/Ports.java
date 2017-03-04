@@ -25,5 +25,8 @@ public class Ports {
 	public static final int ULTRASONIC_TRIGGER = 3, ULTRASONIC_ECHO = 4;
 
 	public static final int CLIMBER_PRESSURE_SENSOR = 0;
+	
+	//Servo Ports
+	public static final int SHOOTER_SERVO = 1;
 
 }

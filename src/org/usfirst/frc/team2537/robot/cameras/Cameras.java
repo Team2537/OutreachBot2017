@@ -7,7 +7,6 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 
 public class Cameras {

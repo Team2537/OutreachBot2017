@@ -59,16 +59,15 @@ public class ShooterCommand extends Command {
 				if (currentVoltage < 0) {
 					currentVoltage = 0;
 				}
-				// System.out.println(currentVoltage);
 				Robot.shooterSys.setExteriorMotor(currentVoltage);
 				startTime = System.currentTimeMillis();
 			}
 		}
 		if (System.currentTimeMillis() - startTime >= 1000) {
 			if (Robot.shooterSys.getExteriorSpeed() > INNER_TARGET_1 && Robot.shooterSys.getExteriorSpeed() < INNER_TARGET_2) {
-				Robot.shooterSys.setInteriorMotor(1);
+				Robot.shooterSys.setShooterServo(0.4);
 			} else {
-				Robot.shooterSys.setInteriorMotor(0);
+				Robot.shooterSys.setShooterServo(0);
 			}
 		} 
 	}
@@ -83,7 +82,7 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.shooterSys.setInteriorMotor(0);
+		Robot.shooterSys.setShooterServo(0);
 		Robot.shooterSys.setExteriorMotor(0);
 	}
 
@@ -92,7 +91,7 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void interrupted() {
-		Robot.shooterSys.setInteriorMotor(0);
+		Robot.shooterSys.setShooterServo(0);
 		Robot.shooterSys.setExteriorMotor(0);
 	}
 

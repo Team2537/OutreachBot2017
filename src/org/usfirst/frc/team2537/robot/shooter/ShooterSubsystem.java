@@ -7,30 +7,25 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
+	
+
+
 
 	public static final int LEEWAY = 1;
 	private static final int TICKS_PER_REVOLUTION = 80;
 	private CANTalon exteriorFlywheel = new CANTalon(Ports.EXTERIOR_SHOOTER); // creates
 																				// motors
-	private CANTalon interiorFlywheel = new CANTalon(Ports.INTERIOR_SHOOTER);
-//	private static double p = 1.2, i = 0, d = 0.85; // sets pid values
+	private Servo shooterServo = new Servo(Ports.SHOOTER_SERVO);
 	public static final int SPEED_MULTIPLIER = 1;
 
 	public ShooterSubsystem() {
-		/**
-		 * creates PID subsystem and enables it
-		 */
-	/*	super("Shooter", p, i, d);
-		setAbsoluteTolerance(100);
-		getPIDController().setContinuous();
-		enable(); */
 		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
 		exteriorFlywheel.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		exteriorFlywheel.configEncoderCodesPerRev(TICKS_PER_REVOLUTION);
-		// exteriorFlywheel.changeControlMode(TalonControlMode.Speed);
 
 	}
 
@@ -47,15 +42,6 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	/**
-	 * sets interior motor
-	 * 
-	 * @param speed
-	 */
-	public void setInteriorMotor(double speed) {
-		interiorFlywheel.set(speed * SPEED_MULTIPLIER);
-	}
-
-	/**
 	 * sets exterior motor
 	 */
 	public void setExteriorMotor(double speed) {
@@ -67,7 +53,6 @@ public class ShooterSubsystem extends Subsystem {
 	 */
 	public void turnExteriorMotorOff() {
 		exteriorFlywheel.changeControlMode(TalonControlMode.PercentVbus);
-//		this.setSetpoint(0);
 		exteriorFlywheel.set(0);
 	}
 
@@ -87,31 +72,9 @@ public class ShooterSubsystem extends Subsystem {
 		return exteriorFlywheel.getSpeed();
 	}
 
-	/**
-	 * gets the error between the actual speed and target speed of the motor
-	 * 
-	 * @return
-	 */
-	public double getExteriorError() {
-		return exteriorFlywheel.getError();
+	public void setShooterServo(double speed) {
+		shooterServo.setSpeed(speed);
 	}
 
-	/**
-	 * Returns the current speed for use of the PID loop
-	 */
-/*	@Override
-	protected double returnPIDInput() {
-		return exteriorFlywheel.getSpeed();
 
-	}
-
-	*//**
-	 * Sets the exterior flywheel to the number the PID loop outputs
-	 * 
-	 * @Override
-	 **//*
-	protected void usePIDOutput(double output) {
-		exteriorFlywheel.set(output);
-	}
-	*/
 }

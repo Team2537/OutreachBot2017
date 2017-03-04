@@ -15,7 +15,7 @@ public class FeedOneBallCommand extends Command {
 	
 	protected void initialize(){
 		startTime = System.currentTimeMillis();
-		Robot.shooterSys.setInteriorMotor(1);
+		Robot.shooterSys.setShooterServo(1);
 		
 	}
 	
@@ -29,10 +29,10 @@ public class FeedOneBallCommand extends Command {
 	}
 	
 	protected void end(){
-		Robot.shooterSys.setInteriorMotor(0);
+		Robot.shooterSys.setShooterServo(0);
 	}
 	
 	protected void interrupted(){
-		Robot.shooterSys.setInteriorMotor(0);
+		Robot.shooterSys.setShooterServo(0);
 	}
 }
