@@ -1,13 +1,18 @@
-
 package org.usfirst.frc.team2537.robot;
 
+//github.com/Team2537/Cogsworth.git
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.vision.PISubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -21,10 +26,9 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	public static Cameras cameras;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	public static PISubsystem piSys;
+	private SendableChooser<Command> autoChooser;
+	
 	@Override
 	public void robotInit() {
 		driveSys = new DriveSubsystem();
@@ -36,29 +40,23 @@ public class Robot extends IterativeRobot {
 		cameras = new Cameras();
 		cameras.start();
 		
+		piSys = new PISubsystem();
+		piSys.initDefaultCommand();
+		
 		pdp = new PowerDistributionPanel();
+		
+		autoChooser = new AutoChooser();
+		SmartDashboard.putData("Auto Choices", autoChooser);
 	}
 	
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select  
-	 * between different autonomous modes using the dashboard. The sendable 
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
-	 */
-	@Override
-	public void autonomousInit() {
-	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	@Override
-	public void autonomousPeriodic() {
+	public void autonomousInit() {
+		Scheduler.getInstance().removeAll();
+		Scheduler.getInstance().add(autoChooser.getSelected());
+		System.out.println("Autonomous start");
 	}
 
 	/**
@@ -73,7 +71,38 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	@Override
-	public void testPeriodic() {
+	public void autonomousPeriodic() {
+		//System.out.println(Robot.driveSys.rencoder.getRaw());
+		Scheduler.getInstance().run();
+	}
+
+
+	/**
+	 * 
+	 */
+	public void teleopInit(){
+		System.out.println("Teleop init");
 
 	}
-}                           
+
+	public void testInit() {
+	}
+
+	@Override
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	@Override
+	public void disabledInit() {
+		driveSys.getAhrs().reset();
+	}
+	
+	@Override
+	public void disabledPeriodic() {
+	}
+
+}

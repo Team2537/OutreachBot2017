@@ -18,7 +18,7 @@ public class DriveCommand extends Command {
 	 * Sets motors to joystick input
 	 */
 	protected void execute() {
-		Robot.driveSys.setMotors(Robot.driveSys.getLeftJoystick(), Robot.driveSys.getRightJoystick());
+		Robot.driveSys.setDriveMotors(Robot.driveSys.getLeftJoystick(), Robot.driveSys.getRightJoystick());
 	}
 
 	/**
