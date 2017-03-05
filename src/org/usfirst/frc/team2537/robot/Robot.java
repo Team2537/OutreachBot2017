@@ -4,7 +4,6 @@ package org.usfirst.frc.team2537.robot;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -19,7 +18,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	public static ClimberSubsystem climberSys;
-	public static ShooterSubsystem shooterSys;
 	public static PowerDistributionPanel pdp;
 	public static Cameras cameras;
 
@@ -34,9 +32,6 @@ public class Robot extends IterativeRobot {
 		
 		climberSys = new ClimberSubsystem();
 		climberSys.registerButtons();
-		
-		shooterSys = new ShooterSubsystem();
-		shooterSys.registerButtons();
 		
 		cameras = new Cameras();
 		cameras.start();
