@@ -4,9 +4,9 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class UltraSonicCourseCorrect extends Command {
+public class UltrasonicDrive extends Command {
 	private static final int TOLERANCE = 9;
-	public UltraSonicCourseCorrect() {
+	public UltrasonicDrive() {
 		requires(Robot.driveSys);
 	}
 	
