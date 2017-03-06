@@ -73,7 +73,7 @@ public class DriveStraightCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.driveSys.getEncoderAverage() >= targetTicks);
+    	return targetTicks > 0 ? Robot.driveSys.getEncoderAverage() >= targetTicks : Robot.driveSys.getEncoderAverage() <= targetTicks;
     }
 
     // Called once after isFinished returns true

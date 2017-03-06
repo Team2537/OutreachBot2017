@@ -92,6 +92,10 @@ public class Cameras extends Thread {
 			
 			// Get frame from cvSink
 			cvSink.grabFrame(source);
+			
+			if (source.rows() != 240 || source.cols() != 320) {
+				continue;
+			}
 			output = source;
 
 			// If on gear cam...

@@ -2,6 +2,8 @@ package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
@@ -12,6 +14,8 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		Robot.driveSys.setMode(TalonControlMode.PercentVbus);
+		Robot.driveSys.enableMotors();
 	}
 
 	/**

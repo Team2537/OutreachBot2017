@@ -7,5 +7,6 @@ public class Specs {
 		ROBOT_LENGTH = 32.65,
 		ROBOT_WIDTH = 29.1,
 		BUMPER_WIDTH = 3,
-		WALL_TO_AIRSHIP = 114.3;
+		WALL_TO_AIRSHIP = 114.3,
+		AUTO_DISTANCE_FORWARD_TO_SIDE_PEG = 60; //For right and left placement 74 inches from wall
 }

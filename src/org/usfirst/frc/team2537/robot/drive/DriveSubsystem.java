@@ -235,6 +235,7 @@ public class DriveSubsystem extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
+		this.setDefaultCommand(new DriveCommand());
 	}
 
 	protected void setDriveStraight(boolean b) {
@@ -284,6 +285,11 @@ public class DriveSubsystem extends Subsystem {
 		talonFrontRight.set(0);
 	}
 	
+	public void enableMotors() {
+		talonFrontLeft.enable();
+		talonFrontRight.enable();
+	}
+	
 	public void enablePIDControl(double p, double i, double d) {
 		talonFrontLeft.setPID(p, i, d);
 		talonFrontRight.setPID(p, i, d);
@@ -306,11 +312,11 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public double getLeftJoystick() {
-		return HumanInput.leftJoystick.getAxis(AxisType.kY);
+		return -HumanInput.leftJoystick.getAxis(AxisType.kY);
 	}
 
 	public double getRightJoystick() {
-		return HumanInput.rightJoystick.getAxis(AxisType.kY);
+		return -HumanInput.rightJoystick.getAxis(AxisType.kY);
 	}
 	
 }

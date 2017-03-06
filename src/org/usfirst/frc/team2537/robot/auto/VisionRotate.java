@@ -19,7 +19,7 @@ public class VisionRotate extends Command {
 	 * 
 	 * the greater the distance of the target is from the center of the camera, the duty cycles gets farther from the @code{TARGET_DUTY_CYCLE}
 	 */
-	private static final double TARGET_DUTY_CYCLE = 0.52;
+	private static final double TARGET_DUTY_CYCLE = 0.46;
 	/* we stop this command when the pi duty cycle is within @code{TARGET_DUTY_CYCLE} +/- @code{DUTY_CYCLE_TOLERANCE} */
 	private static final double DUTY_CYCLE_TOLERANCE = 0.02;
 	
