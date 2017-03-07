@@ -32,7 +32,7 @@ public class ShooterSubsystem extends Subsystem {
 	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.shooterOnButton, new ShooterCommand(false));
 		HumanInput.registerWhenPressedCommand(HumanInput.shooterOffButton, new ShooterKillCommand());
-		HumanInput.registerWhenPressedCommand(HumanInput.feedBallButton, new FeedOneBallCommand());
+		HumanInput.registerWhenPressedCommand(HumanInput.feedBallButton, new FeedOneBallCommand(false));
 	}
 	
 
@@ -73,7 +73,12 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void setShooterServo(double speed) {
-		shooterServo.setSpeed(speed);
+		shooterServo.set(speed);
+
+	}
+	
+	public void setShooterServoAngle(double angle) {
+		shooterServo.setAngle(angle);
 	}
 
 

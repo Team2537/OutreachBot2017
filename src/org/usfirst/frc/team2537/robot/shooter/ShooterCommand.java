@@ -8,19 +8,20 @@ public class ShooterCommand extends Command {
 
 	private boolean shooterOff;
 	private final static double TARGET_SPEED = 500;
-	private final static double INNER_TARGET_1 = 450;
-	private final static double INNER_TARGET_2 = 550;
-	private final static double MAKESHIFT_P = 2300;
-	private final static double TOLERANCE = 30;
+	private final static double INNER_TARGET_1 = 400;
+	private final static double INNER_TARGET_2 = 600;
+	private final static double P = 1200;
+	private final static double TOLERANCE = 10;
 	private double currentVoltage = 0;
-	private long startTime = System.currentTimeMillis();
+	private long startTime;
+	private long resetStartTime; // resets after every iteration of the 1st if statement in execute
 
 	/**
 	 * constructor that requires Robot.shooterSys
 	 * 
 	 * @param shooterOff
-	 *            boolean: true = shooter motors are off, false = shooter motors
-	 *            are on
+	 *            boolean: true = shooter motors are off, false = shooter
+	 *            motors are on
 	 */
 	public ShooterCommand(boolean shooterOff) {
 		requires(Robot.shooterSys);
@@ -33,12 +34,13 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void initialize() {
-		// Robot.shooterSys.enable();
+		startTime = System.currentTimeMillis();
+		resetStartTime = System.currentTimeMillis();
 		Robot.shooterSys.setExteriorMotorMode();
 		if (shooterOff) {
 			Robot.shooterSys.turnExteriorMotorOff();
 		} else {
-			Robot.shooterSys.setExteriorMotor(0.75);
+			Robot.shooterSys.setExteriorMotor(0.7);
 		}
 
 	}
@@ -48,28 +50,36 @@ public class ShooterCommand extends Command {
 	 * the speed of the motor
 	 */
 	@Override
+
 	protected void execute() {
 		System.out.println(Robot.shooterSys.getExteriorSpeed());
-		if (System.currentTimeMillis() - startTime >= 500) {
-			if ((System.currentTimeMillis() - startTime) >= 200 && (Robot.shooterSys.getExteriorSpeed() < TARGET_SPEED - TOLERANCE || Robot.shooterSys.getExteriorSpeed() > TARGET_SPEED + TOLERANCE)) {
-				currentVoltage += (TARGET_SPEED - Robot.shooterSys.getExteriorSpeed()) / (MAKESHIFT_P);
-				if (currentVoltage > 1) { // limits voltage for PID loop
-					currentVoltage = 1;
+		if (System.currentTimeMillis() - startTime >= 800) {
+			if (Robot.shooterSys.getExteriorSpeed() < TARGET_SPEED - TOLERANCE || Robot.shooterSys.getExteriorSpeed() > TARGET_SPEED + TOLERANCE && System.currentTimeMillis() - resetStartTime >= 200) {
+				if ((TARGET_SPEED - Robot.shooterSys.getExteriorSpeed() > 0)) {
+					currentVoltage += (TARGET_SPEED - Robot.shooterSys.getExteriorSpeed()) / (3 * P);
 				}
-				if (currentVoltage < 0) {
-					currentVoltage = 0;
+				if ((TARGET_SPEED - Robot.shooterSys.getExteriorSpeed() < 0)) {
+					currentVoltage += (TARGET_SPEED - Robot.shooterSys.getExteriorSpeed()) / (P);
+				}
+				if (currentVoltage > 0.7) { // limits voltage for PID loop
+					currentVoltage = 0.7;
+				}
+				if (currentVoltage < 0.35) {
+					currentVoltage = 0.35;
 				}
 				Robot.shooterSys.setExteriorMotor(currentVoltage);
-				startTime = System.currentTimeMillis();
+				resetStartTime = System.currentTimeMillis();
+			}
+
+		}
+		if (System.currentTimeMillis() - startTime >= 600) {
+			if (Robot.shooterSys.getExteriorSpeed() > INNER_TARGET_1
+					&& Robot.shooterSys.getExteriorSpeed() < INNER_TARGET_2) {
+				Robot.shooterSys.setShooterServo(0);
+			} else {
+				Robot.shooterSys.setShooterServo(0.5);
 			}
 		}
-		if (System.currentTimeMillis() - startTime >= 1000) {
-			if (Robot.shooterSys.getExteriorSpeed() > INNER_TARGET_1 && Robot.shooterSys.getExteriorSpeed() < INNER_TARGET_2) {
-				Robot.shooterSys.setShooterServo(0.4);
-			} else {
-				Robot.shooterSys.setShooterServo(0);
-			}
-		} 
 	}
 
 	@Override
@@ -82,8 +92,8 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.shooterSys.setShooterServo(0);
 		Robot.shooterSys.setExteriorMotor(0);
+		Robot.shooterSys.setShooterServo(0.5);
 	}
 
 	/**
@@ -91,8 +101,8 @@ public class ShooterCommand extends Command {
 	 */
 	@Override
 	protected void interrupted() {
-		Robot.shooterSys.setShooterServo(0);
 		Robot.shooterSys.setExteriorMotor(0);
+		Robot.shooterSys.setShooterServo(0.5);
 	}
 
 }

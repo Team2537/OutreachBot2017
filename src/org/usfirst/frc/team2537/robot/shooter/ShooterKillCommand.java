@@ -20,7 +20,10 @@ public class ShooterKillCommand extends Command {
 
 	protected void end() {
 		Robot.shooterSys.setExteriorMotor(0);
-		Robot.shooterSys.setShooterServo(0);
+		Robot.shooterSys.setShooterServo(0.5);
+
+		
+
 
 	}
 
