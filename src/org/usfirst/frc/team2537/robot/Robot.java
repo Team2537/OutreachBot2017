@@ -2,10 +2,12 @@ package org.usfirst.frc.team2537.robot;
 
 //github.com/Team2537/Cogsworth.git
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.auto.VisionRotate;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PISubsystem;
+import org.usfirst.frc.team2537.robot.vision.RPiCalibration;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -47,8 +49,9 @@ public class Robot extends IterativeRobot {
 		
 		autoChooser = new AutoChooser();
 		SmartDashboard.putData("Auto Choices", autoChooser);
+		SmartDashboard.putData("Reclibrate RPi", new RPiCalibration());
+		SmartDashboard.putNumber("RPi Target Duty Cycle", VisionRotate.TARGET_DUTY_CYCLE);
 	}
-	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -73,6 +76,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		//System.out.println(Robot.driveSys.rencoder.getRaw());
+		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
 		Scheduler.getInstance().run();
 	}
 
@@ -100,10 +104,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		driveSys.getAhrs().reset();
+		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
 	}
 	
 	@Override
 	public void disabledPeriodic() {
+		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
+		SmartDashboard.putNumber("RPi Target Duty Cycle", VisionRotate.TARGET_DUTY_CYCLE);
+		Scheduler.getInstance().run();
 	}
 
 }

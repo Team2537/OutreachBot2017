@@ -10,7 +10,7 @@ public class VisionRotate extends Command {
 	/* when the pi cannot see the target, we spin faster to try to find the target */
 	private static final double FAST_SPEED = 0.75;
 	/* we spin slower when the pi can see the target so that we do not overshoot */
-	private static final double SLOW_SPEED = 0.6;
+	private static final double SLOW_SPEED = 0.47;
 	/* if the pi does not see a target, it outputs this duty cycle or less when right side up.  When upside down, it outputs 1 - @code{NO_TARGET_DUTY_CYCLE} */
 	private static final double NO_TARGET_DUTY_CYCLE = 0.02;
 	/* we are perfectly centered at @code{TARGET_DUTY_CYCLE}.  When mounted right side up, duty cycles greater than
@@ -19,9 +19,9 @@ public class VisionRotate extends Command {
 	 * 
 	 * the greater the distance of the target is from the center of the camera, the duty cycles gets farther from the @code{TARGET_DUTY_CYCLE}
 	 */
-	private static final double TARGET_DUTY_CYCLE = 0.46;
+	public static double TARGET_DUTY_CYCLE = 0.56;
 	/* we stop this command when the pi duty cycle is within @code{TARGET_DUTY_CYCLE} +/- @code{DUTY_CYCLE_TOLERANCE} */
-	private static final double DUTY_CYCLE_TOLERANCE = 0.02;
+	private static final double DUTY_CYCLE_TOLERANCE = 0.04;
 	
 	private int inToleranceCycleCounts;
 	private int inToleranceCycleCountsThreshold = 10;

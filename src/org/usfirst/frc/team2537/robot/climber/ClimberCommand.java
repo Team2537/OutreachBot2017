@@ -23,7 +23,7 @@ public class ClimberCommand extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.climberSys.setClimberMotor(-1);
+		Robot.climberSys.setClimberMotor(-.8);
 	}
 
 	/**
