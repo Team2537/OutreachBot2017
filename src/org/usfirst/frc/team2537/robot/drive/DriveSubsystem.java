@@ -30,10 +30,6 @@ public class DriveSubsystem extends Subsystem {
 														// numbers
 														// are fun
 	public static final int PulsesPerRevolution = 480; // for encoders
-	private double initialLeftEncoders = 0; // Inches to subtract (for
-											// resetEncoders)
-	private double initialRightEncoders = 0; // Inches to subtract (for
-												// resetEncoders)
 
 	// Atlas encoder code
 	//public Encoder lencoder = new Encoder(Ports.LEFT_ENCODER_A, Ports.LEFT_ENCODER_B);

@@ -6,10 +6,12 @@ import org.usfirst.frc.team2537.robot.auto.UltrasonicDrive;
 import org.usfirst.frc.team2537.robot.auto.VisionRotate;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class MiddleGear extends CommandGroup {
 	public MiddleGear() {
 		addSequential(new DriveStraightCommand(Specs.AUTO_DISTANCE_FORWARD_TO_SIDE_PEG));
+		addSequential(new WaitCommand(1));
 		addSequential(new VisionRotate());
 		addSequential(new UltrasonicDrive());
 //		addSequential(new Wait4GearGone());

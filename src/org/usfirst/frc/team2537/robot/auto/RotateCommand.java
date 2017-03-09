@@ -3,7 +3,6 @@ package org.usfirst.frc.team2537.robot.auto;
 import org.usfirst.frc.team2537.robot.Robot;
 
 import com.ctre.CANTalon.TalonControlMode;
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Command;
 

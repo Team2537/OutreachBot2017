@@ -1,11 +1,9 @@
 package org.usfirst.frc.team2537.robot.cameras;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.cscore.CvSink;
@@ -24,8 +22,6 @@ public class Cameras extends Thread {
 	private Mat output;
 	private boolean switched;
 	private long lastSwitched;
-	private static final int DRIVE_CLOSE_RANGE = 6;
-	private static final int DRIVE_FAR_RANGE = 9;
 	
 	/**
 	 * Creates the default camera (cam0) and the cvSink
@@ -102,13 +98,6 @@ public class Cameras extends Thread {
 			if ((camNum == 0 && !switched) || (camNum == 1 && switched)) {
 				// Makes the image greener if within the drive range, and red if too
 				// close
-//				if (Robot.driveSys.getUltrasonic() < DRIVE_FAR_RANGE) {
-//					if (Robot.driveSys.getUltrasonic() > DRIVE_CLOSE_RANGE) {
-//						Core.add(source, new Scalar(0, 100, 0), output);
-//					} else {
-//						Core.add(source, new Scalar(0, 0, 100), output);
-//					}
-//				}
 				
 				// draws "GEAR" in the top right corner
 				Imgproc.putText(source, "GEAR", new Point(output.cols() - 75, 25), 4, 0.8,
