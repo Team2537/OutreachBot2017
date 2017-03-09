@@ -40,10 +40,10 @@ public class Robot extends IterativeRobot {
 		climberSys = new ClimberSubsystem();
 		climberSys.registerButtons();
 		
-		cams = new Cameras();
-		
-		cameraSys = new CameraSubsystem();
-		cameraSys.registerButtons();
+//		cams = new Cameras();
+//		
+//		cameraSys = new CameraSubsystem();
+//		cameraSys.registerButtons();
 	}
 
 	/**

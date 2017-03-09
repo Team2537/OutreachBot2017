@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCommand extends Command {
 
-	private boolean shooterOff;
 	private final static double TARGET_SPEED = 500;
 	private final static double INNER_TARGET_1 = 400;
 	private final static double INNER_TARGET_2 = 600;
@@ -23,9 +22,8 @@ public class ShooterCommand extends Command {
 	 *            boolean: true = shooter motors are off, false = shooter
 	 *            motors are on
 	 */
-	public ShooterCommand(boolean shooterOff) {
+	public ShooterCommand() {
 		requires(Robot.shooterSys);
-		this.shooterOff = shooterOff;
 	}
 
 	/**
@@ -37,11 +35,7 @@ public class ShooterCommand extends Command {
 		startTime = System.currentTimeMillis();
 		resetStartTime = System.currentTimeMillis();
 		Robot.shooterSys.setExteriorMotorMode();
-		if (shooterOff) {
-			Robot.shooterSys.turnExteriorMotorOff();
-		} else {
-			Robot.shooterSys.setExteriorMotor(0.7);
-		}
+		Robot.shooterSys.setExteriorMotor(0.7);
 
 	}
 
@@ -79,6 +73,12 @@ public class ShooterCommand extends Command {
 			} else {
 				Robot.shooterSys.setShooterServo(0.5);
 			}
+			if (currentVoltage < 0) {
+				currentVoltage = 0;
+			}
+			
+			// System.out.println(currentVoltage);
+			Robot.shooterSys.setExteriorMotor(currentVoltage);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * will never be engaged
+	 * Will never be engaged
 	 */
 	@Override
 	protected void end() {
@@ -97,7 +97,7 @@ public class ShooterCommand extends Command {
 	}
 
 	/**
-	 * turns flywheels off if interrupted
+	 * Turns motors off if interrupted
 	 */
 	@Override
 	protected void interrupted() {

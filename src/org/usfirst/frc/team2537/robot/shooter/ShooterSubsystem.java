@@ -30,7 +30,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerWhenPressedCommand(HumanInput.shooterOnButton, new ShooterCommand(false));
+		HumanInput.registerWhenPressedCommand(HumanInput.shooterOnButton, new ShooterCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.shooterOffButton, new ShooterKillCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.feedBallButton, new FeedOneBallCommand(false));
 	}
