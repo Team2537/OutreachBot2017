@@ -30,7 +30,7 @@ public class DriveStraightCommand extends Command {
 	/* the robot begins to turn when the angle is greater than this constant */
 	private static final double NAVX_CORRECTION_DEGREE_TOLERANCE = 1;
 	/* add @code{DISTANCE_STOP_CORRECTION} inches to distance because the robot consistently stops this many inches early */
-	private static final double DISTANCE_STOP_CORRECTION = 3;
+	private static final double DISTANCE_STOP_CORRECTION = 0;
 	
     public DriveStraightCommand(double distance) {
     	requires(Robot.driveSys);
@@ -50,9 +50,11 @@ public class DriveStraightCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double angle = Robot.driveSys.getAhrs().getAngle();
-    	/* convert angle domain from [0,359] to [-180,180] */
+    	/* convert angle domain from [0,360] to [-180,180] */
     	if(angle > 180){
     		angle -= 360;
+    	} else if(angle < -180){
+    		angle += 360;
     	}
 //    	System.out.println("[DriveStraightCommand] angle: " + angle);
     	/* set the back wheels to a speed proportional to the front wheel speeds

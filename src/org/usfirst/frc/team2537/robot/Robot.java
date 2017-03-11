@@ -92,6 +92,7 @@ public class Robot extends IterativeRobot {
 
 	public void testInit() {
 		Robot.driveSys.resetEncoders();
+		Robot.driveSys.getAhrs().reset();
 	}
 
 	@Override
@@ -100,7 +101,14 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 //		Scheduler.getInstance().run();
+		double angle = Robot.driveSys.getAhrs().getAngle();
+		if(angle > 180){
+    		angle -= 360;
+    	} else if (angle < -180) {
+    		angle += 360;
+    	}
 		System.out.println(Robot.driveSys.getLeftEncoders());
+		System.out.println(angle);
 	}
 
 	@Override
