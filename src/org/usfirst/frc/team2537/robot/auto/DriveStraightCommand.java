@@ -35,11 +35,11 @@ public class DriveStraightCommand extends Command {
     public DriveStraightCommand(double distance) {
     	requires(Robot.driveSys);
     	targetTicks = (distance + DISTANCE_STOP_CORRECTION) * DriveSubsystem.ticksPerInch;
-    	System.out.println("[DriveStraightCommand] target ticks: " + targetTicks);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("[DriveStraightCommand] target ticks: " + targetTicks);
     	Robot.driveSys.resetEncoders();
     	Robot.driveSys.getAhrs().reset();
     	Robot.driveSys.setMode(TalonControlMode.Position);
@@ -54,7 +54,7 @@ public class DriveStraightCommand extends Command {
     	if(angle > 180){
     		angle -= 360;
     	}
-    	System.out.println("[DriveStraightCommand] angle: " + angle);
+//    	System.out.println("[DriveStraightCommand] angle: " + angle);
     	/* set the back wheels to a speed proportional to the front wheel speeds
     	 * the front wheels are set by a PID loop */
     	double backLeftWheelSpeed = ((targetTicks - Robot.driveSys.getEncoderAverage()) / targetTicks) * BACK_WHEEL_SPEED_PROPORTION;
@@ -68,7 +68,7 @@ public class DriveStraightCommand extends Command {
     		backLeftWheelSpeed -= correction;
     	}
     	Robot.driveSys.setBackMotors(backLeftWheelSpeed, backRightWheelSpeed);
-    	System.out.println("[DriveForwardCommand] Encoder Position: " + Robot.driveSys.getEncoderAverage());
+//    	System.out.println("[DriveForwardCommand] Encoder Position: " + Robot.driveSys.getEncoderAverage());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -78,7 +78,7 @@ public class DriveStraightCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("[DriveForwardCommand] finished");
+    	System.out.println("[DriveForwardCommand] finished. Ticks: " + Robot.driveSys.getEncoderAverage());
     	Robot.driveSys.setMode(TalonControlMode.PercentVbus);
 		Robot.driveSys.setDriveMotors(0);
     	Robot.driveSys.disableMotors();

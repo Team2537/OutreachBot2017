@@ -29,7 +29,7 @@ public class DriveSubsystem extends Subsystem {
 	public static final double WHEEL_DIAMETER = 7.5; // Inches TODO: Magic
 														// numbers
 														// are fun
-	public static final int PulsesPerRevolution = 480; // for encoders
+	public static final int PulsesPerRevolution = 1040; // for encoders
 
 	// Atlas encoder code
 	//public Encoder lencoder = new Encoder(Ports.LEFT_ENCODER_A, Ports.LEFT_ENCODER_B);

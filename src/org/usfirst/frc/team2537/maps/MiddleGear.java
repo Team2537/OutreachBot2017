@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2537.maps;
 
-import org.usfirst.frc.team2537.robot.Specs;
 import org.usfirst.frc.team2537.robot.auto.DriveStraightCommand;
 import org.usfirst.frc.team2537.robot.auto.UltrasonicDrive;
 import org.usfirst.frc.team2537.robot.auto.VisionRotate;
@@ -10,15 +9,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class MiddleGear extends CommandGroup {
 	public MiddleGear() {
-		addSequential(new DriveStraightCommand(Specs.AUTO_DISTANCE_FORWARD_TO_SIDE_PEG));
-		addSequential(new WaitCommand(1));
-		addSequential(new VisionRotate());
-		addSequential(new UltrasonicDrive());
-//		addSequential(new Wait4GearGone());
-//		addSequential(new DriveStraightCommand(-40));
-//		addSequential(new RotateCommand(90));
-//		addSequential(new DriveStraightCommand(60));
-//		addSequential(new RotateCommand(-90));
-//		addSequential(new DriveStraightCommand(84));
+		addSequential(new DriveStraightCommand(45.65)); // Optimal distance to move before starting vision
+		addSequential(new WaitCommand(1)); // Give robot time to settle before starting vision
+		addSequential(new VisionRotate()); // Start vision
+		addSequential(new UltrasonicDrive()); // Drive until ultrasonic is within range
 	}
 }

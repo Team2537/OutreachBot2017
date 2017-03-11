@@ -13,5 +13,6 @@ public class AutoChooser extends SendableChooser<Command> {
 		addObject("Left Gear", new LeftGear());
 		addObject("Right Gear", new RightGear());
 		addObject("Vision test", new VisionRotate());
+		addObject("Gearing Calibration Test", new DriveStraightCommand(24));
 	}
 }

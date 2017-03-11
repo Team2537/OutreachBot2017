@@ -91,6 +91,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void testInit() {
+		Robot.driveSys.resetEncoders();
 	}
 
 	@Override
@@ -98,7 +99,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		Scheduler.getInstance().run();
+//		Scheduler.getInstance().run();
+		System.out.println(Robot.driveSys.getLeftEncoders());
 	}
 
 	@Override

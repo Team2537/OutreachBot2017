@@ -4,7 +4,7 @@ public class Ports {
 	// TODO: Change ports to line up with actual ports
 
 	// Drive Talon Ports
-	public static final int FRONT_LEFT_MOTOR = 1, FRONT_RIGHT_MOTOR = 2, BACK_LEFT_MOTOR = 2, BACK_RIGHT_MOTOR = 1;
+	public static final int FRONT_LEFT_MOTOR = 1, FRONT_RIGHT_MOTOR = 2, BACK_LEFT_MOTOR = 3, BACK_RIGHT_MOTOR = 2;
 	// Red bot ports: 2, 1. Blue bot ports: 3, 2
 
 	// Mechanism Talon Ports
