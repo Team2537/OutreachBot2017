@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class VisionRotate extends Command {
 	
 	/* when the pi cannot see the target, we spin faster to try to find the target */
-	private static final double FAST_SPEED = 0.95;
+	private static final double FAST_SPEED = 0.75;
 	/* we spin slower when the pi can see the target so that we do not overshoot */
-	private static final double SLOW_SPEED = 0.75;
+	private static final double SLOW_SPEED = 0.5;
 	/* if the pi does not see a target, it outputs this duty cycle or less when right side up.  When upside down, it outputs 1 - @code{NO_TARGET_DUTY_CYCLE} */
 	private static final double NO_TARGET_DUTY_CYCLE = 0.02;
 	/* we are perfectly centered at @code{TARGET_DUTY_CYCLE}.  When mounted right side up, duty cycles greater than

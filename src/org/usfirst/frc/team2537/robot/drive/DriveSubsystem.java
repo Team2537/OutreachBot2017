@@ -150,7 +150,7 @@ public class DriveSubsystem extends Subsystem {
 		//System.out.println("Encoder Average:"
 		//		+ (getLeftEncoders() + getRightEncoders()) / 2);
 		
-		return (getLeftEncoders() + getRightEncoders()) / 2;
+		return (getLeftEncoders() - getRightEncoders()) / 2;
 	}
 	
 

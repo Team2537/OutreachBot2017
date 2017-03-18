@@ -12,6 +12,7 @@ public class AutoChooser extends SendableChooser<Command> {
 		addDefault("Middle Gear", new MiddleGear());
 		addObject("Left Gear", new LeftGear());
 		addObject("Right Gear", new RightGear());
+		addObject("Rotate Test", new RotateCommand(-60));
 //		addObject("Vision test", new VisionRotate());
 	}
 }

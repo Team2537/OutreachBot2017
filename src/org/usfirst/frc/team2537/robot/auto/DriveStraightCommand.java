@@ -6,6 +6,7 @@ import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Front wheels are SRX Talons
@@ -69,6 +70,10 @@ public class DriveStraightCommand extends Command {
     		backRightWheelSpeed -= correction;
     		backLeftWheelSpeed -= correction;
     	}
+    	SmartDashboard.putNumber("[DriveStraightCommand] target ticks", targetTicks);
+    	SmartDashboard.putNumber("[DriveStraightCommand] encoder average", Robot.driveSys.getEncoderAverage());
+    	SmartDashboard.putNumber("[DriveStraightCommand] left ticks", Robot.driveSys.getLeftEncoders());
+    	SmartDashboard.putNumber("[DriveStraightCommand] right ticks", Robot.driveSys.getRightEncoders());
     	Robot.driveSys.setBackMotors(backLeftWheelSpeed, backRightWheelSpeed);
 //    	System.out.println("[DriveForwardCommand] Encoder Position: " + Robot.driveSys.getEncoderAverage());
     }
@@ -83,7 +88,9 @@ public class DriveStraightCommand extends Command {
     	System.out.println("[DriveForwardCommand] finished. Ticks: " + Robot.driveSys.getEncoderAverage());
     	Robot.driveSys.setMode(TalonControlMode.PercentVbus);
 		Robot.driveSys.setDriveMotors(0);
+		/* we disable and then enable the motors to kill the PID loop */
     	Robot.driveSys.disableMotors();
+    	Robot.driveSys.enableMotors();
     	Robot.driveSys.resetEncoders();
     }
 

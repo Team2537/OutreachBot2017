@@ -13,7 +13,7 @@ public class RightGear extends CommandGroup {
 	public RightGear() {
 		addSequential(new DriveStraightCommand(Specs.AUTO_DISTANCE_FORWARD_TO_SIDE_PEG));
 		addSequential(new RotateCommand(-60));
-		addSequential(new WaitCommand(1));
+		addSequential(new WaitCommand(0.25));
 		addSequential(new VisionRotate());
 		addSequential(new UltrasonicDrive());
 	}

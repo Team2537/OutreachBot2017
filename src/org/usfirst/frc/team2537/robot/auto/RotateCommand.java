@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RotateCommand extends Command {
 	private double targetAngle;
-	private static final double DEFAULT_SPEED = 1.0;
-	private static final double REDUCED_SPEED = 0.7;
+	private static final double DEFAULT_SPEED = 0.75;
+	private static final double REDUCED_SPEED = 0.5;
 	private static final double TOLERANCE = 1; // degrees
 	private static final int SLOW_DOWN_ANGLE = 10;
 	private double currentAngle;
