@@ -1,13 +1,20 @@
-
 package org.usfirst.frc.team2537.robot;
 
+//github.com/Team2537/Cogsworth.git
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.auto.VisionRotate;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.vision.PISubsystem;
+import org.usfirst.frc.team2537.robot.vision.RPiCalibration;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -21,10 +28,9 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	public static Cameras cameras;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	public static PISubsystem piSys;
+	private SendableChooser<Command> autoChooser;
+	
 	@Override
 	public void robotInit() {
 		driveSys = new DriveSubsystem();
@@ -36,29 +42,24 @@ public class Robot extends IterativeRobot {
 		cameras = new Cameras();
 		cameras.start();
 		
+		piSys = new PISubsystem();
+		piSys.initDefaultCommand();
+		
 		pdp = new PowerDistributionPanel();
-	}
-	
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select  
-	 * between different autonomous modes using the dashboard. The sendable 
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
-	 */
-	@Override
-	public void autonomousInit() {
+		
+		autoChooser = new AutoChooser();
+		SmartDashboard.putData("Auto Choices", autoChooser);
+		SmartDashboard.putData("Reclibrate RPi", new RPiCalibration());
+		SmartDashboard.putNumber("RPi Target Duty Cycle", VisionRotate.TARGET_DUTY_CYCLE);
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	@Override
-	public void autonomousPeriodic() {
+	public void autonomousInit() {
+		Scheduler.getInstance().removeAll();
+		Scheduler.getInstance().add(autoChooser.getSelected());
+		System.out.println("Autonomous start");
 	}
 
 	/**
@@ -73,7 +74,54 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	@Override
-	public void testPeriodic() {
+	public void autonomousPeriodic() {
+		//System.out.println(Robot.driveSys.rencoder.getRaw());
+		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
+		Scheduler.getInstance().run();
+	}
+
+
+	/**
+	 * 
+	 */
+	public void teleopInit(){
+		Scheduler.getInstance().removeAll();
+		System.out.println("Teleop init");
 
 	}
-}                           
+
+	public void testInit() {
+		Robot.driveSys.resetEncoders();
+		Robot.driveSys.getAhrs().reset();
+	}
+
+	@Override
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+//		Scheduler.getInstance().run();
+		double angle = Robot.driveSys.getAhrs().getAngle();
+		if(angle > 180){
+    		angle -= 360;
+    	} else if (angle < -180) {
+    		angle += 360;
+    	}
+		System.out.println(Robot.driveSys.getLeftEncoders());
+		System.out.println(angle);
+	}
+
+	@Override
+	public void disabledInit() {
+		driveSys.getAhrs().reset();
+		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
+	}
+	
+	@Override
+	public void disabledPeriodic() {
+		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
+		SmartDashboard.putNumber("RPi Target Duty Cycle", VisionRotate.TARGET_DUTY_CYCLE);
+		Scheduler.getInstance().run();
+	}
+
+}

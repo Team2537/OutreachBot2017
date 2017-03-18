@@ -4,7 +4,8 @@ public class Ports {
 	// TODO: Change ports to line up with actual ports
 
 	// Drive Talon Ports
-	public static final int FRONT_LEFT_MOTOR = 1, FRONT_RIGHT_MOTOR = 2, BACK_LEFT_MOTOR = 0, BACK_RIGHT_MOTOR = 2;
+	public static final int FRONT_LEFT_MOTOR = 1, FRONT_RIGHT_MOTOR = 2, BACK_LEFT_MOTOR = 3, BACK_RIGHT_MOTOR = 2;
+	// Red bot ports: 2, 1. Blue bot ports: 3, 2
 
 	// Mechanism Talon Ports
 	public static final int CLIMBER_MOTOR_ONE = 5;
@@ -29,8 +30,8 @@ public class Ports {
 	
 	public static final int INFRARED_TRIGGER = 1, INFRARED_ECHO =2;
 	
-	public static final int ULTRASONIC_TRIGGER = 1, ULTRASONIC_ECHO = 2;
-
+	public static final int ULTRASONIC_TRIGGER = 3, ULTRASONIC_ECHO = 8;
+	
 	// PDP ports
 	public static final int CLIMBER_MOTOR_PDP_CHANNEL = 14;
 }
