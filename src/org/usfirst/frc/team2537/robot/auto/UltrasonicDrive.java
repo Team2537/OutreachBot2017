@@ -6,12 +6,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class UltrasonicDrive extends Command {
 	private static final int TOLERANCE = 9;
+	private static final double SPEED = 0.25;
 	public UltrasonicDrive() {
 		requires(Robot.driveSys);
 	}
 	
 	public void initialize() {
-		Robot.driveSys.setDriveMotors(0.5);
+		Robot.driveSys.setDriveMotors(SPEED);
 		// TODO Auto-generated constructor stub
 	}
 

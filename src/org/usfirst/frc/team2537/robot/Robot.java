@@ -59,6 +59,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().add(autoChooser.getSelected());
+		driveSys.resetEncoders();
+		driveSys.getAhrs().reset();
 		System.out.println("Autonomous start");
 	}
 
