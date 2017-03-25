@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class LeftGear extends CommandGroup {
 	public LeftGear() {
-		addSequential(new DriveStraightCommand(Specs.AUTO_DISTANCE_FORWARD_TO_SIDE_PEG));
+		addSequential(new DriveStraightCommand(Specs.AUTO_DISTANCE_FORWARD_TO_SIDE_PEG / 2));
+		addSequential(new WaitCommand(.25));
+		addSequential(new DriveStraightCommand(Specs.AUTO_DISTANCE_FORWARD_TO_SIDE_PEG / 2));
 		addSequential(new RotateCommand(60));
 		addSequential(new WaitCommand(0.25));
 		addSequential(new VisionRotate());

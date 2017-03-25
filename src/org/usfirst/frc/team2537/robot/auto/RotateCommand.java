@@ -20,9 +20,6 @@ public class RotateCommand extends Command {
     	requires(Robot.driveSys);
     	Robot.driveSys.getAhrs().reset();
     	targetAngle = angle;
-    	if(targetAngle > 180){
-    		targetAngle -= 360;
-    	}
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -38,6 +35,8 @@ public class RotateCommand extends Command {
     	currentAngle=Robot.driveSys.getAhrs().getAngle();
     	if(currentAngle > 180){
     		currentAngle -= 360;
+    	} else if (currentAngle < -180) {
+    		currentAngle += 360;
     	}
     	double speed = DEFAULT_SPEED;
     	if (Math.abs(currentAngle-targetAngle) < SLOW_DOWN_ANGLE) { //reduces speed if angle is close to finishing angle

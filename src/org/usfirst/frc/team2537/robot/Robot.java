@@ -79,6 +79,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		//System.out.println(Robot.driveSys.rencoder.getRaw());
 		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
+		SmartDashboard.putNumber("NavX Angle", driveSys.getAhrs().getAngle());
 		Scheduler.getInstance().run();
 	}
 
@@ -123,6 +124,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
 		SmartDashboard.putNumber("RPi Target Duty Cycle", VisionRotate.TARGET_DUTY_CYCLE);
+		SmartDashboard.putNumber("NavX Angle", driveSys.getAhrs().getAngle());
 		Scheduler.getInstance().run();
 	}
 
