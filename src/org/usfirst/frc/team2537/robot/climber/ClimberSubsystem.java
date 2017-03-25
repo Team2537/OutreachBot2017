@@ -19,8 +19,8 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void registerButtons() { 
-		HumanInput.climberActivateButton.whileHeld(new ClimberSlowCommand());
-		HumanInput.climberActivateButton.whenReleased(new ClimberCommand());
+		HumanInput.climberActivateButton.whenPressed(new ClimberSlowCommand());
+		HumanInput.climberSlowActivateButton.whenPressed(new ClimberCommand());
 		HumanInput.registerWhenPressedCommand(HumanInput.climberKillSwitch, new ClimberKillCommand());
 	}
 

@@ -16,7 +16,7 @@ public class Ports {
 	public static final int LEFT_JOYSTICK = 0, RIGHT_JOYSTICK = 1;
 
 	// Joystick Buttons
-	public static final int CLIMBER_ACTIVATOR_BUTTON = 3, CLIMBER_KILL_SWITCH = 2;
+	public static final int CLIMBER_ACTIVATOR_BUTTON = 3, CLIMBER_SLOW_ACTIVATOR_BUTTON = 4, CLIMBER_KILL_SWITCH = 2;
 
 	public static final int CAMERA_SWITCH_BUTTON = 3, CAMERA_SWITCHEROO_BUTTON = 7;
 

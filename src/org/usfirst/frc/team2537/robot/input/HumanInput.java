@@ -15,6 +15,7 @@ public class HumanInput {
 
 	// Create climber buttons
 	public static Button climberActivateButton = new JoystickButton(leftJoystick, Ports.CLIMBER_ACTIVATOR_BUTTON);
+	public static Button climberSlowActivateButton = new JoystickButton(leftJoystick, Ports.CLIMBER_SLOW_ACTIVATOR_BUTTON);
 	public static Button climberKillSwitch = new JoystickButton(leftJoystick, Ports.CLIMBER_KILL_SWITCH);
 
 	// Create shooter buttons
