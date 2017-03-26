@@ -80,6 +80,7 @@ public class Robot extends IterativeRobot {
 		//System.out.println(Robot.driveSys.rencoder.getRaw());
 		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
 		SmartDashboard.putNumber("NavX Angle", driveSys.getAhrs().getAngle());
+		SmartDashboard.putNumber("Ultrasonic value: ", driveSys.ultraSanic.getRangeInches());
 		Scheduler.getInstance().run();
 	}
 
@@ -125,6 +126,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("RPi Current Duty Cycle", piSys.getDutyCycle());
 		SmartDashboard.putNumber("RPi Target Duty Cycle", VisionRotate.TARGET_DUTY_CYCLE);
 		SmartDashboard.putNumber("NavX Angle", driveSys.getAhrs().getAngle());
+		SmartDashboard.putNumber("Ultrasonic value: ", driveSys.ultraSanic.getRangeInches());
 		Scheduler.getInstance().run();
 	}
 

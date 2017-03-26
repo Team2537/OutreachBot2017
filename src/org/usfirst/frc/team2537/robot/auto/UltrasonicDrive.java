@@ -8,22 +8,22 @@ public class UltrasonicDrive extends Command {
 	private static final int TOLERANCE = 9;
 	private static final double SPEED = 0.25;
 	public UltrasonicDrive() {
+		super(5);
 		requires(Robot.driveSys);
 	}
 	
 	public void initialize() {
 		Robot.driveSys.setDriveMotors(SPEED);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean isFinished(){
 		double ultraDistance = Robot.driveSys.ultraSanic.getRangeInches();
 		//System.out.println(ultraDistance);
-		if(ultraDistance <= TOLERANCE){
-			return true;
-		} else {
-			return false;
+		if(Robot.driveSys.ultraSanic.getRangeInches() <= 1){
+			return isTimedOut();
+		} else{
+			return ultraDistance <= TOLERANCE;
 		}
 	}
 	
