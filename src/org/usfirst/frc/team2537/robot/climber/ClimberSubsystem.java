@@ -10,7 +10,9 @@ public class ClimberSubsystem extends Subsystem {
 
 	private Talon climberMotor1 = new Talon(Ports.CLIMBER_MOTOR_ONE); // creates motor for climber
 	protected static final double SPEED_MULTIPLIER = 1; // Direct multiplier (set speed * this variable)
-
+	protected static final double GROUND_AMPERAGE_THRESHOLD = 20;
+	protected static final double AIR_AMPERAGE_CUTOFF = 40;
+	
 	public ClimberSubsystem() {
 	}
 

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberCommand extends Command {
 	// executes climber function
 
-	private int limitCurrent = 45; // Maximum current before climber kills itself
+	private ClimbStatus climbStatus = ClimbStatus.GROUNDED;
 
 	public ClimberCommand() {
 		requires(Robot.climberSys); 
@@ -23,7 +23,13 @@ public class ClimberCommand extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.climberSys.setClimberMotor(-1);
+		if (climbStatus == ClimbStatus.GROUNDED && Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > ClimberSubsystem.GROUND_AMPERAGE_THRESHOLD) {
+			climbStatus = ClimbStatus.AIR;
+		}
+		if (climbStatus == ClimbStatus.AIR && Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > ClimberSubsystem.AIR_AMPERAGE_CUTOFF) {
+			climbStatus = ClimbStatus.TOUCHING;
+		}
+		Robot.climberSys.setClimberMotor(climbStatus.speed());
 	}
 
 	/**
@@ -31,7 +37,7 @@ public class ClimberCommand extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > limitCurrent;
+		return Robot.pdp.getCurrent(Ports.CLIMBER_MOTOR_PDP_CHANNEL) > ClimberSubsystem.AIR_AMPERAGE_CUTOFF;
 	}
 
 	/**
