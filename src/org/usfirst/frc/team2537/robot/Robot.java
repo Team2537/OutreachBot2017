@@ -6,6 +6,7 @@ import org.usfirst.frc.team2537.robot.auto.VisionRotate;
 import org.usfirst.frc.team2537.robot.cameras.Cameras;
 import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.ShooterSubsystem;
 import org.usfirst.frc.team2537.robot.vision.PISubsystem;
 import org.usfirst.frc.team2537.robot.vision.RPiCalibration;
 
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	public static ClimberSubsystem climberSys;
+	public static ShooterSubsystem shooterSys;
 	public static PowerDistributionPanel pdp;
 	public static Cameras cameras;
 
@@ -41,6 +43,9 @@ public class Robot extends IterativeRobot {
 		
 		cameras = new Cameras();
 		cameras.start();
+		
+		shooterSys = new ShooterSubsystem();
+		shooterSys.registerButtons();
 		
 		piSys = new PISubsystem();
 		piSys.initDefaultCommand();

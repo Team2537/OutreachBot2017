@@ -19,9 +19,7 @@ public class HumanInput {
 	public static Button climberKillSwitch = new JoystickButton(leftJoystick, Ports.CLIMBER_KILL_SWITCH);
 
 	// Create shooter buttons
-	public static Button shooterOnButton = new JoystickButton(leftJoystick, Ports.SHOOTER_ON_BUTTON);
-	public static Button shooterOffButton = new JoystickButton(leftJoystick, Ports.SHOOTER_OFF_BUTTON);
-	public static Button feedBallButton = new JoystickButton(leftJoystick, Ports.FEED_BALL_BUTTON);
+	public static Button shooterBallRelease = new JoystickButton(rightJoystick, Ports.SHOOTER_BALL_RELEASE);
 
 	// Create camera buttons
 	// Camera switcheroo switches overlay without switching sensors
