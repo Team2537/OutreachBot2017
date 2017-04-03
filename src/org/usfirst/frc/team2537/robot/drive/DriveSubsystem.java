@@ -6,22 +6,16 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
-import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
 
 	private CANTalon talonFrontLeft;
 	private CANTalon talonFrontRight;
-	private Talon talonBackRight;
-	private Talon talonBackLeft;
+	private CANTalon talonBackRight;
+	private CANTalon talonBackLeft;
 
 	private boolean drivingStraight;
 	private boolean driveLowerSpeed;
@@ -31,33 +25,23 @@ public class DriveSubsystem extends Subsystem {
 														// are fun
 	public static final int PulsesPerRevolution = 1040; // for encoders
 
-	// Atlas encoder code
-	//public Encoder lencoder = new Encoder(Ports.LEFT_ENCODER_A, Ports.LEFT_ENCODER_B);
-	//public Encoder rencoder = new Encoder(Ports.RIGHT_ENCODER_A, Ports.RIGHT_ENCODER_B);
-	public Ultrasonic ultraSanic = new Ultrasonic(Ports.ULTRASONIC_TRIGGER, Ports.ULTRASONIC_ECHO); 
-	public DigitalInput diosaur = new DigitalInput(Ports.INFRARED_ECHO);
-	public DigitalOutput infrared = new DigitalOutput(Ports.INFRARED_TRIGGER);
-	private AHRS ahrs;
+
 	
 	public static final double ticksPerInch = PulsesPerRevolution / (Math.PI * WHEEL_DIAMETER);
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR);
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR);
-		talonBackLeft = new Talon(Ports.BACK_LEFT_MOTOR);
-		talonBackRight = new Talon(Ports.BACK_RIGHT_MOTOR);
-		ultraSanic.setAutomaticMode(true);
+		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR);
+		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR);
+
 		
 		talonFrontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talonFrontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talonFrontLeft.configEncoderCodesPerRev(PulsesPerRevolution);
 		talonFrontRight.configEncoderCodesPerRev(PulsesPerRevolution);
 
-		try {
-			ahrs = new AHRS(Port.kMXP);
-		} catch (Exception ex) {
-			//System.out.println(ex);
-		}
+
 		// SPEED MODE CODE
 		// setDriveControlMode(TalonControlMode.Speed);
 		drivingStraight = false;
@@ -254,20 +238,6 @@ public class DriveSubsystem extends Subsystem {
 		return reversed;
 	}
 
-	public AHRS getAhrs() {
-		return ahrs;
-	}
-
-	protected void setReversed(boolean reversed) {
-		this.reversed = reversed;
-	}
-
-	public void registerButtons() {
-	}
-	
-	public boolean getBeamBreak(){
-		return diosaur.get();
-	}
 	
 	public void setMode(TalonControlMode tcm) {
 		talonFrontLeft.changeControlMode(tcm);

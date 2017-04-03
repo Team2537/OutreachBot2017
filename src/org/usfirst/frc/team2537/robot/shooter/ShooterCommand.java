@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCommand extends Command {
 	
+	long startTime;
 	static boolean shooterLock = true;
 	
 	public ShooterCommand() {
@@ -19,19 +20,25 @@ public class ShooterCommand extends Command {
 	@Override
 	protected void initialize() {
 		if(shooterLock == true){
-			Robot.shooterSys.setShooterLocked();
+			Robot.shooterSys.setShooterReleased();
 		} else {
 			Robot.shooterSys.setShooterReleased();
 		}
+		startTime = System.currentTimeMillis();
 	}
 
 	@Override
 	protected void execute() {
+		if (System.currentTimeMillis() - startTime > 10){
+			Robot.shooterSys.setShooterLocked();
+		} else {
+			Robot.shooterSys.setShooterMotor(0);
+		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	@Override

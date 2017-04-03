@@ -25,6 +25,10 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor.set(1);
 	}
 	
+	public void setShooterMotor(double speed){
+		shooterMotor.set(speed);
+	}
+	
 	public void registerButtons() {
 		HumanInput.registerWhenPressedCommand(HumanInput.shooterBallRelease, new ShooterCommand());
 	}
